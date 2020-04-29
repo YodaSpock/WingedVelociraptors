@@ -2,8 +2,24 @@
 <html>
   <head>
     <title>Backend Test</title>
+    <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
-    <script src="./main.js"></script>
+    <div><button id="join">Join</button></div>
+    <div><button id="narrator">Join (Narrator)</button></div>
+    <div><button id="start">Start</button></div>
+    <div><button id="ready">Ready</button></div>
+    <div><button id="narrAck">Narrator acknowledge</button></div>
+    <div>
+      <textarea id="actText"></textarea>
+      <button id="act">Act</button>
+    </div>
+    <div>
+      <input id="voteText" />
+      <button id="vote">Vote</button>
+    </div>
+      <textarea id="log" disabled></textarea>
+
+    <script type="module" src="./main.js"></script>
   </body>
 </html>

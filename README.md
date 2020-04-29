@@ -1,6 +1,7 @@
 # Winged Velociraptors
 
-Description Here
+A game based on One Night Ultimate Werewolf, but tailored specifically for our college friend group trying to attribute
+any card actions based on each individual's personality. 
 
 ## Installs
 

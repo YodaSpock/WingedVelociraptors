@@ -13,7 +13,10 @@ npm install antd
 npm install react-router-dom
 ```
 
-## Card Types
+## Gameplay
+5 Minute Rounds where the Winged Velociraptors try to avoid being discovered and exposed. 
+
+## Card Types / Play Order
 These are listed in wake-up order, with 11/12 not waking up and having passive abilities
 
 1. Winged Velociraptor
@@ -54,3 +57,10 @@ Flips over one of the center cards
 (Passive) Wins if he is killed
 ### Josh - Samurai
 (Passive) Cannot be swapped or stolen (other players don't know if swaps didn't happen) 
+
+
+## Strech Goals
+Timer Music
+Sound Recording for each player
+Add Ellie as Villager or another player... 
+Make Josh a Villain??? (or Annalise) otherwise too OP

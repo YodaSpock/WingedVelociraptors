@@ -60,7 +60,7 @@ Flips over one of the center cards
 
 
 ## Strech Goals
-Timer Music
-Sound Recording for each player
-Add Ellie as Villager or another player... 
-Make Josh a Villain??? (or Annalise) otherwise too OP
+* Timer Music
+* Sound Recording for each player
+* Add Ellie as Villager or another player... 
+* Make Josh a Villain??? (or Annalise) otherwise too OP

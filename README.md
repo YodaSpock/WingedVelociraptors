@@ -11,6 +11,7 @@ NPM Installs on Client side
 npm install
 npm install antd 
 npm install react-router-dom
+npm install sass
 ```
 
 ## Gameplay

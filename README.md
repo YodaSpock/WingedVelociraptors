@@ -14,7 +14,8 @@ npm install react-router-dom
 ```
 
 ## Gameplay
-5 Minute Rounds where the Winged Velociraptors try to avoid being discovered and exposed. 
+* 5 Minute Rounds where the Winged Velociraptors try to avoid being discovered and exposed. 
+* The Dorsal Fin Gang tries to discover the Winged Velociraptors and expose them in a majority vote
 
 ## Card Types / Play Order
 These are listed in wake-up order, with 11/12 not waking up and having passive abilities

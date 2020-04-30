@@ -3,7 +3,7 @@ import WebSocketEventManager from "./websocket-event-manager.js";
 const wsem = new WebSocketEventManager(`ws://${window.location.hostname}:81`);
 
 document.getElementById("join").addEventListener("click", () => {
-  wsem.sendMessage("c_join", { name: String(Math.random()) });
+  wsem.sendMessage("c_join", { name: document.getElementById("name").value });
 });
 
 document.getElementById("narrator").addEventListener("click", () => {

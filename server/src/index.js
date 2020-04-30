@@ -24,7 +24,9 @@ const runGame = () => {
     gameModule.performNextAct();
     // TODO: `performNextAct` needs to return dialogue and roleData so it can be sent to client
     // TODO: listener for data from client. need way to give data to gameModule. gameModule must track current role to know who data applies to
-    // TODO: listener for narrator acknowledge. start timer. after it ends, continue to next act
+    // TODO: listener for narrator acknowledge. start timer (7 seconds). after it ends, continue to next act
+
+    // TODO: allow players to lock in vote to avoid long timer
   }
 };
 

@@ -27,6 +27,7 @@ class GameModule {
     this.dealCards();
 
     // TODO: probably move this outside (handle all networking elsewhere)
+    // TODO: also provide array of other players
     this.players.forEach((player) => {
       wsem.sendMessage(player.id, events.s_role, { role: player.role, position: player.position });
     });

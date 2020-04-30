@@ -3,9 +3,10 @@ class WebSocketEventManager {
     this.wss = wss;
     this.events = {};
     this.clients = {};
+    this.clientCount = 0;
 
     wss.on("connection", (ws) => {
-      const id = Object.keys(this.clients).length;
+      const id = this.clientCount++;
       this.clients[id] = ws;
 
       ws.on("message", (message) => {

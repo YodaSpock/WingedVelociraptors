@@ -4,8 +4,7 @@ const Player = require("./player");
 const { getDialogue, getRoleData, wvTest } = require("./util");
 
 class GameModule {
-  constructor(wsem) {
-    this.wsem = wsem;
+  constructor() {
     this.narrators = [];
   }
 
@@ -18,23 +17,17 @@ class GameModule {
   }
 
   /**
-   * Set up the game by dealing cards and notifying players of their roles.
+   * Set up the game by dealing cards.
    * @param {Object} clients Maps WebSocket IDs to `Client` instances
    */
   setup(clients) {
-    this.players = new Array(Object.keys(clients).length);
+    this.players = new Array(clients.length);
 
-    this.dealCards();
-
-    // TODO: probably move this outside (handle all networking elsewhere)
-    // TODO: also provide array of other players
-    this.players.forEach((player) => {
-      wsem.sendMessage(player.id, events.s_role, { role: player.role, position: player.position });
-    });
+    this.dealCards(clients);
   }
 
   /** Assigns roles and decides the three middle cards */
-  dealCards() {
+  dealCards(clients) {
     // assume all roles are being used for now
     // this will be configurable in the future
     const sessionRoles = Array.from(Object.keys(roles));
@@ -46,13 +39,12 @@ class GameModule {
     this.sessionOrder = Array.from(sessionRoles);
     shuffle(sessionRoles);
 
-    this.assignRoles(sessionRoles);
+    this.assignRoles(clients, sessionRoles);
     this.assignMiddle(sessionRoles);
   }
 
-  assignRoles(sessionRoles) {
-    const ids = Object.keys(clients);
-    ids.forEach((id, i) => this.players.push(new Player(clients[id].name, id, sessionRoles[i], i)));
+  assignRoles(clients, sessionRoles) {
+    clients.forEach((client, i) => this.players[i] = new Player(client.name, client.id, sessionRoles[i], i));
   }
 
   assignMiddle(sessionRoles) {

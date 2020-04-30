@@ -17,7 +17,8 @@ const state = {
   started: false
 };
 const clients = {};
-const gameModule = new GameModule(wsem);
+let order = 0;
+const gameModule = new GameModule();
 
 const runGame = () => {
   while(gameModule.hasNextAct()) {
@@ -32,7 +33,7 @@ const runGame = () => {
 
 wsem.addEventHandler(events.c_join, (id, data) => {
   if(!state.started) { 
-    clients[id] = new Client(data.name);
+    clients[id] = new Client(id, data.name, order++);
     console.log(clients);
     // TODO: inform client current number of players when joining. update them when others join
   }
@@ -46,9 +47,13 @@ wsem.addEventHandler(events.c_start, () => {
   if(state.started) return;
 
   state.started = true;
-  gameModule.setup(clients);
+  const gameClients = Object.values(clients).sort((a, b) => a.order - b.order);
+  gameModule.setup(gameClients);
 
-  console.log(gameModule.players);
+  gameModule.players.forEach((player) => {
+    const otherPlayers = gameModule.players.filter((el) => el.id !== player.id).map((el) => ({ name: el.name, id: el.id }));
+    wsem.sendMessage(player.id, events.s_role, { role: player.role, position: player.position, players: otherPlayers });
+  });
 
   state.notReadyCount = gameModule.players.length;
 });

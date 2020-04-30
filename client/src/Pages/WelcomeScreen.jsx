@@ -9,15 +9,17 @@ export default class WelcomeScreen extends React.Component{
             <div style = {{alignContent: "center"}}>
                 <img src = {jerry} alt = "Velociraptor Guy" style = {{height: "50vh", alignContent: "center"}}/>
                 <br/>
+                Login as:
+                <br/>
                 <Link to="/player">
                     <Button>
-                        Player Login
+                        Player
                     </Button>
                 </Link>
                 <br/>
-                <Link to="/narrator">
+                <Link to="/narrator/waiting">
                     <Button>
-                        Narrator Login
+                        Narrator
                     </Button>
                 </Link>
             </div>

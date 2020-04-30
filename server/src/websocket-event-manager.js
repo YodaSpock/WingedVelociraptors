@@ -1,5 +1,3 @@
-const uuid = require("uuid").v4;
-
 class WebSocketEventManager {
   constructor(wss, onClose) {
     this.wss = wss;
@@ -7,7 +5,7 @@ class WebSocketEventManager {
     this.clients = {};
 
     wss.on("connection", (ws) => {
-      const id = uuid();
+      const id = Object.keys(this.clients).length;
       this.clients[id] = ws;
 
       ws.on("message", (message) => {
@@ -21,13 +19,16 @@ class WebSocketEventManager {
   }
 
   addEventHandler(eventName, callback) {
-    this.events[eventName] = callback;
+    if(!this.events[eventName]) this.events[eventName] = [];
+    this.events[eventName].push(callback);
   }
 
   handleEvent(id, message) {
     console.log(`Received: ${message}`);
     message = JSON.parse(message);
-    if(this.events[message.event]) this.events[message.event](id, message.data);
+
+    const handlers = this.events[message.event];
+    if(handlers) handlers.forEach((handler) => handler(id, message.data));
   }
 
   sendMessage(id, event, data) {

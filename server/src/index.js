@@ -34,6 +34,7 @@ wsem.addEventHandler(events.c_join, (id, data) => {
   if(!state.started) { 
     clients[id] = new Client(data.name);
     console.log(clients);
+    // TODO: inform client current number of players when joining. update them when others join
   }
 });
 

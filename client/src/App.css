@@ -41,3 +41,7 @@
   src: url(Fonts/JurassicPark.ttf);
   font-family: jurassic;
 }
+
+html, body{
+  height: 100%;
+}

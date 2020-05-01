@@ -1,7 +1,6 @@
-const { roles } = require("./constants");
 const { shuffle } = require("../util");
 const Player = require("./player");
-const { getDialogue, getRoleData, wvTest } = require("./util");
+const { getRolePool, getDialogue, getRoleData } = require("./util");
 
 class GameModule {
   constructor() {
@@ -28,15 +27,13 @@ class GameModule {
 
   /** Assigns roles and decides the three middle cards */
   dealCards(clients) {
-    // assume all roles are being used for now
-    // this will be configurable in the future
-    const sessionRoles = Array.from(Object.keys(roles));
+    const { sessionRoles, sessionOrder } = getRolePool({ wvCount: 3 });
+    this.sessionOrder = sessionOrder;
+
     const numCards = this.players.length + 3;
     if(numCards > sessionRoles.length) throw new Error(`Too many players. Max ${sessionRoles.length - 3}.`);
-    // remove excess cards
+    // remove excess cards (if game is configured correctly, shouldn't happen)
     sessionRoles.splice(numCards);
-    // treated as a queue to decide next role
-    this.sessionOrder = Array.from(sessionRoles);
     shuffle(sessionRoles);
 
     this.assignRoles(clients, sessionRoles);
@@ -51,29 +48,29 @@ class GameModule {
     this.middle = sessionRoles.slice(-3);
   }
 
-  hasNextAct() {
-    return this.sessionOrder.length > 0;
-  }
+  get hasNextRole() { return this.sessionOrder.length > 0; }
 
-  getNextActData() {
-    const nextRole = this.sessionOrder.shift();
+  readyNextRole() {
+    if(this.sessionOrder.length === 0) throw new Error("No more roles");
 
-    let playerTargets;
-    if(wvTest(nextRole)) {
-      playerTargets = this.players.filter((player) => wvTest(player.originalRole));
-    } else {
-      playerTargets = this.players.filter((player) => nextRole === player.originalRole);
-    }
+    let nextRole;
+    // error handling in case `this.sessionOrder` contains other roles
+    while(!this.gameHasRole(nextRole = this.sessionOrder.shift()));
+    console.log(`Readying next role: ${nextRole}`);
+
+    let playerTargets = this.players.filter((player) => nextRole === player.originalRole);
 
     const dialogue = getDialogue(nextRole);
     const roleData = getRoleData(nextRole);
 
-    // skip rest of WV roles if applicable
-    if(wvTest(nextRole)) {
-      while(wvTest(this.sessionOrder[0])) this.sessionOrder.shift();
-    }
+    this.currentRole = nextRole;
+    this.roleActed = false;
 
     return { playerTargets, roleData, dialogue };
+  }
+
+  gameHasRole(role) {
+    return this.players.filter((player) => player.originalRole === role).length > 0;
   }
 }
 

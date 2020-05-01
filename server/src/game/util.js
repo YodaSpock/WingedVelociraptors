@@ -1,9 +1,7 @@
 const { roles, dialogues } = require("./constants");
 
 const getDialogue = (role) => {
-  if(wvTest(role)) {
-    return dialogues.wv;
-  } else if(role === roles.lucas || role === roles.josh) {
+  if(role === roles.lucas || role === roles.josh) {
     // passive; nothing should be read
     return null;
   } else {
@@ -13,9 +11,7 @@ const getDialogue = (role) => {
 
 const getRoleData = (role) => {
   switch(role) {
-    case roles.wv1:
-    case roles.wv2:
-    case roles.wv3:
+    case roles.wv:
     case roles.jake:
     case roles.austin:
     case roles.lucas:
@@ -26,8 +22,17 @@ const getRoleData = (role) => {
   }
 };
 
-const wvTest = (role) => {
-  return role === roles.wv1 || role === roles.wv2 || role === roles.wv3;
-}
+const getRolePool = (config) => {
+  // TODO: currently, config only tracks number of WVs
+  // TODO: in future, it will also hold other enabled roles
+  // TODO: this will be configured and sent over by the client
+  // TODO: will need to sort
 
-module.exports = { getDialogue, getRoleData, wvTest };
+  const pool = Object.values(roles);
+  const order = Array.from(pool);
+  // already have one WV in pool
+  for(let i = 0; i < config.wvCount - 1; i++) pool.push(roles.wv);
+  return { roles, order };
+};
+
+module.exports = { getDialogue, getRoleData, getRolePool };

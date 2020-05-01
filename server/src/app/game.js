@@ -31,7 +31,7 @@ class GameApp {
   }
 
   nextAct() {
-    const { playerTargets, roleData, dialogue } = this.gameModule.getNextActData();
+    const { playerTargets, roleData, dialogue } = this.gameModule.readyNextRole();
 
     this.gameModule.narrators.forEach((id) => this.wsem.sendMessage(id, events.s_narrate, { dialogue }));
   

@@ -1,7 +1,5 @@
 const roles = {
-  wv1: "wv1",
-  wv2: "wv2",
-  wv3: "wv3",
+  wv: "wv",
   sydney: "sydney",
   rachel: "rachel",
   jake: "jake",

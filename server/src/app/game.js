@@ -4,6 +4,8 @@ class GameApp {
   constructor(wsem, gameModule) {
     this.wsem = wsem;
     this.gameModule = gameModule;
+
+    this.actTimer = null;
   }
 
   run() {
@@ -14,8 +16,17 @@ class GameApp {
     });
   
     this.wsem.addEventHandler(events.c_narr_ack, () => {
-      // start timer (7 seconds). after it ends, continue to next act
-      // track if timer is already running
+      if(this.actTimer) return;
+
+      this.actTimer = setTimeout(() => {
+        this.actTimer = null;
+
+        if(this.gameModule.hasNextRole) {
+          this.nextAct();
+        } else {
+          // TODO: switch to voting phase
+        }
+      }, 7000);
     });
   }
 

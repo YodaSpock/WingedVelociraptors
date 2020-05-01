@@ -27,7 +27,7 @@ class GameModule {
 
   /** Assigns roles and decides the three middle cards */
   dealCards(clients) {
-    const { sessionRoles, sessionOrder } = getRolePool({ wvCount: 3 });
+    const { roles: sessionRoles, order: sessionOrder } = getRolePool({ wvCount: 3 });
     this.sessionOrder = sessionOrder;
 
     const numCards = this.players.length + 3;

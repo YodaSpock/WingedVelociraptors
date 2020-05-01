@@ -24,6 +24,7 @@ class GameApp {
         if(this.gameModule.hasNextRole) {
           this.nextAct();
         } else {
+          console.log("Starting voting phase...");
           // TODO: switch to voting phase
         }
       }, 7000);

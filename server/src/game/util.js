@@ -32,7 +32,7 @@ const getRolePool = (config) => {
   const order = Array.from(pool);
   // already have one WV in pool
   for(let i = 0; i < config.wvCount - 1; i++) pool.push(roles.wv);
-  return { roles, order };
+  return { roles: pool, order };
 };
 
 module.exports = { getDialogue, getRoleData, getRolePool };

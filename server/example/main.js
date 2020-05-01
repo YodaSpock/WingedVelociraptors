@@ -24,12 +24,12 @@ document.getElementById("narrAck").addEventListener("click", () => {
 
 document.getElementById("act").addEventListener("click", () => {
   const data = JSON.parse(document.getElementById("actText").value);
-  wsem.sendMessage("c_narrAck", data);
+  wsem.sendMessage("c_act", data);
 });
 
 document.getElementById("vote").addEventListener("click", () => {
-  const name = document.getElementById("voteText").value;
-  wsem.sendMessage("c_narrAck", { name });
+  const id = document.getElementById("voteText").value;
+  wsem.sendMessage("c_vote", { id });
 });
 
 wsem.addEventHandler("s_role", (data) => {

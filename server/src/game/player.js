@@ -6,6 +6,6 @@ class Player {
     this.originalRole = role;
     this.position = position;
   }
-};
+}
 
 module.exports = Player;

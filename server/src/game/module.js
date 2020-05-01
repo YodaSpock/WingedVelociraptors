@@ -1,4 +1,4 @@
-const { roles, dialogues } = require("./constants");
+const { roles } = require("./constants");
 const { shuffle } = require("../util");
 const Player = require("./player");
 const { getDialogue, getRoleData, wvTest } = require("./util");
@@ -55,28 +55,26 @@ class GameModule {
     return this.sessionOrder.length > 0;
   }
 
-  performNextAct() {
+  getNextActData() {
     const nextRole = this.sessionOrder.shift();
-    this.act(nextRole);
-    // TODO: if `nextRole` was a WV, skip following WV roles
-  }
 
-  act(role) {
-    let targets;
-    if(wvTest(role)) {
-      targets = this.players.filter((player) => wvTest(player.originalRole));
+    let playerTargets;
+    if(wvTest(nextRole)) {
+      playerTargets = this.players.filter((player) => wvTest(player.originalRole));
     } else {
-      targets = this.players.filter((player) => role === player.originalRole);
+      playerTargets = this.players.filter((player) => nextRole === player.originalRole);
     }
 
-    const dialogue = getDialogue(role);
-    const roleData = getRoleData(role);
-    // send dialogue to narrators
-    // send `roleData` to player if it is not `null`
-    // wait for data from player
-    // update players accordingly
-    // wait for narrator acknowledge, start timer, then go to next act
+    const dialogue = getDialogue(nextRole);
+    const roleData = getRoleData(nextRole);
+
+    // skip rest of WV roles if applicable
+    if(wvTest(nextRole)) {
+      while(wvTest(this.sessionOrder[0])) this.sessionOrder.shift();
+    }
+
+    return { playerTargets, roleData, dialogue };
   }
-};
+}
 
 module.exports = GameModule;

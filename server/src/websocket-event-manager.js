@@ -1,11 +1,15 @@
 class WebSocketEventManager {
   constructor(wss, onClose) {
     this.wss = wss;
+    this.onClose = onClose;
+
     this.events = {};
     this.clients = {};
     this.clientCount = 0;
+  }
 
-    wss.on("connection", (ws) => {
+  run() {
+    this.wss.on("connection", (ws) => {
       const id = this.clientCount++;
       this.clients[id] = ws;
 
@@ -14,7 +18,7 @@ class WebSocketEventManager {
       });
 
       ws.on("close", (code, reason) => {
-        onClose(id);
+        this.onClose(id);
       });
     });
   }
@@ -22,6 +26,10 @@ class WebSocketEventManager {
   addEventHandler(eventName, callback) {
     if(!this.events[eventName]) this.events[eventName] = [];
     this.events[eventName].push(callback);
+  }
+
+  removeEventHandler(eventName, callback) {
+    if(this.events[eventName]) this.events[eventName] = this.events[eventName].filter((fn) => fn !== callback);
   }
 
   handleEvent(id, message) {
@@ -53,6 +61,6 @@ class WebSocketEventManager {
       }));
     });
   }
-};
+}
 
 module.exports = WebSocketEventManager;

@@ -5,6 +5,7 @@ class Player {
     this.role = role;
     this.originalRole = role;
     this.position = position;
+    this.hasActed = false;
   }
 }
 

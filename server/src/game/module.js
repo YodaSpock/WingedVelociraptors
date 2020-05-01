@@ -72,6 +72,17 @@ class GameModule {
   gameHasRole(role) {
     return this.players.filter((player) => player.originalRole === role).length > 0;
   }
+
+  playerAct(id, data) {
+    const player = this.players.filter((el) => el.id === id)[0];
+    if(!player || player.originalRole !== this.currentRole || player.hasActed) return;
+
+    console.log(`Player ${player.name} acting`);
+
+    // TODO: use `data` to manipulate roles, players, etc.
+
+    player.hasActed = true;
+  }
 }
 
 module.exports = GameModule;

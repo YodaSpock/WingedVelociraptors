@@ -12,7 +12,7 @@ class GameApp {
     this.nextAct();
 
     this.wsem.addEventHandler(events.c_act, (id, data) => {
-      // give data to gameModule. gameModule must track current role to know who data applies to
+      this.gameModule.playerAct(id, data);
     });
   
     this.wsem.addEventHandler(events.c_narr_ack, () => {
@@ -40,6 +40,11 @@ class GameApp {
 
   beginVoting() {
     // TODO: allow players to lock in vote to avoid long timer
+  }
+
+  cleanUp() {
+    // TODO: make event listeners their own functions
+    // TODO: clear all event listeners this class has used
   }
 }
 

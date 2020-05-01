@@ -3,6 +3,7 @@ const GameApp = require("./game");
 
 class App {
   constructor(wsem, gameModule) {
+    wsem.run();
     this.wsem = wsem;
     this.gameModule = gameModule;
   }

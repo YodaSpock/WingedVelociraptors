@@ -16,6 +16,11 @@ class PregameApp {
     };
     this.clients = {};
     this.order = 0;
+
+    this.joinHandler = this.joinHandler.bind(this);
+    this.narratorHandler = this.narratorHandler.bind(this);
+    this.startHandler = this.startHandler.bind(this);
+    this.readyHandler = this.readyHandler.bind(this);
   }
 
   run() {
@@ -25,7 +30,7 @@ class PregameApp {
     
       console.log(this.clients);
     };
-    
+
     this.wsem.addEventHandler(events.c_join, this.joinHandler);
     this.wsem.addEventHandler(events.c_narrator, this.narratorHandler);
     this.wsem.addEventHandler(events.c_start, this.startHandler);

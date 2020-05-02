@@ -1,13 +1,13 @@
 import React from 'react';
 import {Button} from 'antd';
-import jerry from "../Images/raptor.png"
+import jerome from "../Images/jerome.png"
 import {Link} from 'react-router-dom';
 
 export default class WelcomeScreen extends React.Component{
     render(){
         return(
-            <div style = {{alignContent: "center"}}>
-                <img src = {jerry} alt = "Velociraptor Guy" style = {{height: "50vh", alignContent: "center"}}/>
+            <div style = {{textAlign: "center"}}>
+                <img src = {jerome} alt = "Velociraptor Guy" style = {{height: "50vh"}}/>
                 <br/>
                 Login as:
                 <br/>

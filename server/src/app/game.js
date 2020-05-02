@@ -12,7 +12,7 @@ class GameApp {
     this.nextAct();
 
     this.wsem.addEventHandler(events.c_act, (id, data) => {
-      this.gameModule.playerAct(id, data);
+      this.playerAct(id, data);
     });
   
     this.wsem.addEventHandler(events.c_narr_ack, () => {

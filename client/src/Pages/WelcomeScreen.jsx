@@ -7,21 +7,21 @@ export default class WelcomeScreen extends React.Component{
     render(){
         return(
             <div style = {{textAlign: "center"}}>
-                <img src = {jerome} alt = "Velociraptor Guy" style = {{height: "50vh"}}/>
-                <br/>
-                Login as:
-                <br/>
-                <Link to="/player">
-                    <Button>
-                        Player
-                    </Button>
-                </Link>
-                <br/>
-                <Link to="/narrator/waiting">
-                    <Button>
-                        Narrator
-                    </Button>
-                </Link>
+                <img src = {jerome} alt = "Velociraptor Guy" style = {{height: "50vh", borderRadius: "30%"}}/>
+                <div style = {{padding: "5%"}}>
+                    <Link to="/player">
+                        <Button style = {{borderRadius: "50%", width: "35%"}}>
+                            Player
+                        </Button>
+                    </Link>
+                </div>
+                <div>
+                    <Link to="/narrator/waiting">
+                        <Button style = {{borderRadius: "50%", width: "35%"}}>
+                            Narrator
+                        </Button>
+                    </Link>
+                </div>
             </div>
         )
     }

@@ -1,24 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
+import {BrowserRouter, Route} from 'react-router-dom'
 import './App.css';
+import Header from './Pages/Header';
+import Footer from './Pages/Footer';
+import 'antd/dist/antd.css';
+import LoginScreen from './Pages/LoginScreen';
+import WelcomeScreen from './Pages/WelcomeScreen';
+import NarratorWaitingScreen from './Pages/NarratorWaitingScreen';
+import PlayerWaitingScreen from './Pages/PlayerWaitingScreen';
+import '../src/Styles/Layout.scss';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p style = {{fontFamily: "jurassic", fontSize: "50px"}}>
-          Winged Velociraptors
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className = "layout" style = {{height: "100%"}}>
+      <BrowserRouter>
+        <Header/>
+        <Route path = "/" exact component = {WelcomeScreen}/>
+        <Route path = "/player" exact component = {LoginScreen}/>
+        <Route path = "/narrator/waiting" exact component = {NarratorWaitingScreen}/>
+        <Route path = "/player/:id/waiting" exact component = {PlayerWaitingScreen}/>
+        <Route path = "/player/:id/game" exact component = {LoginScreen}/>
+        <Route path = "/narrator/game" exact component = {LoginScreen}/>
+        <Footer/>
+      </BrowserRouter>
     </div>
   );
 }

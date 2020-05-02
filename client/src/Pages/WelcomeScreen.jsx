@@ -11,10 +11,10 @@ export default class WelcomeScreen extends React.Component{
                 <img src = {jerome} alt = "Velociraptor Guy" style = {{height: "50vh", borderRadius: "30%"}}/>
                 <Col style = {{padding: "5vh"}}>
                     <Row xs = {0} md = {8}/>
-                    <Row xs = {24} md = {8} style = {{display: "flex", justifyContent: "center"}}>
+                    <Row xs = {24} md = {8} style = {{display: "flex", justifyContent: "center", fontFamily: "minecraft"}}>
                         <Button style = {{borderRadius: "50%", width: "30vh"}}>
                             <Link to="/player">
-                                Player
+                                <div style = {{fontSize: "100%"}}>PLAYER</div>
                             </Link>
                         </Button>
                     </Row>
@@ -22,10 +22,10 @@ export default class WelcomeScreen extends React.Component{
                 </Col>
                 <Col>
                     <Row xs = {0} md = {8}/>
-                    <Row xs = {24} md = {8} style = {{display: "flex", justifyContent: "center"}}>
+                    <Row xs = {24} md = {8} style = {{display: "flex", justifyContent: "center", fontFamily: "minecraft"}}>
                         <Button style = {{borderRadius: "50%", width: "30vh"}}>
                             <Link to="/narrator/waiting">
-                                Narrator
+                                <div style = {{fontSize: "100%"}}>NARRATOR</div>
                             </Link>
                         </Button>
                     </Row>

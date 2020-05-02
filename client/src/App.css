@@ -42,6 +42,21 @@
   font-family: jurassic;
 }
 
+@font-face {
+  src: url(Fonts/astronBoy.ttf);
+  font-family: astro;
+}
+
+@font-face {
+  src: url(Fonts/Atari.ttf);
+  font-family: atari;
+}
+
+@font-face {
+  src: url(Fonts/Minecraft.ttf);
+  font-family: minecraft;
+}
+
 html, body{
   height: 100%;
 }

@@ -39,8 +39,30 @@ The following table documents the different events and their accompanying data. 
 | c_vote       | Client | Identifies the player this player wishes to vote to kill. This can be sent multiple times to change their vote. The **ID** must be provided, not the name. | `id: number`                                                                  |
 | s_results    | Server | Provides end-of-game results.                                                                                                                              | TBD                                                                           |
 
+### Identifying middle cards
+There are a few situations where players need to identify a card from the middle.. These cards will be represented by the numbers `0` (top/leftmost), `1` (middle), and `2` (bottom/rightmost).
+
 ### `s_act` data
-TBD
+| Role       | Data             | Description                                                                                                                                                   |
+|------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `rachel`   | `noise: boolean` | If `noise` is `true`, play Rachel's noise (currently, it was always be true, but this is to differentiate if we ever need to send another message to Rachel). |
+| `annalise` | `role: string`   | When Annalise requests to view another player's card, this message is sent in response to reveal to her that role.                                            |
+| `isaac`    | `role: string`   | When Isaac wakes up, `role` is his *current* role.                                                                                                       |
+
+If a role is not listed, they do not need additional information and will receive the value `null` for the `data` property.
+
+#### Special cases
+##### Sleep
+If a player was put to sleep by Sydney, their data will always be `{ "sleep": true }`. They cannot act on their turn.
 
 ### `c_act` data
-TBD
+| Role       | Data            | Description                                                                                         |
+|------------|-----------------|-----------------------------------------------------------------------------------------------------|
+| `sydney`   | `id: number`    | The ID of the player she wishes to put to sleep. She cannot choose herself.                         |
+| `annalise` | `id: number`    | First sent message. The ID of the player she wishes to view the role of. She cannot choose herself. |
+| `annalise` | `swap: boolean` | Second sent message. Whether or not she wishes to swap with the player she viewed the role of.      |
+| `hannah`   | `ids: array`    | The IDs of the two players to swap cards. Neither ID can be hers.                                   |
+| `daniel`   | `card: number`  | Which card to take from the middle.                                                                 |
+| `cat`      | `card: number`  | Which card to flip over in the middle.                                                              |
+
+Annalise clarification: she sends her first message, the server responds, she sends her second message.

@@ -1,5 +1,5 @@
 import React from 'react'; 
-import {Typography} from 'antd'; 
+import {Typography, Divider} from 'antd'; 
 import jerome from "../Images/jerome.png";
 import Annalise from "../Images/DorsalFinGang/annalise-1.PNG";
 import Austin from "../Images/DorsalFinGang/austin-6.PNG";
@@ -26,88 +26,120 @@ export default class CharacterPage extends React.Component{
                 </Title>
                 <img src = {jerome} alt = "Winged Velociraptor" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                This card does 
+                {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
 
                 <Title level = {4}>
                     The Annalise
                 </Title>
                 <img src = {Annalise} alt = "Annalise" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
 
                 <Title level = {4}>
                     The Austin
                 </Title>
                 <img src = {Austin} alt = "Austin" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                                    
+                    This card does 
+                    {/* TODO - Figure out what card does */}            
                 </p>
+                <Divider/>
 
                 <Title level = {4}>
                     The Cat
                 </Title>
                 <img src = {Cat} alt = "Catherine" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
+
                 <Title level = {4}>
                     The Daniel
                 </Title>
                 <img src = {Daniel} alt = "Annalise" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
+
                 <Title level = {4}>
                     The Hannah
                 </Title>
                 <img src = {Hannah} alt = "Hannah" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
+
                 <Title level = {4}>
                     The Isaac
                 </Title>
                 <img src = {Isaac} alt = "Isaac" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
+
                 <Title level = {4}>
                     The Jacob
                 </Title>
                 <img src = {Jacob} alt = "Jacob" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
+
                 <Title level = {4}>
                     The Josh
                 </Title>
                 <img src = {Josh} alt = "Josh" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
+
                 <Title level = {4}>
                     The Lucas
                 </Title>
                 <img src = {Lucas} alt = "Lucas" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
+
                 <Title level = {4}>
                     The Rachel
                 </Title>
                 <img src = {Rachel} alt = "Rachel" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
+
                 <Title level = {4}>
                     The Sydney
                 </Title>
                 <img src = {Sydney} alt = "Sydney" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
-                
+                    This card does 
+                    {/* TODO - Figure out what card does */}
                 </p>
+                <Divider/>
             </div>
         )
     }

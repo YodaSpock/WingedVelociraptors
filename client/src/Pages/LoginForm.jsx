@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Input, Button, Row, Col} from 'antd';
 //import { Link } from 'react-router-dom';
 
+
 const LoginForm = () => (
     <Formik
         initialValues={{
@@ -19,7 +20,7 @@ const LoginForm = () => (
         onSubmit={(values, {setSubmitting, resetForm}) => {
             console.log(values.name);
             setTimeout(()=>{
-                alert(JSON.stringify(values, null, 2));
+                
                 resetForm();
                 setSubmitting(false);
             }, 1000)

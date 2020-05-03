@@ -7,12 +7,10 @@ export default class LoginScreen extends React.Component{
     render(){
         return(
             <>
-            <Row style = {{paddingTop: "3vh"}}>
-                <Col xs = {0} md = {8}/>
+            <Row style = {{paddingTop: "3vh", textAlign: "center", justifyContent: "center"}}>
                 <Col xs = {24} md = {8} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "200%"}}>
                     Please Enter Your Name: 
                 </Col>
-                <Col xs = {0} md = {8}/>
             </Row>
             <LoginForm/>
             </>

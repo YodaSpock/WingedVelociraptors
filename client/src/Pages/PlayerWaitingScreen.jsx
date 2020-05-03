@@ -37,7 +37,7 @@ export default class PlayerWaitingScreen extends React.Component{
         return(
             <div>
                 <Modal
-                    title = "Winged Velociraptor Game Rules"
+                    title = "Game Rules"
                     visible = {this.state.rulesVisible}
                     onCancel = {this.closeRules}
                     footer = {[
@@ -50,11 +50,11 @@ export default class PlayerWaitingScreen extends React.Component{
                 </Modal>
 
                 <Modal
-                    title = "Winged Velociraptor Game Rules"
+                    title = "Character Cards"
                     visible = {this.state.charactersVisible}
                     onCancel = {this.closeCharacters}
                     footer = {[
-                        <Button key = "noice" type = "primary" onClick = {this.closeCharacters}>
+                        <Button key = "gotIt" type = "primary" onClick = {this.closeCharacters}>
                             Got it
                         </Button>
                     ]}

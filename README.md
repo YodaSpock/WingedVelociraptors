@@ -38,13 +38,12 @@ These are listed in wake-up order, with 11/12 not waking up and having passive a
 ### Winged Velociraptor
 Try to Blend in with the Dorsal Fin Gang and not be killed
 ### Sydney - Witch
-Cast's a sleeping spell during her phase on another player that player does not wake up for their phase
-(Affected player's phone vibrates and gives notification to alert them to not take their action during their phase) 
+Casts a sleeping spell on another player. That player does not wake up for their phase (more precisely they will open their eyes, see that they were put to sleep, and not perform an action). 
 ### Rachel - Klutz
 Phone Makes a noise to alert other players to her innocence
 ### Jake - I'm Right
 Shifts all players cards to the right (the exception being the Josh)
-### Austin - No you're not
+### Austin - No You're Not
 Shift all players cards to the left (the exception being the Josh)
 ### Annalise - Unsure
 Views another player's card and can decide to switch cards or not

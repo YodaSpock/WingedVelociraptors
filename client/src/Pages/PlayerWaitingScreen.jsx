@@ -22,10 +22,14 @@ export default class PlayerWaitingScreen extends React.Component{
         return(
             <div>
                 <Modal
-                    title = "Game Rules"
+                    title = "Winged Velociraptor Game Rules"
                     visible = {this.state.rulesVisible}
-                    onOk = {this.closeRules}
                     onCancel = {this.closeRules}
+                    footer = {[
+                        <Button key = "noice" type = "primary" onClick = {this.closeRules}>
+                            Noice
+                        </Button>
+                    ]}
                 >
                     <RulesPage/>
                 </Modal>

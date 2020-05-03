@@ -17,6 +17,7 @@ export default class RulesPage extends React.Component{
                 goal is to figure out who the Winged Velociraptors are, and 
                 get a majority vote to kill one of them. 
             </p>
+
             <Title level = {4}>
                 The Night
             </Title>
@@ -31,17 +32,19 @@ export default class RulesPage extends React.Component{
                 member and your card was switched to a Winged Velociraptor you must try to win as a 
                 Winged Velociraptor. </b>
             </p>
+
             <Title level = {4}>
                 The Day
             </Title>
             <p style = {{textAlign: "justify"}}>
                 After players wake up, they discuss who they believe the Winged Velociraptors are. All 
-                players can say anything, but can never look at or show their card to anyone. Again, you
-                are not always the same character you started as and you are trying to win as your current 
-                character, whose identity is a secret to you. After the timer goes off players will have 
-                a few seconds to lock in their vote. 
+                players can say anything, but once the day begins, <b>you can not look at or show your 
+                card to anyone</b>. Again, you are not always the same character you started as and you 
+                are trying to win as your current character, whose identity is a secret to you. After the 
+                timer goes off players will have a few seconds to lock in their vote. 
                 
             </p>
+
             <Title level = {4}>
                 Winning
             </Title>
@@ -50,13 +53,10 @@ export default class RulesPage extends React.Component{
                 vote for a Winged Velociraptor then the Dorsal Fin Gang wins. However,
                 if the majority of people vote for a Dorsal Fin Gang member then the 
                 Winged Velociraptors will win. If you are playing with <b>The Lucas</b>, there 
-                are additional winning conditions with his character, so refer to the Cards 
+                are additional winning conditions with his character, so refer to the Characters 
                 section. 
-
             </p>
-            
             </>
-
         )
     }
 }

@@ -42,14 +42,14 @@ export default class PlayerWaitingScreen extends React.Component{
                 </Row>
 
                 <Row style = {{paddingTop: "3vh", paddingBottom: "3vh", justifyContent: "center"}}>
-                    <Col xs = {12} md = {8} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "200%"}}>
+                    <Col xs = {24} md = {8} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "200%"}}>
                         {/* Create State for player name */}
                         You are Player 1
                     </Col>
                 </Row>
 
-                <Row style = {{paddingTop: "3vh", paddingBottom: "3vh", justifyContent: "center"}}>
-                    <Col xs = {12} md = {8} style = {{textAlign: "center", fontFamily: "jurassic", fontSize: "250%", letterSpacing: "1px"}}>
+                <Row style = {{paddingTop: "3vh", justifyContent: "center"}}>
+                    <Col xs = {24} md = {8} style = {{textAlign: "center", fontFamily: "jurassic", fontSize: "250%", letterSpacing: "1px"}}>
                         <div className = "loading">
                             {/* TODO- Add a Countdown Timer for a strech goal */}
                             Waiting for Game
@@ -62,12 +62,23 @@ export default class PlayerWaitingScreen extends React.Component{
                     </Col>
                 </Row>
 
-                <Row style = {{paddingTop: "3vh", paddingBottom: "3vh", justifyContent: "center"}}>
-                    <Col xs = {24} md = {8} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "100%"}}>
+                <Row style = {{paddingTop: "3vh", justifyContent: "center"}}>
+                    <Col xs = {24} md = {12} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "100%"}}>
                         {/* TODO -  ADD THE START GAME FUNCTION */}
                         <Button onClick = {this.showRules} style = {{borderRadius: "50%", width: "30vh"}}>
                             {/* <Link to = "/player/1/waiting"> */}
                                 Rules
+                            {/* </Link> */}
+                        </Button>
+                    </Col>
+                </Row>
+
+                <Row style = {{paddingTop: "3vh", justifyContent: "center"}}>
+                    <Col xs = {24} md = {12} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "100%"}}>
+                        {/* TODO -  ADD THE START GAME FUNCTION */}
+                        <Button onClick = {this.showRules} style = {{borderRadius: "50%", width: "30vh"}}>
+                            {/* <Link to = "/player/1/waiting"> */}
+                                Characters
                             {/* </Link> */}
                         </Button>
                     </Col>

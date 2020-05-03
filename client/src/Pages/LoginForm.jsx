@@ -5,7 +5,7 @@ import { Input, Button} from 'antd';
 //import { Link } from 'react-router-dom';
 
 const LoginForm = () => (
-        <FormikForm
+        <Formik
         initialValues={{
             name: ''
         }}
@@ -64,7 +64,7 @@ const LoginForm = () => (
                     
                 </form>
             )}
-        </FormikForm>
+        </Formik>
 );
 
 export default LoginForm;

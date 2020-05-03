@@ -51,6 +51,7 @@ export default class PlayerWaitingScreen extends React.Component{
                 <Row style = {{paddingTop: "3vh", paddingBottom: "3vh", justifyContent: "center"}}>
                     <Col xs = {12} md = {8} style = {{textAlign: "center", fontFamily: "jurassic", fontSize: "250%", letterSpacing: "1px"}}>
                         <div className = "loading">
+                            {/* TODO- Add a Countdown Timer for a strech goal */}
                             Waiting for Game
                             <span class = "ellipsis">
                                 <span>.</span>

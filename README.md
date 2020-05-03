@@ -12,6 +12,7 @@ npm install
 npm install antd 
 npm install react-router-dom
 npm install sass
+npm install formik
 ```
 
 ## Gameplay

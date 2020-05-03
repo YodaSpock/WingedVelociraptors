@@ -1,23 +1,24 @@
-const logEl = document.getElementById("log");
-const log = (msg) => logEl.value += `${msg}\n`;
-
+/**
+ * Client-side WebSocket event manager.
+ * The `onLog` property of an instance can be set as a function receiving a log string.
+ */
 class WebSocketEventManager {
   constructor(url, onOpen) {
     this.events = {};
     this.ws = new WebSocket(url);
 
     this.ws.onopen = () => {
-      log(`WebSocket opened at ${url}`);
+      if(this.onLog) this.onLog(`WebSocket opened at ${url}`);
       if(onOpen) onOpen();
     };
 
     this.ws.onmessage = (message) => {
       message = JSON.parse(message.data);
       if(!message.event) {
-        log(`Invalid message received: ${message}`);
+        if(this.onLog) this.onLog(`Invalid message received: ${message}`);
         return;
       }
-      log(`Event ${message.event} received: ${JSON.stringify(message.data)}`);
+      if(this.onLog) this.onLog(`Event ${message.event} received: ${JSON.stringify(message.data)}`);
       if(this.events[message.event]) this.events[message.event](message.data);
     };
   }
@@ -28,7 +29,7 @@ class WebSocketEventManager {
 
   sendMessage(event, data) {
     const msg = JSON.stringify({ event, data });
-    log(`Sending: ${msg}`);
+    if(this.onLog) this.onLog(`Sending: ${msg}`);
     this.ws.send(msg);
   }
 }

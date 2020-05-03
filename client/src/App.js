@@ -19,8 +19,8 @@ function App() {
         <Route path = "/" exact component = {WelcomeScreen}/>
         <Route path = "/player" exact component = {LoginScreen}/>
         <Route path = "/narrator/waiting" exact component = {NarratorWaitingScreen}/>
-        <Route path = "/player/:id/waiting" exact component = {PlayerWaitingScreen}/>
-        <Route path = "/player/:id/game" exact component = {LoginScreen}/>
+        <Route path = "/player/waiting" exact component = {PlayerWaitingScreen}/>
+        <Route path = "/player/game" exact component = {LoginScreen}/>
         <Route path = "/narrator/game" exact component = {LoginScreen}/>
         <Footer/>
       </BrowserRouter>

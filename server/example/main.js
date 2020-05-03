@@ -1,6 +1,9 @@
 import WebSocketEventManager from "./websocket-event-manager.js";
 
+const logEl = document.getElementById("log");
+
 const wsem = new WebSocketEventManager(`ws://${window.location.hostname}:81`);
+wsem.onLog = (msg) => logEl.value += `${msg}\n`;
 
 document.getElementById("join").addEventListener("click", () => {
   wsem.sendMessage("c_join", { name: document.getElementById("name").value });

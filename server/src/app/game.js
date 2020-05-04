@@ -21,6 +21,8 @@ class GameApp {
       this.actTimer = setTimeout(() => {
         this.actTimer = null;
 
+        // TODO: probably send `s_act` message to rachel to make noise if she is current role
+
         if(this.gameModule.hasNextRole) {
           this.nextAct();
         } else {

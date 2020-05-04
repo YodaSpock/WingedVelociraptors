@@ -22,12 +22,52 @@ export default class CharacterPage extends React.Component{
         return(
             <div style = {{textAlign: "center"}}>
                 <Title level = {4}>
-                    Winged Velociraptor
+                    Winged Velociraptor (1)
                 </Title>
                 <img src = {jerome} alt = "Winged Velociraptor" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify"}}>
                 This card does 
                 {/* TODO - Figure out what card does */}
+                </p>
+                <Divider/>
+
+                <Title level = {4}>
+                    The Sydney (2)
+                </Title>
+                <img src = {Sydney} alt = "Sydney" style = {{height: "40vh", borderRadius: "30%"}}/>
+                <p style = {{textAlign: "justify"}}>
+                    This card does 
+                    {/* TODO - Figure out what card does */}
+                </p>
+                <Divider/>
+
+                <Title level = {4}>
+                    The Rachel (3)
+                </Title>
+                <img src = {Rachel} alt = "Rachel" style = {{height: "40vh", borderRadius: "30%"}}/>
+                <p style = {{textAlign: "justify"}}>
+                    This card does 
+                    {/* TODO - Figure out what card does */}
+                </p>
+                <Divider/>
+
+                <Title level = {4}>
+                    The Jacob (4)
+                </Title>
+                <img src = {Jacob} alt = "Jacob" style = {{height: "40vh", borderRadius: "30%"}}/>
+                <p style = {{textAlign: "justify"}}>
+                    This card does 
+                    {/* TODO - Figure out what card does */}
+                </p>
+                <Divider/>
+
+                <Title level = {4}>
+                    The Austin (5)
+                </Title>
+                <img src = {Austin} alt = "Austin" style = {{height: "40vh", borderRadius: "30%"}}/>
+                <p style = {{textAlign: "justify"}}>
+                    This card does 
+                    {/* TODO - Figure out what card does */}            
                 </p>
                 <Divider/>
 
@@ -41,15 +81,7 @@ export default class CharacterPage extends React.Component{
                 </p>
                 <Divider/>
 
-                <Title level = {4}>
-                    The Austin
-                </Title>
-                <img src = {Austin} alt = "Austin" style = {{height: "40vh", borderRadius: "30%"}}/>
-                <p style = {{textAlign: "justify"}}>
-                    This card does 
-                    {/* TODO - Figure out what card does */}            
-                </p>
-                <Divider/>
+                
 
                 <Title level = {4}>
                     The Cat
@@ -91,15 +123,7 @@ export default class CharacterPage extends React.Component{
                 </p>
                 <Divider/>
 
-                <Title level = {4}>
-                    The Jacob
-                </Title>
-                <img src = {Jacob} alt = "Jacob" style = {{height: "40vh", borderRadius: "30%"}}/>
-                <p style = {{textAlign: "justify"}}>
-                    This card does 
-                    {/* TODO - Figure out what card does */}
-                </p>
-                <Divider/>
+                
 
                 <Title level = {4}>
                     The Josh
@@ -121,25 +145,9 @@ export default class CharacterPage extends React.Component{
                 </p>
                 <Divider/>
 
-                <Title level = {4}>
-                    The Rachel
-                </Title>
-                <img src = {Rachel} alt = "Rachel" style = {{height: "40vh", borderRadius: "30%"}}/>
-                <p style = {{textAlign: "justify"}}>
-                    This card does 
-                    {/* TODO - Figure out what card does */}
-                </p>
-                <Divider/>
+               
 
-                <Title level = {4}>
-                    The Sydney
-                </Title>
-                <img src = {Sydney} alt = "Sydney" style = {{height: "40vh", borderRadius: "30%"}}/>
-                <p style = {{textAlign: "justify"}}>
-                    This card does 
-                    {/* TODO - Figure out what card does */}
-                </p>
-                <Divider/>
+                
             </div>
         )
     }

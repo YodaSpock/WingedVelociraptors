@@ -5,6 +5,11 @@ import {Link} from 'react-router-dom';
 import {Col, Row} from 'antd';
 
 export default class WelcomeScreen extends React.Component{
+
+    onClick = () =>{
+        this.props.wsem.sendMessage("c_narrator");
+    };
+
     render(){
         return(
             <div style = {{textAlign: "center"}}>
@@ -24,7 +29,7 @@ export default class WelcomeScreen extends React.Component{
                     <Row xs = {0} md = {8}/>
                     <Row xs = {24} md = {8} style = {{display: "flex", justifyContent: "center", fontFamily: "minecraft"}}>
                         <Button style = {{borderRadius: "50%", width: "30vh"}}>
-                            <Link to="/narrator/waiting">
+                            <Link to="/narrator/waiting" onClick = {this.onClick} >
                                 <div style = {{fontSize: "100%"}}>NARRATOR</div>
                             </Link>
                         </Button>

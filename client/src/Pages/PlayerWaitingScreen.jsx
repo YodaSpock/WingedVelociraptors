@@ -33,7 +33,20 @@ export default class PlayerWaitingScreen extends React.Component{
             charactersVisible: false,
         })
     }
+
+    renderName = () =>{
+        var name = this.props.location.name;
+        if(typeof name !== 'undefined'){
+            name = name.toLowerCase();
+            if(name === "austin" || name === "autin"){
+                name = "potato";
+            }
+            return name;
+        }
+    }
+    
     render(){
+
         return(
             <div>
                 <Modal
@@ -65,7 +78,7 @@ export default class PlayerWaitingScreen extends React.Component{
                 <Row style = {{paddingTop: "3vh", paddingBottom: "3vh", justifyContent: "center"}}>
                     <Col xs = {12} md = {8} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "200%"}}>
                         {/* Create State for player name */}
-                        Welcome Isaac 
+                        Welcome {this.renderName()}
                     </Col>
                 </Row>
 
@@ -81,7 +94,7 @@ export default class PlayerWaitingScreen extends React.Component{
                         <div className = "loading">
                             {/* TODO- Add a Countdown Timer for a strech goal */}
                             Waiting for Game
-                            <span class = "ellipsis">
+                            <span className = "ellipsis">
                                 <span>.</span>
                                 <span>.</span>
                                 <span>.</span>

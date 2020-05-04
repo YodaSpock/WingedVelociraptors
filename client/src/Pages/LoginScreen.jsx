@@ -5,6 +5,7 @@ import LoginForm from './LoginForm';
 export default class LoginScreen extends React.Component{
 
     render(){
+
         return(
             <>
             <Row style = {{paddingTop: "3vh", textAlign: "center", justifyContent: "center"}}>
@@ -12,7 +13,7 @@ export default class LoginScreen extends React.Component{
                     Please Enter Your Name: 
                 </Col>
             </Row>
-            <LoginForm/>
+            <LoginForm />
             </>
         )
     }

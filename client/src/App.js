@@ -10,7 +10,6 @@ import NarratorWaitingScreen from './Pages/NarratorWaitingScreen';
 import PlayerWaitingScreen from './Pages/PlayerWaitingScreen';
 import '../src/Styles/Layout.scss';
 
-
 function App() {
   return (
     <div className = "layout" style = {{height: "100%"}}>

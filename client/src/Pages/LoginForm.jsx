@@ -2,13 +2,19 @@ import React from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import { Input, Button, Row, Col} from 'antd';
+import { useHistory } from "react-router-dom";
 //import { Link } from 'react-router-dom';
 
 const LoginForm = ({wsem, onRole}) => {
 
+
+    let history = useHistory();
+      
     const getRole = e => {
         onRole(e);
+        console.log("GET ROLE - LOGIN FORM")
         console.log(e);
+        history.push("/player/game");
     };
     
     return(

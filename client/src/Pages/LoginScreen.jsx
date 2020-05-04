@@ -4,14 +4,12 @@ import LoginForm from './LoginForm';
 
 export default class LoginScreen extends React.Component{
 
-
-
     render(){
         const {
             wsem,
             onRole
         } = this.props; 
-
+        
         return(
             <>
             <Row style = {{paddingTop: "3vh", textAlign: "center", justifyContent: "center"}}>

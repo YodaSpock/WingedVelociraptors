@@ -18,18 +18,16 @@ const wsem = new WebSocketEventManager(`ws://${window.location.hostname}:81`);
 
 function App() {
 
+
   const [role, setRole] = useState("");
   const [position, setPosition] = useState(0);
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState([{}]);
   
   const doThings = e => {
-    //Do Something
-    //History push 
+    console.log("DO THINGS")
     setRole(e.role);
     setPosition(e.position);
     setPlayers(e.players);
-
-    
   };
 
   return (

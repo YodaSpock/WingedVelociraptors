@@ -80,6 +80,7 @@ class GameModule {
     console.log(`Player ${player.name} acting`);
 
     // TODO: use `data` to manipulate roles, players, etc.
+    // TODO: check if player is asleep. If so, don't do anything
 
     player.hasActed = true;
   }

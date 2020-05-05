@@ -9,6 +9,11 @@ const getDialogue = (role) => {
   }
 };
 
+/**
+ * Returns a parallel array corresponding to the data to be sent to each target.
+ * @param {String} role 
+ * @param {Array<Players>} targets 
+ */
 const getRoleData = (role, targets) => {
   if(role === roles.isaac) {
     return targets.map((target) => ({ role: target.role }));

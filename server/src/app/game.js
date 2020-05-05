@@ -3,7 +3,9 @@ const roles = require("../game/constants");
 
 class GameApp {
   constructor(wsem, gameModule) {
+    /** @type {import("../websocket-event-manager")} */
     this.wsem = wsem;
+    /** @type {import("../game/module")} */
     this.gameModule = gameModule;
 
     this.actTimer = null;
@@ -33,7 +35,6 @@ class GameApp {
         } else {
           console.log("Starting voting phase...");
           this.beginVoting();
-          // TODO: switch to voting phase
         }
       }, 7000); // TODO: maybe make timer conditional length for Annalise (more time)
     });
@@ -48,6 +49,7 @@ class GameApp {
   }
 
   beginVoting() {
+    // TODO: add handler for c_vote
     // TODO: tell players which middle cards are exposed (new WS event)
     // TODO: allow players to lock in vote to avoid long timer
   }

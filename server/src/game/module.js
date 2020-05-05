@@ -6,6 +6,7 @@ const { roles } = require("./constants");
 
 class GameModule {
   constructor() {
+    /** @type {Array<Number>} */
     this.narrators = [];
   }
 
@@ -53,8 +54,20 @@ class GameModule {
     Object.freeze(this.middle);
   }
 
+  /** @returns {boolean} */
   get hasNextRole() { return this.sessionOrder.length > 0; }
 
+
+  /**
+   * @typedef {Object} NextRoleData
+   * @property {Array<Player>} playerTargets
+   * @property {Array<Object>} roleData
+   * @property {String} dialogue
+   */
+
+  /**
+   * @returns {NextRoleData}
+   */
   readyNextRole() {
     if(this.sessionOrder.length === 0) throw new Error("No more roles");
 
@@ -68,21 +81,34 @@ class GameModule {
     const dialogue = getDialogue(nextRole);
     const roleData = getRoleData(nextRole);
 
+    /** @type {String} */
     this.currentRole = nextRole;
 
     return { playerTargets, roleData, dialogue };
   }
 
+  /** @returns {boolean} */
   gameHasRole(role) {
     return this.players.filter((player) => player.originalRole === role).length > 0;
   }
 
+  /**
+   * @param {Number} id 
+   * @returns {Player}
+   */
   getPlayer(id) {
     const player = this.players.filter((el) => el.id === id)[0];
     if(!player) throw new Error(`No player found with ID ${id}`);
     return player;
   }
 
+  /**
+   * Manipulates the game given data from the given ID.
+   * Returns a data object to respond to the client with, if applicable.
+   * @param {Number} id 
+   * @param {Object} data 
+   * @returns {Object}
+   */
   playerAct(id, data) {
     const player = this.getPlayer(id);
     if(player.originalRole !== this.currentRole || player.hasActed || player.asleep) return;

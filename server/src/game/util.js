@@ -35,31 +35,19 @@ const getRolePool = (config) => {
   return { roles: pool, order };
 };
 
-const shift = (players, direction) => {
-  if(direction !== "right" && direction !== "left") throw new Error("Invalid `direction` parameter");
-
-  // TODO: handle Josh
-  let next = direction === "right" ? players[players.length - 1].role : players[0].role;
-  for(let i = direction === "right" ? 0 : players.length - 1;
-      direction === "right" ? i < players.length : i >= 0;
-      direction === "right" ? i++ : i--) {
-    const player = players[i];
-    const tmpNext = player.role;
-    player.role = next;
-    next = tmpNext;
-  }
-}
-
 /**
  * Shift the `role` property of each player to the right once.
  * @param {Array<Player>} players Array of players
  */
 const rshift = (players) => {
-  // TODO: instead, go backwards and find first non-josh
-  let next = players[players.length - 1].role;
+  // going backwards, find first non-josh
+  let next, i = players.length - 1;
+  while(i > 0 && (next = players[i--]).role === roles.josh);
+  if(i === 0) return;
+
   for(let i = 0; i < players.length; i++) {
-    // TODO: just continue; if josh?
     const player = players[i];
+    if(player.role === roles.josh) continue;
     const tmpNext = player.role;
     player.role = next;
     next = tmpNext;
@@ -71,11 +59,14 @@ const rshift = (players) => {
  * @param {Array<Player>} players Array of players
  */
 const lshift = (players) => {
-  // TODO: instead, go forwards and find first non-josh
-  let next = players[0].role;
+  // going forwards, find first non-josh
+  let next, i = 0;
+  while(i < players.length && (next = players[i++]).role === roles.josh);
+  if(i === players.length) return;
+
   for(let i = players.length - 1; i >= 0; i--) {
-    // TODO: just continue; if josh?
     const player = players[i];
+    if(player.role === roles.josh) continue;
     const tmpNext = player.role;
     player.role = next;
     next = tmpNext;

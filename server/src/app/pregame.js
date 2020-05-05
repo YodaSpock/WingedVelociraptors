@@ -1,4 +1,4 @@
-const events = require("../wsEvents");
+const events = require("../networking/wsEvents");
 const Client = require("../client");
 // TODO: move wsEvents, client (?), and wsem to networking folder
 

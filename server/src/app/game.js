@@ -1,9 +1,9 @@
-const events = require("../wsEvents");
+const events = require("../networking/wsEvents");
 const roles = require("../game/constants");
 
 class GameApp {
   constructor(wsem, gameModule) {
-    /** @type {import("../websocket-event-manager")} */
+    /** @type {import("../networking/websocket-event-manager")} */
     this.wsem = wsem;
     /** @type {import("../game/module")} */
     this.gameModule = gameModule;

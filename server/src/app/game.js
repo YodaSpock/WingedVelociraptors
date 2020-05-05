@@ -29,7 +29,7 @@ class GameApp {
           console.log("Starting voting phase...");
           // TODO: switch to voting phase
         }
-      }, 7000);
+      }, 7000); // TODO: maybe make timer conditional length for Annalise (more time)
     });
   }
 

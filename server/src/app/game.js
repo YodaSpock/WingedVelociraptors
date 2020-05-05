@@ -1,4 +1,5 @@
 const events = require("../wsEvents");
+const roles = require("../game/constants");
 
 class GameApp {
   constructor(wsem, gameModule) {
@@ -12,7 +13,8 @@ class GameApp {
     this.nextAct();
 
     this.wsem.addEventHandler(events.c_act, (id, data) => {
-      this.gameModule.playerAct(id, data);
+      const responseData = this.gameModule.playerAct(id, data);
+      if(responseData) this.wsem.sendMessage(id, events.s_act, { data: responseData });
     });
   
     this.wsem.addEventHandler(events.c_narr_ack, () => {
@@ -21,12 +23,16 @@ class GameApp {
       this.actTimer = setTimeout(() => {
         this.actTimer = null;
 
-        // TODO: probably send `s_act` message to rachel to make noise if she is current role
+        if(this.gameModule.currentRole === roles.rachel) {
+          this.gameModule.players.filter((player) => player.originalRole === roles.rachel)
+            .forEach((player) => this.wsem.sendMessage(player.id, events.s_act, { data: { noise: true } }));
+        }
 
         if(this.gameModule.hasNextRole) {
           this.nextAct();
         } else {
           console.log("Starting voting phase...");
+          this.beginVoting();
           // TODO: switch to voting phase
         }
       }, 7000); // TODO: maybe make timer conditional length for Annalise (more time)
@@ -38,10 +44,11 @@ class GameApp {
 
     this.gameModule.narrators.forEach((id) => this.wsem.sendMessage(id, events.s_narrate, { dialogue }));
   
-    playerTargets.forEach((player) => this.wsem.sendMessage(player.id, events.s_act, roleData));
+    playerTargets.forEach((player, i) => this.wsem.sendMessage(player.id, events.s_act, { data: roleData[i] }));
   }
 
   beginVoting() {
+    // TODO: tell players which middle cards are exposed (new WS event)
     // TODO: allow players to lock in vote to avoid long timer
   }
 

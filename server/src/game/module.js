@@ -69,7 +69,6 @@ class GameModule {
     const roleData = getRoleData(nextRole);
 
     this.currentRole = nextRole;
-    this.roleActed = false;
 
     return { playerTargets, roleData, dialogue };
   }
@@ -102,6 +101,7 @@ class GameModule {
     } else if(player.originalRole === roles.annalise) {
       if(data.id) {
         player.roleData.id = data.id;
+        return { role: this.getPlayer(data.id).role };
       } else if(data.swap) {
         if(!player.roleData.id) throw new Error("Annalise didn't choose an ID already");
 

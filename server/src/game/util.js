@@ -9,16 +9,11 @@ const getDialogue = (role) => {
   }
 };
 
-const getRoleData = (role) => {
-  switch(role) {
-    case roles.wv:
-    case roles.jake:
-    case roles.austin:
-    case roles.lucas:
-    case roles.josh:
-      // passive or effectively passive
-      return null;
-    // TODO: cases with actual data
+const getRoleData = (role, targets) => {
+  if(role === roles.isaac) {
+    return targets.map((target) => ({ role: target.role }));
+  } else {
+    return new Array(targets.length).fill(null);
   }
 };
 

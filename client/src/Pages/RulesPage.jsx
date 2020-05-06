@@ -23,6 +23,7 @@ export default class RulesPage extends React.Component{
                 </Title>
                 <p style = {{textAlign: "justify"}}>
                     Eveyone will be assigned a random card which will be their identity for the game. 
+                    The three remaining cards are placed in the middle face-down with their identities hidden. 
                     Then everyone will close their eyes and the shenanigans will ensue. Player's card abilites will 
                     activate at certain times throughout the night, and will allow them to move, switch and view player's cards. 
                     Not everyone will have the same card as at the beginning of the night. Without looking at your new card 

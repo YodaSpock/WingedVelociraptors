@@ -28,12 +28,6 @@ const LoginForm = () => {
                     .required("You forgot your name... you fool!")
             })}
             onSubmit={(values, {setSubmitting, resetForm}) => {
-                //console.log(values.name);
-                setTimeout(()=>{
-                    resetForm();
-                    setSubmitting(false);
-                }, 1000)
-                //handleLogin(values.name)
             }}
             >
                 {({

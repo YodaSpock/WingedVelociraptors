@@ -40,9 +40,9 @@ export default class CharacterPage extends React.Component{
                 </Title>
                 <img src = {Sydney} alt = "Sydney" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify", padding: "5%"}}>
-                    The Sydney learned practiced dark magic down in the land of Disney and now uses it to help her achieve her goals. 
-                    On her turn, the Sydney <b>casts a deep sleep spell on another player of her choice which makes that player sleep through their turn 
-                    in the night and they don't activate their power</b>. She then returns to bed... 
+                    The Sydney practiced dark magic down in the land of Disney and now uses it to help her achieve her goals. 
+                    On her turn, the Sydney <b>casts a deep sleep spell on another player of her choice. This player sleep through their turn 
+                    and doesn't activate their power</b>. She then returns to bed... 
                 </p>
                 <Divider/>
 
@@ -73,9 +73,9 @@ export default class CharacterPage extends React.Component{
                 </Title>
                 <img src = {Austin} alt = "Austin" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify", padding: "5%"}}>
-                    The Austin seeks to undo whatever the Jacob has done, unsure of his own motivation, he sets out. The Austin then 
-                    <b> shifts all of the player's character cards to the left, including his own</b>. He then realizes he must complete 
-                    his Mac N Cheese in the morning so he heads to bed...
+                    The Austin seeks to undo whatever the Jacob has done, <b> 
+                    shifting all of the player's character cards to the left, including his own</b>. He then realizes he must complete 
+                    his Mac N Cheese wall in the morning, so he heads to bed...
                 </p>
                 <Divider/>
 
@@ -84,9 +84,9 @@ export default class CharacterPage extends React.Component{
                 </Title>
                 <img src = {Annalise} alt = "Annalise" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify", padding: "5%"}}>
-                    The Annalise is used to working for the Big 5, but what happend when she must pick between only 2. The Annalise
+                    The Annalise is used to working for the Big 4, but what happens when she must pick between only 2. The Annalise
                     <b> looks at another player's card and chooses to either swap cards with them or not</b>. Upon making the best decision
-                    she falls back asleep easily...
+                    she falls back asleep easily by auditing sheep...
                 </p>
                 <Divider/>
 
@@ -104,11 +104,11 @@ export default class CharacterPage extends React.Component{
                 <Title level = {4}>
                     The Daniel
                 </Title>
-                <img src = {Daniel} alt = "Annalise" style = {{height: "40vh", borderRadius: "30%"}}/>
+                <img src = {Daniel} alt = "Daniel" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify", padding: "5%"}}>
                     The Daniel has the highest tolerance of the group, or so he thinks. After a night of drinking the Daniel <b>forgets who he is
-                    and switches his card for one of the unused character cards</b>. He then stumbles back to his apartment, wondering if anyone 
-                    would go with him to get Jeff's Pizza...
+                    and switches his card for one of the unused character cards in the middle</b>. He then stumbles back to his apartment, wondering 
+                    if anyone would go with him to get Jeff's Pizza...
                 </p>
                 <Divider/>
 
@@ -117,9 +117,8 @@ export default class CharacterPage extends React.Component{
                 </Title>
                 <img src = {Isaac} alt = "Isaac" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify", padding: "5%"}}>
-                    The Isaac thinks he is so cool staying up so late every night, until falls asleep on the futon realizing that he isn't 
-                    sure who he even is. The Isaac <b>views his own character card to see if it changed</b>, and then falls back asleep and 
-                    sleeps until noon...
+                    The Isaac thinks he is so cool staying up late every night. As it turns out, the only benefit of this is finding out your 
+                    true self! The Isaac <b>views his own character card to see if it changed</b>, and then falls back asleep until 2pm...
                 </p>
                 <Divider/>
 
@@ -139,8 +138,8 @@ export default class CharacterPage extends React.Component{
                 </Title>
                 <img src = {Lucas} alt = "Lucas" style = {{height: "40vh", borderRadius: "30%"}}/>
                 <p style = {{textAlign: "justify", padding: "5%"}}>
-                    The Lucas is just pretending to be happy right now, he would rather be behind the couch getting 10 screenshots 
-                    on his snpachat story. The Lucas <b>wins only if he is killed and ends the game</b>. Lucas is tired of this stupid game 
+                    The Lucas is just pretending to be happy right now; he would rather be behind the couch getting 10 screenshots 
+                    on his Snpachat story. The Lucas <b>wins only if he is killed at the end of the game</b>. Lucas is tired of this stupid game 
                     and wants to do something else...
                 </p>
                 <Divider/>
@@ -155,8 +154,6 @@ export default class CharacterPage extends React.Component{
                     The Josh will return to the Dorsal Fin Gang after his long exercusion as a king...
                 </p>
                 <Divider/>
-
-                
             </div>
         )
     }

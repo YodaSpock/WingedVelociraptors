@@ -1,6 +1,7 @@
 const GameModule = require("./module");
 const { roles } = require("./constants");
 const Player = require("./player");
+const Card = require("./card");
 
 describe("GameModule", () => {
   /** @type {GameModule} */
@@ -42,17 +43,6 @@ describe("GameModule", () => {
       [roles.daniel]: 5,
       [roles.cat]: 6
     }
-
-    /**
-     * Basic equality check (does NOT check every property of `Player`)
-     * @param {Player} p1 
-     * @param {Player} p2 
-     * @returns {boolean}
-     */
-    const playersEqual = (p1, p2) => {
-      const props = ["name", "id", "role", "position"];
-      return props.every((prop) => p1[prop] === p2[prop]);
-    };
 
     const act = (role, data) => {
       module.currentRole = role;
@@ -125,12 +115,56 @@ describe("GameModule", () => {
       });
     });
 
-    test.todo("hannah"); 
-    test.todo("daniel");
-    test.todo("cat");
+    test("hannah", () => {
+      const role1 = roles.annalise;
+      const role2 = roles.austin;
+      act(roles.hannah, { ids: [roleToId[role1], roleToId[role2]] });
+
+      expect(module.getPlayer(roleToId[role1]).role).toBe(role2);
+      expect(module.getPlayer(roleToId[role2]).role).toBe(role1);
+    });
+
+    test("daniel", () => {
+      module.middle = [
+        new Card(roles.annalise),
+        new Card(roles.lucas),
+        new Card(roles.austin)
+      ];
+      const index = 1;
+      const newRole = module.middle[index].role;
+
+      act(roles.daniel, { card: index });
+
+      expect(module.getPlayer(roleToId[roles.daniel]).role).toBe(newRole);
+      expect(module.middle[index].role).toBe(roles.daniel);
+    });
+
+    test("cat", () => {
+      module.middle = [
+        new Card(roles.annalise),
+        new Card(roles.lucas),
+        new Card(roles.austin)
+      ];
+      const index = 1;
+
+      act(roles.cat, { card: index });
+
+      module.middle.forEach((card, i) => {
+        if(i === index) {
+          expect(card.exposed).toBe(true);
+        } else {
+          expect(card.exposed).toBe(false);
+        }
+      });
+    });
 
     describe("josh", () => {
-
+      // TODO: make each of these descriptions
+      // TODO: each has two tests: one where Josh is awake (can't swap/steal/etc.) and is asleep (goes through)
+      test.todo("jake");
+      test.todo("austin");
+      test.todo("annalise");
+      test.todo("hannah");
     });
   });
 });

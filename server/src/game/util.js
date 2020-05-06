@@ -36,6 +36,12 @@ const getRolePool = (config) => {
 };
 
 /**
+ * @param {Player} player 
+ * @return {boolean} If the player is a Josh whose passive should apply
+ */
+const validJosh = (player) => player.role === roles.josh && !player.asleep;
+
+/**
  * Shift the `role` property of each player to the right once.
  * @param {Array<import("./player")>} players Array of players
  */
@@ -47,7 +53,7 @@ const rshift = (players) => {
 
   for(let i = 0; i < players.length; i++) {
     const player = players[i];
-    if(player.role === roles.josh) continue;
+    if(validJosh(player)) continue;
     const tmpNext = player.role;
     player.role = next;
     next = tmpNext;
@@ -66,7 +72,7 @@ const lshift = (players) => {
 
   for(let i = players.length - 1; i >= 0; i--) {
     const player = players[i];
-    if(player.role === roles.josh) continue;
+    if(validJosh(player)) continue;
     const tmpNext = player.role;
     player.role = next;
     next = tmpNext;
@@ -79,7 +85,7 @@ const lshift = (players) => {
  * @param {Player} player2 
  */
 const swap = (player1, player2) => {
-  if(player1.role === roles.josh || player2.role === roles.josh) return;
+  if(validJosh(player1) || validJosh(player2)) return;
 
   const tmp = player1.role;
   player1.role = player2.role;

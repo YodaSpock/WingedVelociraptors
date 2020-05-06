@@ -13,6 +13,7 @@ const LoginForm = ({wsem, onRole}) => {
         console.log(e);
         history.push("/player/game");
     };
+
     // let history = useHistory();
 
     // const handleLogin = (name) =>{
@@ -33,15 +34,12 @@ const LoginForm = ({wsem, onRole}) => {
                     .max(15, "Very funny, please put just your first name" )
                     .required("You forgot your name... you fool!")
             })}
-            onSubmit={(values, {setSubmitting, resetForm}) => {
+            onSubmit={(values) => {
                 console.log(values.name);
                 wsem.sendMessage("c_join", {name: values.name})
+                history.push("/player/waiting");
                 wsem.addEventHandler("s_role", getRole)
-                setTimeout(()=>{
-                    alert(JSON.stringify(values, null, 2));
-                    resetForm();
-                    setSubmitting(false);
-                }, 1000)
+                
             }}
             >
                 {({
@@ -74,12 +72,12 @@ const LoginForm = ({wsem, onRole}) => {
                                 {/* This is for hiding the errors button when the name has an error */}
                                 {errors.name == null ? 
                                     <Button htmlType = "submit" style = {{borderRadius: "50%", width: "30vh"}}>
-                                        <Link to={{
+                                        {/* <Link to={{
                                             pathname: '/player/waiting',
                                             name: values.name,
-                                        }}>
+                                        }}> */}
                                             Login
-                                        </Link>
+                                        {/* </Link> */}
                                     </Button>
                                 : null}
                             </Col>

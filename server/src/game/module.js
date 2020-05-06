@@ -50,6 +50,7 @@ class GameModule {
   }
 
   assignMiddle(sessionRoles) {
+    /** @type {Array<Card>} */
     this.middle = sessionRoles.slice(-3).map((role) => new Card(role));
     Object.freeze(this.middle);
   }
@@ -150,6 +151,11 @@ class GameModule {
 
       const card = this.middle[data.card];
       swap(player, card);
+    } else if(player.originalRole === roles.cat) {
+      if(!data.card) throw new Error("Cat must supply a `card` property");
+      else if(data.card < 0 || data.card >= this.middle.length) throw new Error(`\`card\` must be between 0 (inclusive) and ${this.middle.length} (exclusive)`);
+
+      this.middle[data.card].exposed = true;
     }
 
     player.hasActed = true;

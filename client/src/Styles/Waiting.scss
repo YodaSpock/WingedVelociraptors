@@ -1,0 +1,24 @@
+.ellipsis span {
+    opacity: 0;
+    -webkit-animation: ellipsis-dot 2s infinite;
+    animation: ellipsis-dot 2s infinite;
+}
+
+.ellipsis span:nth-child(1) {
+    -webkit-animation-delay: 0.0s;
+    animation-delay: 0.0s;
+}
+.ellipsis span:nth-child(2) {
+    -webkit-animation-delay: 0.2s;
+    animation-delay: 0.2s;
+}
+.ellipsis span:nth-child(3) {
+    -webkit-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+@keyframes ellipsis-dot {
+      0% { opacity: 0; }
+     50% { opacity: 1; }
+    100% { opacity: 0; }
+}

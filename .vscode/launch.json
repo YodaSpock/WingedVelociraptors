@@ -12,6 +12,17 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}\\server\\src\\index.js"
+    },
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "disableOptimisticBPs": true,
+      "cwd": "${workspaceFolder}\\server",
+      "program": "${workspaceFolder}\\server\\node_modules\\jest\\bin\\jest.js",
+      "args": [
+        "--runInBand"
+      ]
     }
   ]
 }

@@ -15,7 +15,12 @@ class GameApp {
     this.nextAct();
 
     this.wsem.addEventHandler(events.c_act, (id, data) => {
-      const responseData = this.gameModule.playerAct(id, data);
+      let responseData;
+      try {
+        responseData = this.gameModule.playerAct(id, data.data);
+      } catch(error) {
+        this.wsem.sendMessage(id, events.s_error, { message: error.message });
+      }
       if(responseData) this.wsem.sendMessage(id, events.s_act, { data: responseData });
     });
   

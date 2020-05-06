@@ -34,7 +34,3 @@ document.getElementById("vote").addEventListener("click", () => {
   const id = document.getElementById("voteText").value;
   wsem.sendMessage("c_vote", { id });
 });
-
-wsem.addEventHandler("s_role", (data) => {
-
-});

@@ -128,11 +128,13 @@ class GameModule {
       if(data.id) {
         player.roleData.id = data.id;
         return { role: this.getPlayer(data.id).role };
-      } else if(data.swap) {
+      } else if("swap" in data) {
         if(!player.roleData.id) throw new Error("Annalise didn't choose an ID already");
 
-        const target = this.getPlayer(player.roleData.id);
-        swap(player, target);
+        if(data.swap) {
+          const target = this.getPlayer(player.roleData.id);
+          swap(player, target);
+        }
       } else {
         throw new Error("Annalise must supply either an `id` or `swap` property");
       }

@@ -1,4 +1,10 @@
 class Player {
+  /**
+   * @param {String} name 
+   * @param {Number} id 
+   * @param {String} role 
+   * @param {Number} position 
+   */
   constructor(name, id, role, position) {
     this.name = name;
     this.id = id;

@@ -37,12 +37,12 @@ const getRolePool = (config) => {
 
 /**
  * Shift the `role` property of each player to the right once.
- * @param {Array<Player>} players Array of players
+ * @param {Array<import("./player")>} players Array of players
  */
 const rshift = (players) => {
   // going backwards, find first non-josh
   let next, i = players.length - 1;
-  while(i > 0 && (next = players[i--]).role === roles.josh);
+  while(i > 0 && (next = players[i--].role) === roles.josh);
   if(i === 0) return;
 
   for(let i = 0; i < players.length; i++) {
@@ -61,7 +61,7 @@ const rshift = (players) => {
 const lshift = (players) => {
   // going forwards, find first non-josh
   let next, i = 0;
-  while(i < players.length && (next = players[i++]).role === roles.josh);
+  while(i < players.length && (next = players[i++].role) === roles.josh);
   if(i === players.length) return;
 
   for(let i = players.length - 1; i >= 0; i--) {

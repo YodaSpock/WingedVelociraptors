@@ -33,6 +33,7 @@ describe("GameModule", () => {
     });
   });
 
+  /** Initially, each player's `name`, `id`, and `order` will be equal to their mapped id */
   describe("playerAct", () => {
     const roleToId = {
       [roles.sydney]: 0,
@@ -52,8 +53,8 @@ describe("GameModule", () => {
     beforeEach(() => {
       let modulePlayers = [], originalPlayers = [];
       for(let [role, id] of Object.entries(roleToId)) {
-        modulePlayers.push(new Player(id, id, role, id));
-        originalPlayers.push(new Player(id, id, role, id));
+        modulePlayers.push(new Player(String(id), id, role, id));
+        originalPlayers.push(new Player(String(id), id, role, id));
       }
       module.players = modulePlayers;
     });
@@ -62,6 +63,12 @@ describe("GameModule", () => {
       act(roles.sydney, { id: roleToId[roles.jake] });
 
       expect(module.getPlayer(roleToId[roles.jake]).asleep).toBe(true);
+
+      act(roles.jake);
+
+      for(let [role, id] of Object.entries(roleToId)) {
+        expect(module.getPlayer(id).role).toBe(role);
+      }
     });
 
     test("jake", () => {
@@ -159,13 +166,85 @@ describe("GameModule", () => {
     });
 
     describe("josh", () => {
-      // TODO: make each of these descriptions
-      // TODO: each has two tests: one where Josh is awake (can't swap/steal/etc.) and is asleep (goes through)
-      test.todo("jake");
-      test.todo("austin");
-      test.todo("annalise");
-      test.todo("hannah");
+      const joshId = 7;
+
+      beforeEach(() => {
+        module.players.push(new Player(String(joshId), joshId, roles.josh, joshId));
+      });
+
+      describe("jake", () => {
+        test("josh awake", () => {
+          act(roles.jake);
+
+          expect(module.getPlayer(joshId).role).toBe(roles.josh);
+        });
+
+        test("josh asleep", () => {
+          const expectedNewRole = module.getPlayer(joshId - 1).role;
+
+          act(roles.sydney, { id: joshId });
+          act(roles.jake);
+
+          expect(module.getPlayer(joshId).role).toBe(expectedNewRole);
+        });
+      });
+
+      describe("austin", () => {
+        test("josh awake", () => {
+          act(roles.austin);
+
+          expect(module.getPlayer(joshId).role).toBe(roles.josh);
+        });
+
+        test("josh asleep", () => {
+          const expectedNewRole = module.getPlayer((joshId + 1) % module.players.length).role;
+
+          act(roles.sydney, { id: joshId });
+          act(roles.austin);
+
+          expect(module.getPlayer(joshId).role).toBe(expectedNewRole);
+        });
+      });
+      
+      describe("annalise", () => {
+        test("josh awake", () => {
+          act(roles.annalise, { id: joshId });
+          act(roles.annalise, { swap: true });
+
+          expect(module.getPlayer(joshId).role).toBe(roles.josh);
+          expect(module.getPlayer(roleToId[roles.annalise]).role).toBe(roles.annalise);
+        });
+
+        test("josh asleep", () => {
+          act(roles.sydney, { id: joshId });
+          act(roles.annalise, { id: joshId });
+          act(roles.annalise, { swap: true });
+
+          expect(module.getPlayer(joshId).role).toBe(roles.annalise);
+          expect(module.getPlayer(roleToId[roles.annalise]).role).toBe(roles.josh);
+        });
+      });
+
+      describe("hannah", () => {
+        test("josh awake", () => {
+          const otherRole = roles.annalise;
+
+          act(roles.hannah, { ids: [joshId, roleToId[otherRole]] });
+
+          expect(module.getPlayer(joshId).role).toBe(roles.josh);
+          expect(module.getPlayer(roleToId[otherRole]).role).toBe(otherRole);
+        });
+
+        test("josh asleep", () => {
+          const otherRole = roles.annalise;
+
+          act(roles.sydney, { id: joshId });
+          act(roles.hannah, { ids: [joshId, roleToId[otherRole]] });
+
+          expect(module.getPlayer(joshId).role).toBe(otherRole);
+          expect(module.getPlayer(roleToId[otherRole]).role).toBe(roles.josh);
+        });
+      });
     });
   });
 });
-

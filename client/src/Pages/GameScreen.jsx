@@ -11,11 +11,11 @@ export default class GameScreen extends React.Component{
 
         return(
             <div>
-                {"Role" + role}
+                {"Role: " + role}
                 <br/>
-                {"Position" + position}
+                {"Position: " + position}
                 <br/>
-                {"Number of Players" + (players.length + 1)}
+                {"Number of Players: " + (players.length + 1)}
             </div>
         )
     }

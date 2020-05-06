@@ -1,13 +1,10 @@
 import React from 'react';
 import {Formik} from 'formik';
+import {Link, useHistory} from 'react-router-dom'
 import * as Yup from 'yup';
 import { Input, Button, Row, Col} from 'antd';
-import { useHistory } from "react-router-dom";
-//import { Link } from 'react-router-dom';
 
 const LoginForm = ({wsem, onRole}) => {
-
-
     let history = useHistory();
       
     const getRole = e => {
@@ -16,7 +13,14 @@ const LoginForm = ({wsem, onRole}) => {
         console.log(e);
         history.push("/player/game");
     };
-    
+    // let history = useHistory();
+
+    // const handleLogin = (name) =>{
+    //     console.log("Logged in as " + name);
+    //     // TODO - Call the server name function -> send the info to the server
+    //     history.push({pathname: "/player/waiting", state: {playerName: name}});
+    // }
+
     return(
         <Formik
             initialValues={{
@@ -67,12 +71,17 @@ const LoginForm = ({wsem, onRole}) => {
                         
                         <Row style = {{paddingTop: "3vh", paddingBottom: "3vh", justifyContent: "center"}}>
                             <Col xs = {24} md = {12} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "100%"}}>
-                                {/* TODO -  ADD THE START GAME FUNCTION */}
-                                <Button htmlType = "submit" style = {{borderRadius: "50%", width: "30vh"}}>
-                                    {/* <Link to = "/player/waiting"> */}
-                                        Login
-                                    {/* </Link> */}
-                                </Button>
+                                {/* This is for hiding the errors button when the name has an error */}
+                                {errors.name == null ? 
+                                    <Button htmlType = "submit" style = {{borderRadius: "50%", width: "30vh"}}>
+                                        <Link to={{
+                                            pathname: '/player/waiting',
+                                            name: values.name,
+                                        }}>
+                                            Login
+                                        </Link>
+                                    </Button>
+                                : null}
                             </Col>
                         </Row>
                         

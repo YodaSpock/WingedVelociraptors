@@ -39,7 +39,9 @@ class GameApp {
         }
 
         if(this.gameModule.hasNextRole) {
-          this.nextAct();
+          try {
+            this.nextAct();
+          } catch(error) { this.beginVoting(); }
         } else {
           console.log("Starting voting phase...");
           this.beginVoting();

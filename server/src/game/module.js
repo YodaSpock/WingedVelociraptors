@@ -72,9 +72,10 @@ class GameModule {
   readyNextRole() {
     if(this.sessionOrder.length === 0) throw new Error("No more roles");
 
-    let nextRole;
+    let nextRole = true;
     // error handling in case `this.sessionOrder` contains other roles
-    while(!this.gameHasRole(nextRole = this.sessionOrder.shift()));
+    while(nextRole && !this.gameHasRole(nextRole = this.sessionOrder.shift()));
+    if(!nextRole) throw new Error("No more roles");
     console.log(`Readying next role: ${nextRole}`);
 
     let playerTargets = this.players.filter((player) => nextRole === player.originalRole);

@@ -1,11 +1,15 @@
 const events = require("../networking/wsEvents");
 
 class VotingApp {
-  constructor(wsem, gameModule) {
-    /** @type {import("../networking/websocket-event-manager")} */
+  /**
+   * @param {import("../networking/websocket-event-manager")} wsem 
+   * @param {import("../game/module")} gameModule 
+   * @param {Number} voteTime Time players have to vote, in seconds
+   */
+  constructor(wsem, gameModule, voteTime) {
     this.wsem = wsem;
-    /** @type {import("../game/module")} */
     this.gameModule = gameModule;
+    this.voteTime = voteTime ? voteTime : 60;
 
     this.votesRemaining = this.gameModule.players.length;
     /**
@@ -16,18 +20,29 @@ class VotingApp {
     this.gameModule.players.forEach((player) => this.votes[player.id] = -1);
 
     this.voteHandler = this.voteHandler.bind(this);
-
-    // TODO: allow players to lock in vote to avoid long timer
   }
 
   run() {
     this.wsem.addEventHandler(events.c_vote, this.voteHandler);
-    // TODO: tell players which middle cards are exposed (new WS event)
+
+    const middle = this.gameModule.middle.map((card) => ({ exposed: card.exposed, role: card.exposed ? card.role : null }));
+    this.gameModule.players.forEach((player) => this.wsem.sendMessage(player.id, events.s_timerStart, { length: this.voteTime, middle }));
+
+    this.voteTimeout = setTimeout(() => {
+      this.endGame();
+    }, this.voteTime * 1000);
+  }
+
+  cleanUp() {
+    this.wsem.removeEventHandler(this.voteHandler);
   }
 
   voteHandler(id, data) {
     this.votes[id] = data.id;
-    if(--this.votesRemaining === 0) this.endGame();
+    if(--this.votesRemaining === 0) {
+      if(this.voteTimeout) clearTimeout(this.voteTimeout);
+      this.endGame();
+    }
   }
 
   tally() {

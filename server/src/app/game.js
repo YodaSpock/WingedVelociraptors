@@ -2,7 +2,7 @@ const events = require("../networking/wsEvents");
 const { roles } = require("../game/constants");
 
 /**
- * `onVotingStart` will be called when regular game has ended
+ * `onVotingBegin` will be called when regular game has ended
  */
 class GameApp {
   constructor(wsem, gameModule) {
@@ -21,12 +21,12 @@ class GameApp {
     this.nextAct();
 
     this.wsem.addEventHandler(events.c_act, this.actHandler);
-    this.wsem.addEventHandler(events.c_narr_ack, this.narrAckHandler);
+    this.wsem.addEventHandler(events.c_narrAck, this.narrAckHandler);
   }
 
   cleanUp() {
     this.wsem.removeEventHandler(events.c_act, this.actHandler);
-    this.wsem.removeEventHandler(events.c_narr_ack, this.narrAckHandler);
+    this.wsem.removeEventHandler(events.c_narrAck, this.narrAckHandler);
   }
 
   nextAct() {
@@ -66,7 +66,7 @@ class GameApp {
       if(this.gameModule.hasNextRole) {
         try {
           this.nextAct();
-        } catch(error) { this.beginVoting(); }
+        } catch(error) { this.onVotingBegin(); }
       } else {
         console.log("Starting voting phase...");
         this.cleanUp();

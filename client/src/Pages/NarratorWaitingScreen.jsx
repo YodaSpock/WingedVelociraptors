@@ -3,7 +3,14 @@ import {Button, Row, Col} from 'antd';
 
 export default class NarratorWaitingScreen extends React.Component{
 
+
+    onStart = () => {
+        this.props.wsem.sendMessage("c_start");
+    };
+
     render(){
+        
+
         return(
             <>
             <Row style = {{paddingTop: "3vh", paddingBottom: "3vh"}}>
@@ -32,7 +39,7 @@ export default class NarratorWaitingScreen extends React.Component{
                 <Col xs = {0} md = {8}/>
                 <Col xs = {24} md = {8} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "100%"}}>
                     {/* TODO -  ADD THE START GAME FUNCTION */}
-                    <Button style = {{borderRadius: "50%", width: "30vh"}}>Start</Button>
+                    <Button onClick = {this.onStart} style = {{borderRadius: "50%", width: "30vh"}}>Start</Button>
                 </Col>
                 <Col xs = {0} md = {8}/>
             </Row>

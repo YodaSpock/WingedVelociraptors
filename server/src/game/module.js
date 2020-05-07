@@ -80,7 +80,7 @@ class GameModule {
     let playerTargets = this.players.filter((player) => nextRole === player.originalRole);
 
     const dialogue = getDialogue(nextRole);
-    const roleData = getRoleData(nextRole);
+    const roleData = getRoleData(nextRole, playerTargets);
 
     /** @type {String} */
     this.currentRole = nextRole;
@@ -117,7 +117,7 @@ class GameModule {
     console.log(`Player ${player.name} acting`);
 
     if(player.originalRole === roles.sydney) {
-      if(!data.id) throw new Error("Sydney must supply an `id` property");
+      if(!("id" in data)) throw new Error("Sydney must supply an `id` property");
 
       const target = this.getPlayer(data.id);
       target.asleep = true;
@@ -130,7 +130,7 @@ class GameModule {
         player.roleData.id = data.id;
         return { role: this.getPlayer(data.id).role };
       } else if("swap" in data) {
-        if(!player.roleData.id) throw new Error("Annalise didn't choose an ID already");
+        if(!("id" in player.roleData)) throw new Error("Annalise didn't choose an ID already");
 
         if(data.swap) {
           const target = this.getPlayer(player.roleData.id);
@@ -146,13 +146,13 @@ class GameModule {
       const targets = data.ids.map((id) => this.getPlayer(id));
       swap(targets[0], targets[1]);
     } else if(player.originalRole === roles.daniel) {
-      if(!data.card) throw new Error("Daniel must supply a `card` property");
+      if(!("card" in data)) throw new Error("Daniel must supply a `card` property");
       else if(data.card < 0 || data.card >= this.middle.length) throw new Error(`\`card\` must be between 0 (inclusive) and ${this.middle.length} (exclusive)`);
 
       const card = this.middle[data.card];
       swap(player, card);
     } else if(player.originalRole === roles.cat) {
-      if(!data.card) throw new Error("Cat must supply a `card` property");
+      if(!("card" in data)) throw new Error("Cat must supply a `card` property");
       else if(data.card < 0 || data.card >= this.middle.length) throw new Error(`\`card\` must be between 0 (inclusive) and ${this.middle.length} (exclusive)`);
 
       this.middle[data.card].exposed = true;

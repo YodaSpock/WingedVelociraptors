@@ -13,9 +13,22 @@ const CharacterCard = (props) => {
   return (
     <div>
       <div onClick={() => set(state => !state)} style = {{display: "flex", justifyContent: "center"}}>
-        <a.div className="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform}} />
+        <a.div className="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform}}>
+          <div
+          style = {{display: "flex", justifyContent: "center", 
+          backgroundColor: "white", textAlign: "center", 
+          position: "absolute", bottom: "0px",
+          fontFamily: "jurassic", fontSize: "30px", paddingLeft: "10px"}}>
+            DORSAL FIN GANG
+          </div>
+        </a.div>
         <a.div className={"c " + props.role} style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
-          <p>Your character role is the {props.role} </p>
+          <div
+          style = {{display: "flex", justifyContent: "center", 
+          backgroundColor: "white", textAlign: "center", 
+          position: "absolute", bottom: "0px"}}>
+            Your character role is the {props.role} 
+          </div>
         </a.div> 
         
       </div>

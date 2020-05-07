@@ -9,18 +9,9 @@ const LoginForm = ({wsem, onRole}) => {
       
     const getRole = e => {
         onRole(e);
-        console.log("GET ROLE - LOGIN FORM")
-        console.log(e);
         history.push("/player/game");
+        // TODO - ADD A way to remove the listener - STRETCH GOAL
     };
-
-    // let history = useHistory();
-
-    // const handleLogin = (name) =>{
-    //     console.log("Logged in as " + name);
-    //     // TODO - Call the server name function -> send the info to the server
-    //     history.push({pathname: "/player/waiting", state: {playerName: name}});
-    // }
 
     return(
         <Formik
@@ -69,15 +60,10 @@ const LoginForm = ({wsem, onRole}) => {
                         
                         <Row style = {{paddingTop: "3vh", paddingBottom: "3vh", justifyContent: "center"}}>
                             <Col xs = {24} md = {12} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "100%"}}>
-                                {/* This is for hiding the errors button when the name has an error */}
                                 {errors.name == null ? 
                                     <Button htmlType = "submit" style = {{borderRadius: "50%", width: "30vh"}}>
-                                        {/* <Link to={{
-                                            pathname: '/player/waiting',
-                                            name: values.name,
-                                        }}> */}
                                             Login
-                                        {/* </Link> */}
+                                            {/* TODO - PASS DOWN THE NAME TO WAITING PAGE -> SEE OPEN ISSUE */}
                                     </Button>
                                 : null}
                             </Col>

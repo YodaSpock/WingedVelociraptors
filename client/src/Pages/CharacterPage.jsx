@@ -6,7 +6,7 @@ import Austin from "../Images/DorsalFinGang/austin-6.PNG";
 import Cat from "../Images/DorsalFinGang/cat-2.PNG";
 import Daniel from "../Images/DorsalFinGang/daniel-4.PNG";
 import Hannah from "../Images/DorsalFinGang/hannah-4.PNG";
-import Isaac from "../Images/DorsalFinGang/isaac-2.PNG";
+import Isaac from "../Images/DorsalFinGang/isaac-4.PNG";
 import Jacob from "../Images/DorsalFinGang/jacob-4.PNG";
 import Josh from "../Images/DorsalFinGang/josh-1.PNG";
 import Lucas from "../Images/DorsalFinGang/lucas-6.PNG";

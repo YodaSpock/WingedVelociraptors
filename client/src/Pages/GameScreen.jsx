@@ -2,7 +2,6 @@ import React from 'react';
 import CharacterCard from './CharacterCard';
 
 export default class GameScreen extends React.Component{
-
     render(){
         const {
             role,
@@ -10,14 +9,10 @@ export default class GameScreen extends React.Component{
             players,
         } = this.props; 
 
+        
         return(
             <div>
-                {"Role: " + role}
-                <br/>
-                {"Position: " + position}
-                <br/>
-                {"Number of Players: " + (players.length + 1)}
-                <CharacterCard/>
+                <CharacterCard role = {role} />
             </div>
         )
     }

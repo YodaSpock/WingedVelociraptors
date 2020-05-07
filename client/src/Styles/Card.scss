@@ -1,15 +1,7 @@
 .c {
   position: absolute;
-  max-width: 500px;
-  max-height: 500px;
-  width: 50ch;
-  height: 50ch;
-  cursor: pointer;
-  will-change: transform, opacity;
-}
-
-.front,
-.back {
+  width: 90vw;
+  height: 126vw;
   background-size: cover;
 }
 
@@ -19,4 +11,53 @@
 
 .front {
   background-image: url(https://images.unsplash.com/photo-1540206395-68808572332f?ixlib=rb-1.2.1&w=1181&q=80&auto=format&fit=crop);
+}
+
+.sydney{
+  background-image: url(../Images/DorsalFinGang/sydney-7.PNG);
+}
+
+.rachel{
+  background-image: url(../Images/DorsalFinGang/rachel-2.PNG);
+}
+
+.jake{
+  background-image: url(../Images/DorsalFinGang/jacob-4.PNG);
+}
+
+.austin{
+  background-image: url(../Images/DorsalFinGang/austin-6.PNG);
+}
+
+.hannah{
+  background-image: url(../Images/DorsalFinGang/hannah-4.PNG);
+}
+
+.daniel{
+  background-image: url(../Images/DorsalFinGang/daniel-4.PNG);
+}
+
+.isaac{
+  background-image: url(../Images/DorsalFinGang/isaac-4.PNG);
+}
+
+.cat{
+  background-image: url(../Images/DorsalFinGang/cat-2.PNG);
+}
+
+.lucas{
+  background-image: url(../Images/DorsalFinGang/lucas-6.PNG);
+}
+
+.josh{
+  background-image: url(../Images/DorsalFinGang/josh-1.PNG);
+}
+
+.annalise{
+  background-image: url(../Images/DorsalFinGang/annalise-1.PNG);
+}
+
+.wv{
+  background-image: url(../Images/jerome.png);
+  
 }

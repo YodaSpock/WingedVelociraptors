@@ -35,13 +35,15 @@ The following table documents the different events and their accompanying data. 
 | c_act        | Client | Provides a response to the server on how the client wishes to act.                                                                                         | `data: object`                                                                                                    |
 | s_narrate    | Server | Requests that a narrator reads the given dialogue line.                                                                                                    | `dialogue: number`                                                                                                |
 | c_narrAck    | Client | Acknowledges that the audio for the previously requested dialogue has been played to completion.                                                           |                                                                                                                   |
-| s_timerStart | Server | Signals that all roles have been played and voting may begin. Provides a duration of time (in seconds) clients may vote.                                   | `length: number`                                                                                                  |
+| s_timerStart | Server | Signals that all roles have been played and voting may begin. Provides a duration of time (in seconds) clients may vote. Also provides the middle cards.   | `length: number`, `middle: [{ exposed: boolean, role: string }]`                                                  |
 | c_vote       | Client | Identifies the player this player wishes to vote to kill. This can be sent multiple times to change their vote. The **ID** must be provided, not the name. | `id: number`                                                                                                      |
 | s_results    | Server | Provides end-of-game results.                                                                                                                              | `killed: [{ name: string, id: number }]`, `role: string`, `players: [{ name: string, id: number, role: string }]` |
 | s_error      | Server | Alerts the client that their last message caused an error.                                                                                                 | `message: string`                                                                                                 |
 
-### Identifying middle cards
+### Middle cards
 There are a few situations where players need to identify a card from the middle.. These cards will be represented by the numbers `0` (top/leftmost), `1` (middle), and `2` (bottom/rightmost).
+
+In the data of `s_timerStart`, middle cards are given in order. A card's role is revealed if `exposed` is `true`.
 
 ### `s_act` data
 | Role       | Data             | Description                                                                                                                                                   |

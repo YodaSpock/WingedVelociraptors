@@ -1,6 +1,9 @@
 const events = require("../networking/wsEvents");
 const { roles } = require("../game/constants");
 
+/**
+ * `onVotingStart` will be called when regular game has ended
+ */
 class GameApp {
   constructor(wsem, gameModule) {
     /** @type {import("../networking/websocket-event-manager")} */
@@ -46,7 +49,8 @@ class GameApp {
           } catch(error) { this.beginVoting(); }
         } else {
           console.log("Starting voting phase...");
-          this.beginVoting();
+          this.cleanUp();
+          this.onVotingBegin();
         }
       }, 7000); // TODO: maybe make timer conditional length for Annalise (more time)
     });
@@ -58,12 +62,6 @@ class GameApp {
     this.gameModule.narrators.forEach((id) => this.wsem.sendMessage(id, events.s_narrate, { dialogue }));
   
     playerTargets.forEach((player, i) => this.wsem.sendMessage(player.id, events.s_act, { data: roleData[i] }));
-  }
-
-  beginVoting() {
-    // TODO: add handler for c_vote
-    // TODO: tell players which middle cards are exposed (new WS event)
-    // TODO: allow players to lock in vote to avoid long timer
   }
 
   cleanUp() {

@@ -37,6 +37,7 @@ class PregameApp {
   }
 
   cleanUp() {
+    this.wsem.onClose = null;
     this.wsem.removeEventHandler(events.c_join, this.joinHandler);
     this.wsem.removeEventHandler(events.c_narrator, this.narratorHandler);
     this.wsem.removeEventHandler(events.c_start, this.startHandler);

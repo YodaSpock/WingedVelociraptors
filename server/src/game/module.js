@@ -78,7 +78,7 @@ class GameModule {
     if(!nextRole) throw new Error("No more roles");
     console.log(`Readying next role: ${nextRole}`);
 
-    let playerTargets = this.players.filter((player) => nextRole === player.originalRole);
+    const playerTargets = this.players.filter((player) => nextRole === player.originalRole);
 
     const dialogue = getDialogue(nextRole);
     const roleData = getRoleData(nextRole, playerTargets);
@@ -95,7 +95,8 @@ class GameModule {
 
   /** @returns {boolean} */
   gameHasRole(role) {
-    return this.players.filter((player) => player.originalRole === role).length > 0;
+    return this.players.filter((player) => player.originalRole === role).length > 0 ||
+      this.middle.filter((card) => card.role === role).length > 0;
   }
 
   /**

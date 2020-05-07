@@ -1,7 +1,7 @@
 const { shuffle } = require("../util");
 const Player = require("./player");
 const Card = require("./card");
-const { getRolePool, getDialogue, getRoleData, lshift, rshift, swap } = require("./util");
+const { getRolePool, getDialogue, getRoleData, lshift, rshift, swap, isEffectivelyPassive } = require("./util");
 const { roles } = require("./constants");
 
 class GameModule {
@@ -85,6 +85,10 @@ class GameModule {
 
     /** @type {String} */
     this.currentRole = nextRole;
+
+    if(isEffectivelyPassive(this.currentRole)) {
+      playerTargets.forEach((player) => this.playerAct(player));
+    }
 
     return { playerTargets, roleData, dialogue };
   }

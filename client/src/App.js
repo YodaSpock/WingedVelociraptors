@@ -10,6 +10,7 @@ import NarratorWaitingScreen from './Pages/NarratorWaitingScreen';
 import PlayerWaitingScreen from './Pages/PlayerWaitingScreen';
 import NarratorScreen from './Pages/NarratorScreen';
 import GameScreen from './Pages/GameScreen';
+import VotingScreen from "./Pages/VotingScreen";
 import '../src/Styles/Layout.scss';
 import WebSocketEventManager from './Networking/websocket-event-manager';
 
@@ -17,6 +18,19 @@ import WebSocketEventManager from './Networking/websocket-event-manager';
 const wsem = new WebSocketEventManager(`ws://${window.location.hostname}:81`);
 // TODO - storing data using useState or useRef - STRETCH GOAL
 
+// TESTING PURPOSES - REMOVE
+wsem.addEventHandler = (event, cb) => {
+  setTimeout(() => {
+    cb({
+      length: 60,
+      middle: [
+        { exposed: false, role: null },
+        { exposed: true, role: "josh" },
+        { exposed: false, role: null }
+      ]
+    })
+  }, 1000);
+};
 
 function App() {
 
@@ -41,6 +55,7 @@ function App() {
         <Route path = "/player/waiting" exact component = {PlayerWaitingScreen}/>
         <Route path = "/player/game" exact component = {() => <GameScreen role = {role} position = {position} players = {players}/>}/>
         <Route path = "/narrator/game" exact component = {NarratorScreen}/>
+        <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} />} />
         <Footer/>
       </BrowserRouter>
     </div>

@@ -1,19 +1,17 @@
 import React from 'react';
 import {Formik} from 'formik';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import * as Yup from 'yup';
 import { Input, Button, Row, Col} from 'antd';
 
-
-const LoginForm = () => {
-
-    // let history = useHistory();
-
-    // const handleLogin = (name) =>{
-    //     console.log("Logged in as " + name);
-    //     // TODO - Call the server name function -> send the info to the server
-    //     history.push({pathname: "/player/waiting", state: {playerName: name}});
-    // }
+const LoginForm = ({wsem, onRole}) => {
+    let history = useHistory();
+      
+    const getRole = e => {
+        onRole(e);
+        history.push("/player/game");
+        // TODO - ADD A way to remove the listener - STRETCH GOAL
+    };
 
     return(
         <Formik
@@ -27,7 +25,12 @@ const LoginForm = () => {
                     .max(15, "Very funny, please put just your first name" )
                     .required("You forgot your name... you fool!")
             })}
-            onSubmit={(values, {setSubmitting, resetForm}) => {
+            onSubmit={(values) => {
+                console.log(values.name);
+                wsem.sendMessage("c_join", {name: values.name})
+                history.push("/player/waiting");
+                wsem.addEventHandler("s_role", getRole)
+                
             }}
             >
                 {({
@@ -57,15 +60,10 @@ const LoginForm = () => {
                         
                         <Row style = {{paddingTop: "3vh", paddingBottom: "3vh", justifyContent: "center"}}>
                             <Col xs = {24} md = {12} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "100%"}}>
-                                {/* This is for hiding the errors button when the name has an error */}
                                 {errors.name == null ? 
                                     <Button htmlType = "submit" style = {{borderRadius: "50%", width: "30vh"}}>
-                                        <Link to={{
-                                            pathname: '/player/waiting',
-                                            name: values.name,
-                                        }}>
                                             Login
-                                        </Link>
+                                            {/* TODO - PASS DOWN THE NAME TO WAITING PAGE -> SEE OPEN ISSUE */}
                                     </Button>
                                 : null}
                             </Col>

@@ -12,10 +12,12 @@ const CharacterCard = (props) => {
   })
   return (
     <div>
-      <div onClick={() => set(state => !state)}>
+      <div onClick={() => set(state => !state)} style = {{display: "flex", justifyContent: "center"}}>
         <a.div className="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform}} />
-        <a.div className={"c " + "cat" } style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} />
-        <p>Your character role is: </p>
+        <a.div className={"c " + props.role} style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
+          <p>Your character role is the {props.role} </p>
+        </a.div> 
+        
       </div>
       {/* <p className = "role" style = {flipped ? {opacity: 1} : {opacity: 0} }>The + {props.role}</p> */}
     </div>

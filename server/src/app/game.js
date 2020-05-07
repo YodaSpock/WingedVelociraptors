@@ -17,7 +17,6 @@ class GameApp {
     this.wsem.addEventHandler(events.c_act, (id, data) => {
       let responseData;
       try {
-        // TODO: this only works for players that respond, some (e.g. austin) don't, so this is never called
         responseData = this.gameModule.idAct(id, data.data);
       } catch(error) {
         this.wsem.sendMessage(id, events.s_error, { message: error.message });

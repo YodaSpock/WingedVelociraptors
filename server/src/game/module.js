@@ -78,7 +78,7 @@ class GameModule {
     if(!nextRole) throw new Error("No more roles");
     console.log(`Readying next role: ${nextRole}`);
 
-    let playerTargets = this.players.filter((player) => nextRole === player.originalRole);
+    const playerTargets = this.players.filter((player) => nextRole === player.originalRole);
 
     const dialogue = getDialogue(nextRole);
     const roleData = getRoleData(nextRole, playerTargets);
@@ -95,7 +95,8 @@ class GameModule {
 
   /** @returns {boolean} */
   gameHasRole(role) {
-    return this.players.filter((player) => player.originalRole === role).length > 0;
+    return this.players.filter((player) => player.originalRole === role).length > 0 ||
+      this.middle.filter((card) => card.role === role).length > 0;
   }
 
   /**
@@ -109,22 +110,22 @@ class GameModule {
   }
 
   playerAct(player, data) {
-    if(player.originalRole !== this.currentRole || player.hasActed || player.asleep) return;
+    if(player.originalRole !== this.currentRole || player.hasActed || player.actionDisabled) return;
 
     console.log(`Player ${player.name} acting`);
     let responseData;
     let fullyActed = true;
 
-    if(player.originalRole === roles.sydney) {
+    if(player.originalRole === roles.sydney) { // Sydney
       if(!("id" in data)) throw new Error("Sydney must supply an `id` property");
 
       const target = this.getPlayer(data.id);
-      target.asleep = true;
-    } else if(player.originalRole === roles.jake) {
+      target.actionDisabled = true;
+    } else if(player.originalRole === roles.jake) { // Jake
       rshift(this.players);
-    } else if(player.originalRole === roles.austin) {
+    } else if(player.originalRole === roles.austin) { // Austin
       lshift(this.players);
-    } else if(player.originalRole === roles.annalise) {
+    } else if(player.originalRole === roles.annalise) { // Annalise
       if("id" in data) {
         player.roleData.id = data.id;
         responseData = { role: this.getPlayer(data.id).role };
@@ -139,19 +140,19 @@ class GameModule {
       } else {
         throw new Error("Annalise must supply either an `id` or `swap` property");
       }
-    } else if(player.originalRole === roles.hannah) {
+    } else if(player.originalRole === roles.hannah) { // Hannah
       if(!data.ids) throw new Error("Hannah must supply an `ids` property");
       else if(data.ids.length !== 2) throw new Error("Hannah must supply two IDs in `ids`");
 
       const targets = data.ids.map((id) => this.getPlayer(id));
       swap(targets[0], targets[1]);
-    } else if(player.originalRole === roles.daniel) {
+    } else if(player.originalRole === roles.daniel) { // Daniel
       if(!("card" in data)) throw new Error("Daniel must supply a `card` property");
       else if(data.card < 0 || data.card >= this.middle.length) throw new Error(`\`card\` must be between 0 (inclusive) and ${this.middle.length} (exclusive)`);
 
       const card = this.middle[data.card];
       swap(player, card);
-    } else if(player.originalRole === roles.cat) {
+    } else if(player.originalRole === roles.cat) { // Cat
       if(!("card" in data)) throw new Error("Cat must supply a `card` property");
       else if(data.card < 0 || data.card >= this.middle.length) throw new Error(`\`card\` must be between 0 (inclusive) and ${this.middle.length} (exclusive)`);
 

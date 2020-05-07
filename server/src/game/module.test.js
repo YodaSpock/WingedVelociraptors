@@ -33,8 +33,8 @@ describe("GameModule", () => {
     });
   });
 
-  /** Initially, each player's `name`, `id`, and `order` will be equal to their mapped id */
-  describe("playerAct", () => {
+  describe("idAct", () => {
+    /** Initially, each player's `name`, `id`, and `order` will be equal to their mapped id */
     const roleToId = {
       [roles.sydney]: 0,
       [roles.jake]: 1,
@@ -47,7 +47,7 @@ describe("GameModule", () => {
 
     const act = (role, data) => {
       module.currentRole = role;
-      module.playerAct(roleToId[role], data);
+      module.idAct(roleToId[role], data);
     }
 
     beforeEach(() => {

@@ -104,18 +104,12 @@ class GameModule {
     return player;
   }
 
-  /**
-   * Manipulates the game given data from the given ID.
-   * Returns a data object to respond to the client with, if applicable.
-   * @param {Number} id 
-   * @param {Object} data 
-   * @returns {Object}
-   */
-  playerAct(id, data) {
-    const player = this.getPlayer(id);
+  playerAct(player, data) {
     if(player.originalRole !== this.currentRole || player.hasActed || player.asleep) return;
 
     console.log(`Player ${player.name} acting`);
+    let responseData;
+    let fullyActed = true;
 
     if(player.originalRole === roles.sydney) {
       if(!("id" in data)) throw new Error("Sydney must supply an `id` property");
@@ -129,7 +123,8 @@ class GameModule {
     } else if(player.originalRole === roles.annalise) {
       if(data.id) {
         player.roleData.id = data.id;
-        return { role: this.getPlayer(data.id).role };
+        responseData = { role: this.getPlayer(data.id).role };
+        fullyActed = false;
       } else if("swap" in data) {
         if(!("id" in player.roleData)) throw new Error("Annalise didn't choose an ID already");
 
@@ -159,7 +154,20 @@ class GameModule {
       this.middle[data.card].exposed = true;
     }
 
-    player.hasActed = true;
+    player.hasActed = fullyActed;
+    if(responseData) return responseData;
+  }
+
+  /**
+   * Manipulates the game given data from the given ID.
+   * Returns a data object to respond to the client with, if applicable.
+   * @param {Number} id 
+   * @param {Object} data 
+   * @returns {Object}
+   */
+  idAct(id, data) {
+    const player = this.getPlayer(id);
+    return this.playerAct(player, data);
   }
 }
 

@@ -125,7 +125,7 @@ class GameModule {
     } else if(player.originalRole === roles.austin) {
       lshift(this.players);
     } else if(player.originalRole === roles.annalise) {
-      if(data.id) {
+      if("id" in data) {
         player.roleData.id = data.id;
         responseData = { role: this.getPlayer(data.id).role };
         fullyActed = false;

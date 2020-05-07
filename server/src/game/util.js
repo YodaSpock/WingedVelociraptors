@@ -38,7 +38,6 @@ const getRolePool = (config) => {
 /**
  * Returns whether or not the given role should act but doesn't require player interaction
  * @param {String} role 
- * @returns {boolean}
  */
 const isEffectivelyPassive = (role) => {
   switch(role) {

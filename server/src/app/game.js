@@ -1,5 +1,5 @@
 const events = require("../networking/wsEvents");
-const roles = require("../game/constants");
+const { roles } = require("../game/constants");
 
 class GameApp {
   constructor(wsem, gameModule) {

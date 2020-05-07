@@ -38,6 +38,9 @@ class GameApp {
             });
         }
 
+        // TODO: add `state` prop to `s_act` that is either `start`, `end`, or `mid`
+        // TODO: `end` send now`, `start` sent with regular start, and `mid` sent for middle stuff (annalise, rachel)
+
         if(this.gameModule.hasNextRole) {
           try {
             this.nextAct();

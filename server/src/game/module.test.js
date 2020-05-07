@@ -62,7 +62,7 @@ describe("GameModule", () => {
     test("sydney", () => {
       act(roles.sydney, { id: roleToId[roles.jake] });
 
-      expect(module.getPlayer(roleToId[roles.jake]).asleep).toBe(true);
+      expect(module.getPlayer(roleToId[roles.jake]).actionDisabled).toBe(true);
 
       act(roles.jake);
 

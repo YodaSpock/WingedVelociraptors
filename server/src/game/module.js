@@ -109,7 +109,7 @@ class GameModule {
   }
 
   playerAct(player, data) {
-    if(player.originalRole !== this.currentRole || player.hasActed || player.asleep) return;
+    if(player.originalRole !== this.currentRole || player.hasActed || player.actionDisabled) return;
 
     console.log(`Player ${player.name} acting`);
     let responseData;
@@ -119,7 +119,7 @@ class GameModule {
       if(!("id" in data)) throw new Error("Sydney must supply an `id` property");
 
       const target = this.getPlayer(data.id);
-      target.asleep = true;
+      target.actionDisabled = true;
     } else if(player.originalRole === roles.jake) { // Jake
       rshift(this.players);
     } else if(player.originalRole === roles.austin) { // Austin

@@ -33,7 +33,7 @@ class GameApp {
         if(this.gameModule.currentRole === roles.rachel) {
           this.gameModule.players.filter((player) => player.originalRole === roles.rachel)
             .forEach((player) => {
-              if(!player.asleep) this.wsem.sendMessage(player.id, events.s_act, { data: { noise: true } })
+              if(!player.actionDisabled) this.wsem.sendMessage(player.id, events.s_act, { data: { noise: true } })
             });
         }
 

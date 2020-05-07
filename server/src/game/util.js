@@ -53,7 +53,7 @@ const isEffectivelyPassive = (role) => {
  * @param {Player} player 
  * @return {boolean} If the player is a Josh whose passive should apply
  */
-const validJosh = (player) => player.role === roles.josh && !player.asleep;
+const validJosh = (player) => player.role === roles.josh && !player.actionDisabled;
 
 /**
  * Shift the `role` property of each player to the right once.

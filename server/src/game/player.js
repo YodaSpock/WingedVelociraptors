@@ -12,7 +12,7 @@ class Player {
     this.originalRole = role;
     this.position = position;
     this.hasActed = false;
-    this.asleep = false;
+    this.actionDisabled = false;
 
     // additional data specific to a role
     this.roleData = {};

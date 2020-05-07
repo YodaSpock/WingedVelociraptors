@@ -1,4 +1,5 @@
 import React from 'react';
+import CharacterCard from './CharacterCard';
 
 export default class GameScreen extends React.Component{
 
@@ -16,6 +17,7 @@ export default class GameScreen extends React.Component{
                 {"Position: " + position}
                 <br/>
                 {"Number of Players: " + (players.length + 1)}
+                <CharacterCard/>
             </div>
         )
     }

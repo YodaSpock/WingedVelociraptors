@@ -5,8 +5,8 @@ export default class GameScreen extends React.Component{
     render(){
         const {
             role,
-            position,
-            players,
+            //position,
+            //players,
         } = this.props; 
 
         

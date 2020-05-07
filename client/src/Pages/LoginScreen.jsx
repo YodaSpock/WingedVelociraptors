@@ -17,7 +17,7 @@ export default class LoginScreen extends React.Component{
                         Please Enter Your Name: 
                     </Col>
                 </Row>
-                <LoginForm wsem = {wsem} onRole={(data) => onRole(data)}/>
+                <LoginForm wsem = {wsem} onRole={onRole}/>
             </>
         )
     }

@@ -15,6 +15,8 @@ import WebSocketEventManager from './Networking/websocket-event-manager';
 
 
 const wsem = new WebSocketEventManager(`ws://${window.location.hostname}:81`);
+// TODO - storing data using useState or useRef - STRETCH GOAL
+
 
 function App() {
 
@@ -23,8 +25,7 @@ function App() {
   const [position, setPosition] = useState(0);
   const [players, setPlayers] = useState([{}]);
   
-  const doThings = e => {
-    console.log("DO THINGS")
+  const recieveRole = e => {
     setRole(e.role);
     setPosition(e.position);
     setPlayers(e.players);
@@ -35,7 +36,7 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Route path = "/" exact component={() => <WelcomeScreen wsem={wsem} />}/>
-        <Route path = "/player" exact component={() => <LoginScreen wsem={wsem} onRole={doThings} />}/>
+        <Route path = "/player" exact component={() => <LoginScreen wsem={wsem} onRole={recieveRole} />}/>
         <Route path = "/narrator/waiting" exact component={() => <NarratorWaitingScreen wsem={wsem} />}/>
         <Route path = "/player/waiting" exact component = {PlayerWaitingScreen}/>
         <Route path = "/player/game" exact component = {() => <GameScreen role = {role} position = {position} players = {players}/>}/>

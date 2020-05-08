@@ -3,6 +3,33 @@ import { Row, Col, Select, Button } from "antd";
 
 const { Option } = Select;
 
+/*
+To test, paste the following into App.js below `const wsem = ...` and
+set VotingScreen's `players` prop to `testPlayers`:
+
+wsem.addEventHandler = (event, cb) => {
+  setTimeout(() => {
+    cb({
+      length: 70,
+      middle: [
+        { exposed: false, role: null },
+        { exposed: true, role: "josh" },
+        { exposed: false, role: null }
+      ]
+    })
+  }, 1000);
+};
+wsem.sendMessage = (event, data) => {
+  console.log(event);
+  console.log(data);
+}
+const testPlayers = [
+  { name: "Daniel", id: 0 },
+  { name: "Isaac", id: 1},
+  { name: "Lucas", id: 2 }
+]
+*/
+
 const VotingScreen = ({ wsem, players }) => {
   const [timerLength, setTimerLength] = useState();
   const [timerStart, setTimerStart] = useState();

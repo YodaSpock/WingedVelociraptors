@@ -21,44 +21,66 @@ export default class GameScreen extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            isReady: false
+            isReady: false,
+            turnActive: false,
+            actionDisabled: false
         }
+        this.handleSAct = this.handleSAct.bind(this);
+    }
+
+    componentDidMount() {
+        const { wsem } = this.props;
+        wsem.addEventHandler("s_act", this.handleSAct);
+    }
+
+    handleSAct(data) {
+        if(data.state === "start") this.setState({ turnActive: true });
+        else if(data.state === "end") this.setState({ turnActive: false });
+
+        if(data.data.sleep) this.setState({ actionDisabled: true });
+
+        // TODO: deal with role-specific stuff
     }
 
     readyUp = () => {
         this.setState({isReady: true});
     }
+
+    getComponent() {
+        const { isReady, turnActive, actionDisabled } = this.state;
+        const { role, players } = this.props;
+
+        if(!isReady) {
+            return (
+                <div>
+                    <CharacterCard role = {role} name = {"You"} ready = {this.readyUp}/>
+                    <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
+                        READY
+                    </Button>
+                </div>
+            );
+        } else if(!turnActive) {
+            return <Night />;
+        } else if(actionDisabled) {
+            // TODO: make look all pretty-like
+            return <div>A sleep spell has been cast on you! Go back to sleep.</div>
+        } else if(role === "sydney" || role === "annalise" ||role === "hannah") {
+            return <AllCards players={players} />;
+        } else if(role === "cat" || role === "daniel") {
+            return <CenterCards />;
+        } else if(role === "isaac" || role === "annalise") {
+            return <CharacterCard role = {role} name = {"Name"}/>;
+        } else {
+            // TODO: default screen when it's your turn
+            return <div>It's your turn</div>
+        }
+    }
     
-    render(){
-        const {
-            role,
-            //position,
-            //players,
-        } = this.props; 
-
-        return(
+    render() {
+        return (
             <div>
-                {/* Not going to mess around with the naming thing will take too long */}
-                {this.state.isReady ? null : 
-                    <div>
-                        <CharacterCard role = {role} name = {"You"} ready = {this.readyUp}/>
-                        <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
-                            READY
-                        </Button>
-                    </div>}
-
-                {/* && game has started and S_act has not been sent*/ }
-                {this.state.isReady ? <Night/> : null }
-
-                {/* Add check for the S_act as well */}
-                {(this.role === "sydney" || this.role === "annalise" ||this.role === "hannah") ? <AllCards/> : null}
-                
-                {/* Add check for the S_act as well */}
-                {(this.role === "cat" || this.role === "daniel") ? <CenterCards/> : null}
-
-                {/* Add the check for annalise specifically and then  */}
-                {(this.role === "isaac" || this.role === "annalise") ? <CharacterCard role = {role} name = {"Name"}/> : null}
+                {this.getComponent()}
             </div>
-        )
+        );
     }
 }

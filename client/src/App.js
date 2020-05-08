@@ -20,12 +20,13 @@ const wsem = new WebSocketEventManager(`ws://${window.location.hostname}:81`);
 
 function App() {
 
-
+  const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [position, setPosition] = useState(0);
   const [players, setPlayers] = useState([{}]);
   
   const recieveRole = e => {
+    setName(e.name);
     setRole(e.role);
     setPosition(e.position);
     setPlayers(e.players);

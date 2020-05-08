@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Formik} from 'formik';
-import {Link, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import * as Yup from 'yup';
 import { Input, Button, Row, Col} from 'antd';
 
 const LoginForm = ({wsem, onRole}) => {
     let history = useHistory();
+
+    const [name, setName] = useState("");
       
     const getRole = e => {
-        onRole(e);
+        onRole({ ...e, name });
         history.push("/player/game");
         // TODO - ADD A way to remove the listener - STRETCH GOAL
     };
@@ -27,6 +29,7 @@ const LoginForm = ({wsem, onRole}) => {
             })}
             onSubmit={(values) => {
                 console.log(values.name);
+                setName(values.name);
                 wsem.sendMessage("c_join", {name: values.name})
                 history.push("/player/waiting");
                 wsem.addEventHandler("s_role", getRole)

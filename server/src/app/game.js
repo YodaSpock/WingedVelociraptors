@@ -31,10 +31,11 @@ class GameApp {
 
   nextAct() {
     const { playerTargets, roleData, dialogue } = this.gameModule.readyNextRole();
+    this.playerTargets = playerTargets;
 
     this.gameModule.narrators.forEach((id) => this.wsem.sendMessage(id, events.s_narrate, { dialogue }));
   
-    playerTargets.forEach((player, i) => this.wsem.sendMessage(player.id, events.s_act, { data: roleData[i] }));
+    playerTargets.forEach((player, i) => this.wsem.sendMessage(player.id, events.s_act, { state: "start", data: roleData[i] }));
   }
 
   actHandler(id, data) {
@@ -44,7 +45,7 @@ class GameApp {
     } catch(error) {
       this.wsem.sendMessage(id, events.s_error, { message: error.message });
     }
-    if(responseData) this.wsem.sendMessage(id, events.s_act, { data: responseData });
+    if(responseData) this.wsem.sendMessage(id, events.s_act, { state: "mid", data: responseData });
   }
 
   narrAckHandler() {
@@ -60,8 +61,7 @@ class GameApp {
           });
       }
 
-      // TODO: add `state` prop to `s_act` that is either `start`, `end`, or `mid`
-      // TODO: `end` send now`, `start` sent with regular start, and `mid` sent for middle stuff (annalise, rachel)
+      this.playerTargets.forEach((player) => this.wsem.sendMessage(player.id, events.s_act, { state: "end" }));
 
       if(this.gameModule.hasNextRole) {
         try {

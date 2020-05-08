@@ -11,7 +11,7 @@ const CharacterCard = (props) => {
   })
   return (
       <div style = {{display: "flex", justifyContent: "center"}}>
-        <a.div onClick={() => set(state => !state)} className="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform}}>
+        <a.div onClick={() => (props.flippable) ? set(state => !state) : set(state => state)} className="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform}}>
           <div
           style = {{display: "flex", justifyContent: "center", 
           backgroundColor: "white", textAlign: "center", 
@@ -20,7 +20,7 @@ const CharacterCard = (props) => {
             Player: {props.name}
           </div>
         </a.div>
-        <a.div onClick={() => set(state => !state)} className={"c " + props.role} style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
+        <a.div onClick={() => (props.flippable) ? set(state => !state) : set(state => state)} className={"c " + props.role} style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
           <div
           style = {{display: "flex", justifyContent: "center", 
           backgroundColor: "white", textAlign: "center", 

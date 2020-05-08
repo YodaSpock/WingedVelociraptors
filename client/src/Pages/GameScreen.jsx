@@ -33,7 +33,7 @@ export default class GameScreen extends React.Component{
         const {
             role,
             //position,
-            //players,
+            players,
         } = this.props; 
 
         return(
@@ -41,7 +41,7 @@ export default class GameScreen extends React.Component{
                 {/* Not going to mess around with the naming thing will take too long */}
                 {this.state.isReady ? null : 
                     <div>
-                        <CharacterCard role = {role} name = {"You"} ready = {this.readyUp}/>
+                        <CharacterCard role = {role} name = {"You"} flippable = {true}/>
                         <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
                             READY
                         </Button>
@@ -58,6 +58,11 @@ export default class GameScreen extends React.Component{
 
                 {/* Add the check for annalise specifically and then  */}
                 {(this.role === "isaac" || this.role === "annalise") ? <CharacterCard role = {role} name = {"Name"}/> : null}
+
+
+                <AllCards role = {role} players = {players}/>
+                {/* <CenterCards/> */}
+
             </div>
         )
     }

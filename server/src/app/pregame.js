@@ -65,7 +65,7 @@ class PregameApp {
   
     this.gameModule.players.forEach((player) => {
       const otherPlayers = this.gameModule.players.filter((el) => el.id !== player.id).map((el) => ({ name: el.name, id: el.id }));
-      this.wsem.sendMessage(player.id, events.s_role, { role: player.role, position: player.position, players: otherPlayers });
+      this.wsem.sendMessage(player.id, events.s_role, { id: player.id, role: player.role, position: player.position, players: otherPlayers });
     });
   
     this.state.notReadyCount = this.gameModule.players.length;

@@ -35,6 +35,16 @@ const getRolePool = (config) => {
   return { roles: pool, order };
 };
 
+const isPassive = (role) => {
+  switch(role) {
+    case roles.lucas:
+    case roles.josh:
+      return true;
+    default:
+      return false;
+  }
+};
+
 /**
  * Returns whether or not the given role should act but doesn't require player interaction
  * @param {String} role 
@@ -106,4 +116,4 @@ const swap = (player1, player2) => {
   player2.role = tmp;
 };
 
-module.exports = { getDialogue, getRoleData, getRolePool, rshift, lshift, swap, isEffectivelyPassive };
+module.exports = { getDialogue, getRoleData, getRolePool, rshift, lshift, swap, isEffectivelyPassive, isPassive };

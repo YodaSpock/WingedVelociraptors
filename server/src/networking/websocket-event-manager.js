@@ -18,7 +18,7 @@ class WebSocketEventManager {
       });
 
       ws.on("close", (code, reason) => {
-        this.onClose(id);
+        if(this.onClose) this.onClose(id);
       });
     });
   }

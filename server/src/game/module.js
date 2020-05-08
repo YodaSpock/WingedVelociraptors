@@ -1,7 +1,7 @@
 const { shuffle } = require("../util");
 const Player = require("./player");
 const Card = require("./card");
-const { getRolePool, getDialogue, getRoleData, lshift, rshift, swap, isEffectivelyPassive } = require("./util");
+const { getRolePool, getDialogue, getRoleData, lshift, rshift, swap, isEffectivelyPassive, isPassive } = require("./util");
 const { roles } = require("./constants");
 
 class GameModule {
@@ -35,9 +35,9 @@ class GameModule {
 
     const numCards = this.players.length + 3;
     if(numCards > sessionRoles.length) throw new Error(`Too many players. Max ${sessionRoles.length - 3}.`);
+    shuffle(sessionRoles);
     // remove excess cards (if game is configured correctly, shouldn't happen)
     sessionRoles.splice(numCards);
-    shuffle(sessionRoles);
 
     this.assignRoles(clients, sessionRoles);
     this.assignMiddle(sessionRoles);
@@ -73,8 +73,7 @@ class GameModule {
     if(this.sessionOrder.length === 0) throw new Error("No more roles");
 
     let nextRole = true;
-    // error handling in case `this.sessionOrder` contains other roles
-    while(nextRole && !this.gameHasRole(nextRole = this.sessionOrder.shift()));
+    while(nextRole && (!this.gameHasRole(nextRole = this.sessionOrder.shift()) || isPassive(nextRole)));
     if(!nextRole) throw new Error("No more roles");
     console.log(`Readying next role: ${nextRole}`);
 

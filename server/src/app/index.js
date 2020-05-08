@@ -1,5 +1,6 @@
 const PregameApp = require("./pregame");
 const GameApp = require("./game");
+const VotingApp = require("./voting");
 
 class App {
   constructor(wsem, gameModule) {
@@ -12,6 +13,10 @@ class App {
     const pregameApp = new PregameApp(this.wsem, this.gameModule);
     pregameApp.onReady = () => {
       const gameApp = new GameApp(this.wsem, this.gameModule);
+      gameApp.onVotingBegin = () => {
+        const votingApp = new VotingApp(this.wsem, this.gameModule, 60);
+        votingApp.run();
+      };
       gameApp.run();
     };
     pregameApp.run();

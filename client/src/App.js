@@ -24,12 +24,19 @@ function App() {
   const [role, setRole] = useState("");
   const [position, setPosition] = useState(0);
   const [players, setPlayers] = useState([{}]);
+  const [killed, setKilled] = useState([]);
   
   const recieveRole = e => {
     setName(e.name);
     setRole(e.role);
     setPosition(e.position);
     setPlayers(e.players);
+  };
+
+  const onEnd = (data) => {
+    setRole(data.role);
+    setPlayers(data.players);
+    setKilled(data.killed);
   };
 
   return (
@@ -42,7 +49,7 @@ function App() {
         <Route path = "/player/waiting" exact component = {PlayerWaitingScreen}/>
         <Route path = "/player/game" exact component = {() => <GameScreen role = {role} position = {position} players = {players}/>}/>
         <Route path = "/narrator/game" exact component = {NarratorScreen}/>
-        <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} players={players} />} />
+        <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} players={players} onEnd={onEnd} />} />
         <Footer/>
       </BrowserRouter>
     </div>

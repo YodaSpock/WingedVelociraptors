@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Select, Button } from "antd";
+import { useHistory } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -30,7 +31,9 @@ const testPlayers = [
 ]
 */
 
-const VotingScreen = ({ wsem, players }) => {
+const VotingScreen = ({ wsem, players, onEnd }) => {
+  const history = useHistory();
+
   const [timerLength, setTimerLength] = useState();
   const [timerStart, setTimerStart] = useState();
   const [timeRemaining, setTimeRemaining] = useState(0);
@@ -43,7 +46,12 @@ const VotingScreen = ({ wsem, players }) => {
       setTimerStart(Date.now());
       setMiddle(data.middle);
     });
-  }, [wsem]);
+
+    wsem.addEventHandler("s_results", (data) => {
+      onEnd(data);
+      history.push("/player/end");
+    });
+  }, [wsem, onEnd, history]);
 
   useEffect(() => {
     if(timerLength && timerStart) {

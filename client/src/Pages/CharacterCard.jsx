@@ -11,17 +11,17 @@ const CharacterCard = (props) => {
     config: { mass: 5, tension: 500, friction: 80 }
   })
   return (
-      <div onClick={() => set(state => !state)} style = {{display: "flex", justifyContent: "center"}}>
-        <a.div className="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform}}>
+      <div style = {{display: "flex", justifyContent: "center"}}>
+        <a.div onClick={() => set(state => !state)} className="c back" style={{ opacity: opacity.interpolate(o => 1 - o), transform}}>
           <div
           style = {{display: "flex", justifyContent: "center", 
           backgroundColor: "white", textAlign: "center", 
           position: "absolute", bottom: "0px",
           fontFamily: "jurassic", fontSize: "30px", paddingLeft: "10px"}}>
-            DORSAL FIN GANG
+            Player: {props.name}
           </div>
         </a.div>
-        <a.div className={"c " + props.role} style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
+        <a.div onClick={() => set(state => !state)} className={"c " + props.role} style={{ opacity, transform: transform.interpolate(t => `${t} rotateX(180deg)`) }} >
           <div
           style = {{display: "flex", justifyContent: "center", 
           backgroundColor: "white", textAlign: "center", 

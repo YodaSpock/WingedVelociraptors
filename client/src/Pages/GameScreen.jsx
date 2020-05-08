@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CharacterCard from './CharacterCard';
+import AllCards from './AllCards';
+import Night from './Night';
+import CenterCards from './CenterCards';
 
 /*
 How to play audio:
@@ -14,6 +17,13 @@ audio.play();
 */
 
 export default class GameScreen extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            isReady: false
+        }
+    }
+    
     render(){
         const {
             role,
@@ -24,7 +34,11 @@ export default class GameScreen extends React.Component{
         
         return(
             <div>
-                <CharacterCard role = {role} />
+                {/* Not going to mess around with the naming thing will take too long */}
+                {this.state.isReady ? null : <CharacterCard role = {role} name = {"You"} />}
+                <AllCards/>
+                <CenterCards/>
+                <Night/>
             </div>
         )
     }

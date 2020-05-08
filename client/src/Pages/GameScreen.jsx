@@ -53,7 +53,7 @@ export default class GameScreen extends React.Component{
         if(!isReady) {
             return (
                 <div>
-                    <CharacterCard role = {role} name = {"You"} ready = {this.readyUp}/>
+                    <CharacterCard role = {role} name = {"You"} flippable = {true}/>
                     <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
                         READY
                     </Button>
@@ -69,7 +69,7 @@ export default class GameScreen extends React.Component{
         } else if(role === "cat" || role === "daniel") {
             return <CenterCards />;
         } else if(role === "isaac" || role === "annalise") {
-            return <CharacterCard role = {role} name = {"Name"}/>;
+            return <CharacterCard role = {role} flippable = {true} name = {"Name"}/>;
         } else {
             // TODO: default screen when it's your turn
             return <div>It's your turn</div>

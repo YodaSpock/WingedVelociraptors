@@ -42,6 +42,8 @@ export default class GameScreen extends React.Component{
         if(data.state === "start") this.setState({ turnActive: true });
         else if(data.state === "end") this.setState({ turnActive: false });
 
+        if(!data.data) return;
+
         if(data.data.sleep) this.setState({ actionDisabled: true });
 
         const { role } = this.props;
@@ -79,6 +81,7 @@ export default class GameScreen extends React.Component{
     }
 
     readyUp = () => {
+        this.props.wsem.sendMessage("c_ready");
         this.setState({isReady: true});
     }
 

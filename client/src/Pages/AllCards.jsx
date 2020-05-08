@@ -5,13 +5,14 @@ import '../Styles/FixMargin.scss'
 
 export default class AllCards extends React.Component{
     state = {
-        value: 1,
+        names = [],
     }
 
     onChange = (checkedNames) => {
-        const names = [];
+        changedNames = [];
         console.log(checkedNames);
         checkedNames.forEach((name) => {
+            
             console.log("Player: " + name + " Selected")
         })
         // this.setState({
@@ -23,7 +24,7 @@ export default class AllCards extends React.Component{
         const {
             role,
             players,
-            onSubmit
+            AllCardsSubmit
         } = this.props; 
         
         const radioStyle = {
@@ -59,7 +60,7 @@ export default class AllCards extends React.Component{
                             </Checkbox>          
                         )}           */}
                     </Checkbox.Group>
-                    <Button onClick = {() => onSubmit()}> Submit </Button>
+                    <Button onClick = {() => AllCardsSubmit()}> Submit </Button>
                 </div>
             </div>
         )

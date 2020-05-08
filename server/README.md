@@ -32,7 +32,7 @@ The following table documents the different events and their accompanying data. 
 | c_start      | Client | Signals that all players have joined and the game should start (need only be sent by a single client, like Jackbox).                                     | None                                                                                                              |
 | s_role       | Server | Identifies the role and position of the player this game. Also provides a list of other players.                                                         | `id: number`, `role: string`, `position: number`, `players: [{ name: string, id: number }]`                       |
 | c_ready      | Client | The client has acknowledged their role/position and is ready to start.                                                                                   | None                                                                                                              |
-| s_act        | Server | Signals it is the client's turn to act. May supply additional data relevant to the given role.                                                           | `data: object`                                                                                                    |
+| s_act        | Server | Gives information on the current player's turn. May supply additional data relevant to the given role.                                                   | `state: string`, `data: object`                                                                                   |
 | c_act        | Client | Provides a response to the server on how the client wishes to act.                                                                                       | `data: object`                                                                                                    |
 | s_narrate    | Server | Requests that a narrator reads the given dialogue line.                                                                                                  | `dialogue: number`                                                                                                |
 | c_narrAck    | Client | Acknowledges that the audio for the previously requested dialogue has been played to completion.                                                         |                                                                                                                   |
@@ -58,6 +58,13 @@ If a role is not listed, they do not need additional information and will receiv
 #### Special cases
 ##### Sleep
 If a player was put to sleep by Sydney, their data will always be `{ "sleep": true }`. They cannot act on their turn.
+
+#### `state`
+| State     | Description                                                                        |
+|-----------|------------------------------------------------------------------------------------|
+| `"start"` | The player's turn has started                                                      |
+| `"mid"`   | Additional data in the `data` property is being supplied in the middle of the turn |
+| `"end"`   | The player's turn has ended                                                        |
 
 ### `c_act` data
 | Role       | Data            | Description                                                                                         |

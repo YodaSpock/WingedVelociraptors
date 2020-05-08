@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { Input, Button, Row, Col} from 'antd';
 
 const LoginForm = ({wsem, onRole}) => {
-
     let history = useHistory();
       
     const getRole = e => {
@@ -64,6 +63,7 @@ const LoginForm = ({wsem, onRole}) => {
                                 {errors.name == null ? 
                                     <Button htmlType = "submit" style = {{borderRadius: "50%", width: "30vh"}}>
                                             Login
+                                            {/* TODO - PASS DOWN THE NAME TO WAITING PAGE -> SEE OPEN ISSUE */}
                                     </Button>
                                 : null}
                             </Col>

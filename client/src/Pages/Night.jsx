@@ -5,7 +5,7 @@ export default class Night extends React.Component{
 
         
         return(
-            <div>
+            <div style = {{height: "100%", fontFamily: "minecraft", fontSize: "90px", textAlign: "center"}}>
                 CLOSE YOUR EYES
             </div>
         )

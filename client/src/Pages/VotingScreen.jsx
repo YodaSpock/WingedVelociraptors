@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Select, Button } from "antd";
+
+const { Option } = Select;
 
 const VotingScreen = ({ wsem, players }) => {
   const [timerLength, setTimerLength] = useState();
   const [timerStart, setTimerStart] = useState();
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [middle, setMiddle] = useState([]);
+  const [voteId, setVoteId] = useState();
 
   useEffect(() => {
     wsem.addEventHandler("s_timerStart", (data) => {
@@ -36,19 +39,35 @@ const VotingScreen = ({ wsem, players }) => {
     return [minutes, seconds].map(formatTime).join(":");
   };
 
+  const submitVote = () => {
+    if(voteId !== undefined) wsem.sendMessage("c_vote", { id: voteId });
+  };
+
   return (
     <div>
-      <Row justify="space-around">
+      <Row justify="space-around" style={{marginBottom: "1rem"}}>
         {middle.map((card, i) => <Col key={i}>{card.exposed ? card.role : "unknown"}</Col>)}
       </Row>
 
-      <Row justify="center">
-        <p>{getTimeString()}</p>
+      <Row justify="center" style={{fontSize: "2rem", marginBottom: "1rem"}}>
+        {`Time remaining: ${getTimeString()}`}
       </Row>
 
       <div>
-        <Row justify="center">Dropdown select</Row>
-        <Row justify="center">Submit</Row>
+        <Row justify="center" style={{marginBottom: "0.5rem"}}>
+          <Select 
+            value={voteId}
+            onSelect={(value) => setVoteId(value)}
+            placeholder="Select a player"
+            style={{ width: "50%" }}>
+            {players.map((player) => (
+              <Option key={player.id} value={player.id}>{player.name}</Option>
+            ))}
+          </Select>
+        </Row>
+        <Row justify="center">
+          <Button onClick={submitVote}>Submit</Button>
+        </Row>
       </div>
     </div>
   )

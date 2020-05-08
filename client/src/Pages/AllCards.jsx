@@ -50,8 +50,9 @@ export default class AllCards extends React.Component{
                             </Checkbox>          
                         )}          
                     </Checkbox.Group>
-                    <Button onClick = {() => onSubmit(this.state.names)}> Submit </Button>
                 </div>
+                <Divider/>
+                <Button onClick = {() => onSubmit(this.state.names)}> Submit </Button>
             </div>
         )
     }

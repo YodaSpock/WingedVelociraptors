@@ -1,53 +1,78 @@
-const events = require("../wsEvents");
+const events = require("../networking/wsEvents");
+const { roles } = require("../game/constants");
 
+/**
+ * `onVotingBegin` will be called when regular game has ended
+ */
 class GameApp {
   constructor(wsem, gameModule) {
+    /** @type {import("../networking/websocket-event-manager")} */
     this.wsem = wsem;
+    /** @type {import("../game/module")} */
     this.gameModule = gameModule;
 
     this.actTimer = null;
+
+    this.actHandler = this.actHandler.bind(this);
+    this.narrAckHandler = this.narrAckHandler.bind(this);
   }
 
   run() {
     this.nextAct();
 
-    this.wsem.addEventHandler(events.c_act, (id, data) => {
-      this.gameModule.playerAct(id, data);
-    });
-  
-    this.wsem.addEventHandler(events.c_narr_ack, () => {
-      if(this.actTimer) return;
+    this.wsem.addEventHandler(events.c_act, this.actHandler);
+    this.wsem.addEventHandler(events.c_narrAck, this.narrAckHandler);
+  }
 
-      this.actTimer = setTimeout(() => {
-        this.actTimer = null;
-
-        // TODO: probably send `s_act` message to rachel to make noise if she is current role
-
-        if(this.gameModule.hasNextRole) {
-          this.nextAct();
-        } else {
-          console.log("Starting voting phase...");
-          // TODO: switch to voting phase
-        }
-      }, 7000);
-    });
+  cleanUp() {
+    this.wsem.removeEventHandler(events.c_act, this.actHandler);
+    this.wsem.removeEventHandler(events.c_narrAck, this.narrAckHandler);
   }
 
   nextAct() {
     const { playerTargets, roleData, dialogue } = this.gameModule.readyNextRole();
+    this.playerTargets = playerTargets;
 
     this.gameModule.narrators.forEach((id) => this.wsem.sendMessage(id, events.s_narrate, { dialogue }));
   
-    playerTargets.forEach((player) => this.wsem.sendMessage(player.id, events.s_act, roleData));
+    playerTargets.forEach((player, i) => this.wsem.sendMessage(player.id, events.s_act, { state: "start", data: roleData[i] }));
   }
 
-  beginVoting() {
-    // TODO: allow players to lock in vote to avoid long timer
+  actHandler(id, data) {
+    let responseData;
+    try {
+      responseData = this.gameModule.idAct(id, data.data);
+    } catch(error) {
+      this.wsem.sendMessage(id, events.s_error, { message: error.message });
+    }
+    if(responseData) this.wsem.sendMessage(id, events.s_act, { state: "mid", data: responseData });
   }
 
-  cleanUp() {
-    // TODO: make event listeners their own functions
-    // TODO: clear all event listeners this class has used
+  narrAckHandler() {
+    if(this.actTimer) return;
+
+    this.actTimer = setTimeout(() => {
+      this.actTimer = null;
+
+      if(this.gameModule.currentRole === roles.rachel) {
+        this.gameModule.players.filter((player) => player.originalRole === roles.rachel)
+          .forEach((player) => {
+            if(!player.actionDisabled) this.wsem.sendMessage(player.id, events.s_act, { data: { noise: true } })
+          });
+      }
+
+      this.playerTargets.forEach((player) => this.wsem.sendMessage(player.id, events.s_act, { state: "end" }));
+
+      if(this.gameModule.hasNextRole) {
+        try {
+          this.nextAct();
+        } catch(error) { this.onVotingBegin(); }
+      } else {
+        console.log("Starting voting phase...");
+        this.cleanUp();
+        this.onVotingBegin();
+      }
+    }, 7000); // TODO: maybe make timer conditional length for Annalise (more time)
   }
 }
 

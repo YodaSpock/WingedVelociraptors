@@ -10,6 +10,8 @@ import NarratorWaitingScreen from './Pages/NarratorWaitingScreen';
 import PlayerWaitingScreen from './Pages/PlayerWaitingScreen';
 import NarratorScreen from './Pages/NarratorScreen';
 import GameScreen from './Pages/GameScreen';
+import VotingScreen from "./Pages/VotingScreen";
+import EndGameScreen from "./Pages/EndGameScreen";
 import '../src/Styles/Layout.scss';
 import WebSocketEventManager from './Networking/websocket-event-manager';
 
@@ -17,18 +19,23 @@ import WebSocketEventManager from './Networking/websocket-event-manager';
 const wsem = new WebSocketEventManager(`ws://${window.location.hostname}:81`);
 // TODO - storing data using useState or useRef - STRETCH GOAL
 
-
 function App() {
-
 
   const [role, setRole] = useState("");
   const [position, setPosition] = useState(0);
   const [players, setPlayers] = useState([{}]);
+  const [killed, setKilled] = useState([]);
   
   const recieveRole = e => {
     setRole(e.role);
     setPosition(e.position);
     setPlayers(e.players);
+  };
+
+  const onEnd = (data) => {
+    setRole(data.role);
+    setPlayers(data.players);
+    setKilled(data.killed);
   };
 
   return (
@@ -41,6 +48,8 @@ function App() {
         <Route path = "/player/waiting" exact component = {PlayerWaitingScreen}/>
         <Route path = "/player/game" exact component = {() => <GameScreen role = {role} position = {position} players = {players}/>}/>
         <Route path = "/narrator/game" exact component = {NarratorScreen}/>
+        <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} players={players} onEnd={onEnd} />} />
+        <Route path = "/player/end" exact component = {() => <EndGameScreen role={role} players={players} killed={killed} />} />
         <Footer/>
       </BrowserRouter>
     </div>

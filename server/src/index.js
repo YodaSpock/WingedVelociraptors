@@ -1,6 +1,6 @@
 const WebSocket = require("ws");
 
-const WebSocketEventManager = require("./websocket-event-manager");
+const WebSocketEventManager = require("./networking/websocket-event-manager");
 const GameModule = require("./game/module");
 const App = require("./app");
 

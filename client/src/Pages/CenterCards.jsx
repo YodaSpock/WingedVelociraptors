@@ -14,6 +14,7 @@ export default class CenterCards extends React.Component{
         this.setState({
             card: e.target.value,
         })
+        console.log(e.target.value)
     };
 
     render(){
@@ -26,12 +27,8 @@ export default class CenterCards extends React.Component{
             height: '30px',
             lineHeight: '30px',
             marginBottom: '5px'
-
         };
 
-        {/* {players.map((player) => <p key={player.id}>{player.name}</p>)} */}
-        {/* {players.map((player) => <CharacterCard key = {player.id} flippable = {false} name = {player.name}/> )}
-        {players.map((player) => {console.log(player.name)})} */}
         return(
             <div style = {{fontFamily: "minecraft", marginLeft: "10vw", marginRight: "10vw"}}>
                 Select a Card: 
@@ -50,7 +47,7 @@ export default class CenterCards extends React.Component{
                     </Radio.Group>
                 </div>
                 <Divider/>
-                <Button onClick = {() => onSubmit(this.state.names)}> Submit </Button>
+                <Button onClick = {() => onSubmit(this.state.card)}> Submit </Button>
             </div>
         )
     }

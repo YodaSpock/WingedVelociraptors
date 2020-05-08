@@ -11,7 +11,8 @@ const wsEvents = {
   s_timerStart: "s_timerStart",
   c_vote: "c_vote",
   s_results: "s_results",
-  s_error: "s_error"
+  s_error: "s_error",
+  c_setRoles: "c_setRoles"
 };
 
 module.exports = wsEvents;

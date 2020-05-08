@@ -18,6 +18,7 @@ class PregameApp {
 
     this.joinHandler = this.joinHandler.bind(this);
     this.narratorHandler = this.narratorHandler.bind(this);
+    this.setRolesHandler = this.setRolesHandler.bind(this);
     this.startHandler = this.startHandler.bind(this);
     this.readyHandler = this.readyHandler.bind(this);
   }
@@ -32,6 +33,7 @@ class PregameApp {
 
     this.wsem.addEventHandler(events.c_join, this.joinHandler);
     this.wsem.addEventHandler(events.c_narrator, this.narratorHandler);
+    this.wsem.addEventHandler(events.c_setRoles, this.setRolesHandler);
     this.wsem.addEventHandler(events.c_start, this.startHandler);
     this.wsem.addEventHandler(events.c_ready, this.readyHandler);
   }
@@ -40,6 +42,7 @@ class PregameApp {
     this.wsem.onClose = null;
     this.wsem.removeEventHandler(events.c_join, this.joinHandler);
     this.wsem.removeEventHandler(events.c_narrator, this.narratorHandler);
+    this.wsem.removeEventHandler(events.c_setRoles, this.setRolesHandler);
     this.wsem.removeEventHandler(events.c_start, this.startHandler);
     this.wsem.removeEventHandler(events.c_ready, this.readyHandler);
   }
@@ -54,6 +57,10 @@ class PregameApp {
 
   narratorHandler(id) {
     if(!this.state.started) this.gameModule.addNarrator(id);
+  }
+
+  setRolesHandler(id, data) {
+    this.gameModule.setRoleConfig(data);
   }
 
   startHandler() {

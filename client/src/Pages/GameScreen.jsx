@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import CharacterCard from './CharacterCard';
 import AllCards from './AllCards';
 import Night from './Night';
 import CenterCards from './CenterCards';
+import {Button} from 'antd';
 
 /*
 How to play audio:
@@ -23,6 +24,10 @@ export default class GameScreen extends React.Component{
             isReady: false
         }
     }
+
+    readyUp = () => {
+        this.setState({isReady: true});
+    }
     
     render(){
         const {
@@ -31,14 +36,28 @@ export default class GameScreen extends React.Component{
             //players,
         } = this.props; 
 
-        
         return(
             <div>
                 {/* Not going to mess around with the naming thing will take too long */}
-                {this.state.isReady ? null : <CharacterCard role = {role} name = {"You"} />}
-                <AllCards/>
-                <CenterCards/>
-                <Night/>
+                {this.state.isReady ? null : 
+                    <div>
+                        <CharacterCard role = {role} name = {"You"} ready = {this.readyUp}/>
+                        <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
+                            READY
+                        </Button>
+                    </div>}
+
+                {/* && game has started and S_act has not been sent*/ }
+                {this.state.isReady ? <Night/> : null }
+
+                {/* Add check for the S_act as well */}
+                {(this.role === "sydney" || this.role === "annalise" ||this.role === "hannah") ? <AllCards/> : null}
+                
+                {/* Add check for the S_act as well */}
+                {(this.role === "cat" || this.role === "daniel") ? <CenterCards/> : null}
+
+                {/* Add the check for annalise specifically and then  */}
+                {(this.role === "isaac" || this.role === "annalise") ? <CharacterCard role = {role} name = {"Name"}/> : null}
             </div>
         )
     }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSpring, animated as a } from 'react-spring';
-import {Button} from 'antd';
 import '../Styles/Card.scss';
 
 const CharacterCard = (props) => {
@@ -29,9 +28,6 @@ const CharacterCard = (props) => {
             Your character role is the {props.role} 
           </div>
         </a.div> 
-        <Button style = {{marginTop: "120vw"}}>
-            READY
-        </Button>
       </div>
   )
 }

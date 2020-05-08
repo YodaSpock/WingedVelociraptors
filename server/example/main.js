@@ -13,6 +13,10 @@ document.getElementById("narrator").addEventListener("click", () => {
   wsem.sendMessage("c_narrator");
 });
 
+document.getElementById("roles").addEventListener("click", () => {
+  wsem.sendMessage("c_setRoles", JSON.parse(document.getElementById("rolesText").value));
+});
+
 document.getElementById("start").addEventListener("click", () => {
   wsem.sendMessage("c_start");
 });

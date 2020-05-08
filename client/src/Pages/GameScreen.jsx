@@ -3,7 +3,6 @@ import CharacterCard from './CharacterCard';
 import AllCards from './AllCards';
 import Night from './Night';
 import CenterCards from './CenterCards';
-import {Button} from 'antd';
 
 /*
 How to play audio:
@@ -96,10 +95,11 @@ export default class GameScreen extends React.Component{
         if(!isReady) {
             return (
                 <div>
-                    <CharacterCard role = {role} name = {"You"} flippable = {true}/>
+                    {/* <CharacterCard role = {role} name = {"You"} flippable = {true}/>
                     <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
                         READY
-                    </Button>
+                    </Button> */}
+                    <AllCards players={players} onSubmit={this.onAllCardsSubmit}/>
                 </div>
             );
         } else if(!turnActive) {

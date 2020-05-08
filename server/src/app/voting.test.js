@@ -18,7 +18,8 @@ describe("VotingApp", () => {
 
   beforeEach(() => {
     wsem = new WebSocketEventManager();
-    gameModule = { players: [] };
+    wsem.sendMessage = jest.fn();
+    gameModule = { players: [], middle: [] };
     for(let i = 0; i < playersLength; i++) gameModule.players.push(new Player(`name_${i}`, i, `role_${i}`, i));
     votingApp = new VotingApp(wsem, gameModule);
     votingApp.run();

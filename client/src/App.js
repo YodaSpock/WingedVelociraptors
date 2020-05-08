@@ -11,6 +11,7 @@ import PlayerWaitingScreen from './Pages/PlayerWaitingScreen';
 import NarratorScreen from './Pages/NarratorScreen';
 import GameScreen from './Pages/GameScreen';
 import VotingScreen from "./Pages/VotingScreen";
+import EndGameScreen from "./Pages/EndGameScreen";
 import '../src/Styles/Layout.scss';
 import WebSocketEventManager from './Networking/websocket-event-manager';
 
@@ -50,6 +51,7 @@ function App() {
         <Route path = "/player/game" exact component = {() => <GameScreen role = {role} position = {position} players = {players}/>}/>
         <Route path = "/narrator/game" exact component = {NarratorScreen}/>
         <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} players={players} onEnd={onEnd} />} />
+        <Route path = "/player/end" exact component = {() => <EndGameScreen role={role} players={players} killed={killed} />} />
         <Footer/>
       </BrowserRouter>
     </div>

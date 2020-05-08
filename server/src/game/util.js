@@ -15,11 +15,17 @@ const getDialogue = (role) => {
  * @param {Array<Players>} targets 
  */
 const getRoleData = (role, targets) => {
-  if(role === roles.isaac) {
-    return targets.map((target) => ({ role: target.role }));
-  } else {
-    return new Array(targets.length).fill(null);
-  }
+  const data = [];
+  targets.forEach((target) => {
+    if(target.actionDisabled) {
+      data.push({ sleep: true });
+    } else if(role === roles.isaac) {
+      data.push({ role: target.role });
+    } else {
+      data.push(null);
+    }
+  });
+  return data;
 };
 
 const getRolePool = (config) => {

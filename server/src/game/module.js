@@ -141,7 +141,7 @@ class GameModule {
       }
     } else if(player.originalRole === roles.hannah) { // Hannah
       if(!data.ids) throw new Error("Hannah must supply an `ids` property");
-      else if(data.ids.length !== 2) throw new Error("Hannah must supply two IDs in `ids`");
+      else if(data.ids.length < 2) throw new Error("Hannah must supply two IDs in `ids`");
 
       const targets = data.ids.map((id) => this.getPlayer(id));
       swap(targets[0], targets[1]);

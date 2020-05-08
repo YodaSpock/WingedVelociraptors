@@ -22,9 +22,14 @@ export default class GameScreen extends React.Component{
         this.state = {
             isReady: false,
             turnActive: false,
-            actionDisabled: false
+            actionDisabled: false,
+            roleToDisplay: "",
+            nameToDisplay: ""
         }
         this.handleSAct = this.handleSAct.bind(this);
+        this.onAllCardsSubmit = this.onAllCardsSubmit.bind(this);
+        this.onCenterCardsSubmit = this.onCenterCardsSubmit.bind(this);
+        this.onCharacterCardSubmit = this.onCharacterCardSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -38,7 +43,38 @@ export default class GameScreen extends React.Component{
 
         if(data.data.sleep) this.setState({ actionDisabled: true });
 
-        // TODO: deal with role-specific stuff
+        const { role } = this.props;
+        if(role === "rachel" && data.data.noise) {
+            // TODO: play noise
+        } else if(role === "annalise" || role === "isaac") {
+            this.setState({ roleToDisplay: data.data.role });
+        }
+    }
+
+    onAllCardsSubmit(ids) {
+        const { wsem, role, players } = this.props;
+        if(role === "sydney" || role === "annalise") {
+            wsem.sendMessage("c_act", { data: { id: ids[0] }});
+            if(role === "annalise") {
+                this.setState({ nameToDisplay: players.filter((el) => el.id === ids[0])[0].name });
+            }
+        } else if(role === "hannah") {
+            wsem.sendMessage("c_act", { data: { ids }});
+        }
+    }
+
+    onCenterCardsSubmit(index) {
+        const { wsem, role } = this.props;
+        if(role === "daniel" || role === "cat") {
+            wsem.sendMessage("c_act", { data: { card: index }});
+        }
+    }
+
+    onCharacterCardSubmit(swap) {
+        const { wsem, role } = this.props;
+        if(role === "annalise") {
+            wsem.sendMessage("c_act", { data: { swap }});
+        }
     }
 
     readyUp = () => {
@@ -46,7 +82,7 @@ export default class GameScreen extends React.Component{
     }
 
     getComponent() {
-        const { isReady, turnActive, actionDisabled } = this.state;
+        const { isReady, turnActive, actionDisabled, roleToDisplay } = this.state;
         const { role, players } = this.props;
 
         if(!isReady) {
@@ -64,16 +100,17 @@ export default class GameScreen extends React.Component{
         } else if(actionDisabled) {
             // TODO: make look all pretty-like
             return <div>A sleep spell has been cast on you! Go back to sleep.</div>
-        } else if(role === "sydney" || role === "annalise" ||role === "hannah") {
-            return <AllCards players={players} />;
+        } else if(role === "sydney" || role === "annalise" || role === "hannah") {
+            return <AllCards players={players} onSubmit={this.onAllCardsSubmit} />;
         } else if(role === "cat" || role === "daniel") {
-            return <CenterCards />;
+            return <CenterCards onSubmit={this.onCenterCardsSubmit} />;
         } else if(role === "isaac" || role === "annalise") {
-            return <CharacterCard role = {role} flippable = {true} name = {"Name"}/>;
+            return <CharacterCard onSubmit={this.onCharacterCardSubmit} role = {roleToDisplay} flippable = {true} name = {"Name"}/>;
         } else {
             // TODO: default screen when it's your turn
             return <div>It's your turn</div>
         }
+        // TODO: s_error display
     }
     
     render() {

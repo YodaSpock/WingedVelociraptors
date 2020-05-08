@@ -9,7 +9,7 @@ class VotingApp {
   constructor(wsem, gameModule, voteTime) {
     this.wsem = wsem;
     this.gameModule = gameModule;
-    this.voteTime = voteTime ? voteTime : 60;
+    this.voteTime = voteTime ? voteTime : 300;
 
     this.votesRemaining = this.gameModule.players.length;
     /**
@@ -61,7 +61,7 @@ class VotingApp {
    * @returns {Array<Number>}
    */
   getKilledIds(tallies) {
-    let max = -1, maxIds;
+    let max = -1, maxIds = [];
     for(let [id, count] of Object.entries(tallies)) {
       if(count > max) {
         max = count;

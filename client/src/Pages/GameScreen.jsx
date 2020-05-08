@@ -35,6 +35,10 @@ export default class GameScreen extends React.Component{
     componentDidMount() {
         const { wsem } = this.props;
         wsem.addEventHandler("s_act", this.handleSAct);
+        wsem.addEventHandler("s_timerStart", (data) => {
+            this.props.onVotingBegin(data);
+            this.props.history.push("/player/voting");   
+        });
     }
     
     handleSAct(data) {

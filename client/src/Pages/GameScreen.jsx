@@ -95,7 +95,7 @@ export default class GameScreen extends React.Component{
                     <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
                         READY
                     </Button> */}
-                    <AllCards players={players} />
+                    <AllCards players={players} onSubmit={this.onAllCardsSubmit}/>
                 </div>
             );
         } else if(!turnActive) {

@@ -1,4 +1,10 @@
 class Player {
+  /**
+   * @param {String} name 
+   * @param {Number} id 
+   * @param {String} role 
+   * @param {Number} position 
+   */
   constructor(name, id, role, position) {
     this.name = name;
     this.id = id;
@@ -6,6 +12,10 @@ class Player {
     this.originalRole = role;
     this.position = position;
     this.hasActed = false;
+    this.actionDisabled = false;
+
+    // additional data specific to a role
+    this.roleData = {};
   }
 }
 

@@ -38,7 +38,7 @@ The following table documents the different events and their accompanying data. 
 | s_timerStart | Server | Signals that all roles have been played and voting may begin. Provides a duration of time (in seconds) clients may vote.                                   | `length: number`                                                              |
 | c_vote       | Client | Identifies the player this player wishes to vote to kill. This can be sent multiple times to change their vote. The **ID** must be provided, not the name. | `id: number`                                                                  |
 | s_results    | Server | Provides end-of-game results.                                                                                                                              | TBD                                                                           |
-
+| s_error      | Server | Alerts the client that their last message caused an error.                                                                                                 | `message: string`                                                             |
 ### Identifying middle cards
 There are a few situations where players need to identify a card from the middle.. These cards will be represented by the numbers `0` (top/leftmost), `1` (middle), and `2` (bottom/rightmost).
 

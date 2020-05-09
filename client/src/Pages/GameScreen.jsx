@@ -3,6 +3,7 @@ import CharacterCard from './CharacterCard';
 import AllCards from './AllCards';
 import Night from './Night';
 import CenterCards from './CenterCards';
+import { Button } from 'antd'
 
 /*
 How to play audio:
@@ -95,11 +96,10 @@ export default class GameScreen extends React.Component{
         if(!isReady) {
             return (
                 <div>
-                    {/* <CharacterCard role = {role} name = {"You"} flippable = {true}/>
+                    <CharacterCard role = {role} name = {"You"} flippable = {true}/>
                     <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
                         READY
-                    </Button> */}
-                    <CenterCards onSubmit={this.onCenterCardsSubmit}/>
+                    </Button>
                 </div>
             );
         } else if(!turnActive) {
@@ -112,6 +112,8 @@ export default class GameScreen extends React.Component{
         } else if(role === "cat" || role === "daniel") {
             return <CenterCards onSubmit={this.onCenterCardsSubmit} />;
         } else if(role === "isaac" || role === "annalise") {
+            // TODO - implement annalise edge case for role... 
+            //TODO - Add button for isaac/annalise
             return <CharacterCard onSubmit={this.onCharacterCardSubmit} role = {roleToDisplay} flippable = {true} name = {"Name"}/>;
         } else {
             // TODO: default screen when it's your turn

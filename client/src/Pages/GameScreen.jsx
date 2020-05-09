@@ -52,8 +52,9 @@ export default class GameScreen extends React.Component{
 
         const { role } = this.props;
         if(role === "rachel" && data.data.noise) {
-            const audio = new Audio("../Audio/test.mp3");
-            audio.play();
+            // const audio = new Audio("../Audio/test.mp3");
+            // audio.play();
+            console.log("FIX this")
         } else if(role === "annalise" || role === "isaac") {
             this.setState({ roleToDisplay: data.data.role });
         }

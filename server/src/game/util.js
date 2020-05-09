@@ -1,4 +1,4 @@
-const { roles, dialogues } = require("./constants");
+const { roles, roleToOrder, dialogues } = require("./constants");
 
 const getDialogue = (role) => {
   if(role === roles.lucas || role === roles.josh) {
@@ -28,13 +28,37 @@ const getRoleData = (role, targets) => {
   return data;
 };
 
-const getRolePool = (config) => {
-  // TODO: currently, config only tracks number of WVs
-  // TODO: in future, it will also hold other enabled roles
-  // TODO: this will be configured and sent over by the client
-  // TODO: will need to sort
+/**
+ * @typedef {Object} Pool
+ * @property {Array<String>} roles List of all roles players could receive. May not be unique or ordered.
+ * @property {Array<String>} order Order of turns. Unique.
+ */
 
-  const pool = Object.values(roles);
+/**
+ * `config` has two properties: `roles` and `wvCount`.
+ * `wvCount` is the count of all WVs that should be in the game.
+ * `roles` is an array of unique roles that should be in the game. It MUST NOT contains any WVs.
+ * @param {Object} config 
+ * @returns {Pool}
+ */
+const getRolePool = (config) => {
+  if(!config) config = {};
+  if(!config.roles) {
+    config.roles = Array.from(Object.keys(roles));
+    config.roles.shift(); // remove WV
+  }
+  if(!("wvCount" in config)) config.wvCount = 3;
+
+  let sparsePool = new Array(Object.keys(roles).length);
+
+  config.roles.forEach((role) => {
+    sparsePool[roleToOrder[role]] = role;
+  });
+  if(config.wvCount > 0) sparsePool[roleToOrder[roles.wv]] = roles.wv;
+
+  const pool = [];
+  sparsePool.forEach((role) => pool.push(role));
+
   const order = Array.from(pool);
   // already have one WV in pool
   for(let i = 0; i < config.wvCount - 1; i++) pool.push(roles.wv);

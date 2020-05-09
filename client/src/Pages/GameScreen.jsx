@@ -52,7 +52,8 @@ export default class GameScreen extends React.Component{
 
         const { role } = this.props;
         if(role === "rachel" && data.data.noise) {
-            // TODO: play noise
+            const audio = new Audio("../Audio/test.mp3");
+            audio.play();
         } else if(role === "annalise" || role === "isaac") {
             this.setState({ roleToDisplay: data.data.role });
         }
@@ -107,7 +108,7 @@ export default class GameScreen extends React.Component{
         } else if(actionDisabled) {
             // TODO: make look all pretty-like
             return <div>A sleep spell has been cast on you! Go back to sleep.</div>
-        } else if(role === "sydney" || role === "annalise" || role === "hannah") {
+        } else if(role === "sydney" || (role === "annalise" && !roleToDisplay) || role === "hannah") {
             return <AllCards players={players} onSubmit={this.onAllCardsSubmit} />;
         } else if(role === "cat" || role === "daniel") {
             return <CenterCards onSubmit={this.onCenterCardsSubmit} />;

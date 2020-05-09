@@ -7,6 +7,7 @@ export default class NarratorWaitingScreen extends React.Component{
 
     onStart = () => {
         this.props.wsem.sendMessage("c_start");
+        this.props.history.push("/narrator/game");
     };
 
     render(){
@@ -40,7 +41,6 @@ export default class NarratorWaitingScreen extends React.Component{
             <Row style = {{paddingTop: "3vh", paddingBottom: "3vh"}}>
                 <Col xs = {0} md = {8}/>
                 <Col xs = {24} md = {8} style = {{textAlign: "center", fontFamily: "minecraft", fontSize: "100%"}}>
-                    {/* TODO -  ADD THE START GAME FUNCTION */}
                     <Button onClick = {this.onStart} style = {{borderRadius: "50%", width: "30vh"}}>Start</Button>
                 </Col>
                 <Col xs = {0} md = {8}/>

@@ -24,9 +24,9 @@ export default class AllCards extends React.Component{
 
     render(){
         const {
-            role,
             players,
-            onSubmit
+            onSubmit, 
+            numPlayers
         } = this.props; 
         
         const radioStyle = {
@@ -35,12 +35,9 @@ export default class AllCards extends React.Component{
             lineHeight: '30px',
         };
 
-        {/* {players.map((player) => <p key={player.id}>{player.name}</p>)} */}
-        {/* {players.map((player) => <CharacterCard key = {player.id} flippable = {false} name = {player.name}/> )}
-        {players.map((player) => {console.log(player.name)})} */}
         return(
             <div style = {{fontFamily: "minecraft", marginLeft: "10vw", marginRight: "10vw"}}>
-                Select a Player: 
+                Select {numPlayers} Player{numPlayers > 1 ? "s": ""} : 
                 <Divider/>
                 <div style = {{alignText: "center", height: "100%", width: "100%"}}>
                     <Checkbox.Group onChange = {this.onChange}>

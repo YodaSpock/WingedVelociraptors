@@ -91,7 +91,7 @@ export default class GameScreen extends React.Component{
     }
 
     getComponent() {
-        const { isReady, turnActive, actionDisabled, roleToDisplay } = this.state;
+        const { isReady, turnActive, actionDisabled, roleToDisplay, nameToDisplay } = this.state;
         const { role, players } = this.props;
 
         if(!isReady) {
@@ -101,6 +101,7 @@ export default class GameScreen extends React.Component{
                     <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
                         READY
                     </Button>
+                    
                 </div>
             );
         } else if(!turnActive) {
@@ -109,13 +110,14 @@ export default class GameScreen extends React.Component{
             // TODO: make look all pretty-like
             return <div>A sleep spell has been cast on you! Go back to sleep.</div>
         } else if(role === "sydney" || (role === "annalise" && !roleToDisplay) || role === "hannah") {
-            return <AllCards players={players} onSubmit={this.onAllCardsSubmit} />;
+            const numPlayers = (role === "hannah" ? 2 : 1);
+            return <AllCards players={players} onSubmit={this.onAllCardsSubmit} numPlayers = {numPlayers} />;
         } else if(role === "cat" || role === "daniel") {
             return <CenterCards onSubmit={this.onCenterCardsSubmit} />;
-        } else if(role === "isaac" || role === "annalise") {
-            // TODO - implement annalise edge case for role... 
-            //TODO - Add button for isaac/annalise
-            return <CharacterCard onSubmit={this.onCharacterCardSubmit} role = {roleToDisplay} flippable = {true} name = {"Name"}/>;
+        } else if(role === "isaac") {
+            return <CharacterCard onSubmit={this.onCharacterCardSubmit} role = {roleToDisplay} flippable = {true} name = {"You"}/>;
+        } else if(role === "annalise") {
+            return <CharacterCard onSubmit={this.onCharacterCardSubmit} role = {roleToDisplay} swap = {true} flippable = {true} name = {nameToDisplay}/>;
         } else {
             // TODO: default screen when it's your turn
             return <div>It's your turn</div>

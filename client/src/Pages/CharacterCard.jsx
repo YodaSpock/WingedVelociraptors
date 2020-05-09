@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSpring, animated as a } from 'react-spring';
+import {Button} from 'antd';
 import '../Styles/Card.scss';
 
 const CharacterCard = (props) => {
@@ -28,6 +29,10 @@ const CharacterCard = (props) => {
             Your character role is the {props.role} 
           </div>
         </a.div> 
+        {props.swap ? <div>
+        <Button onClick = {props.onSubmit(true)}>Swap</Button>
+        <Button onClick = {props.onSubmit(false)}>Don't Swap</Button>
+        </div> : null}
       </div>
   )
 }

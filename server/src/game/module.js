@@ -18,6 +18,10 @@ class GameModule {
     this.narrators = this.narrators.filter((val) => val !== id);
   }
 
+  setRoleConfig(config) {
+    this.config = config;
+  }
+
   /**
    * Set up the game by dealing cards.
    * @param {Object} clients Maps WebSocket IDs to `Client` instances
@@ -30,7 +34,10 @@ class GameModule {
 
   /** Assigns roles and decides the three middle cards */
   dealCards(clients) {
-    const { roles: sessionRoles, order: sessionOrder } = getRolePool({ wvCount: 3 });
+    let pool;
+    if(this.config) pool = getRolePool(this.config);
+    else pool = getRolePool();
+    const { roles: sessionRoles, order: sessionOrder } = pool;
     this.sessionOrder = sessionOrder;
 
     const numCards = this.players.length + 3;

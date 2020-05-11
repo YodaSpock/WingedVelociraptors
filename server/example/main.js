@@ -9,6 +9,10 @@ document.getElementById("join").addEventListener("click", () => {
   wsem.sendMessage("c_join", { name: document.getElementById("name").value });
 });
 
+document.getElementById("reconnect").addEventListener("click", () => {
+  wsem.sendMessage("c_reconnect", JSON.parse(document.getElementById("reconnectText").value));
+});
+
 document.getElementById("narrator").addEventListener("click", () => {
   wsem.sendMessage("c_narrator");
 });

@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+
 const events = require("../networking/wsEvents");
 const Client = require("../client");
 
@@ -6,6 +8,11 @@ const Client = require("../client");
  * Runs `this.onReady` when all clients are ready to start.
  */
 class PregameApp {
+  /**
+   * 
+   * @param {import("../networking/websocket-event-manager")} wsem 
+   * @param {import("../game/module")} gameModule 
+   */
   constructor(wsem, gameModule) {
     this.wsem = wsem;
     this.gameModule = gameModule;
@@ -14,6 +21,7 @@ class PregameApp {
       started: false
     };
     this.clients = {};
+    this.disconnectedClients = {};
     this.order = 0;
 
     this.joinHandler = this.joinHandler.bind(this);
@@ -24,12 +32,16 @@ class PregameApp {
   }
 
   run() {
-    this.wsem.onClose = (id) => {
-      delete this.clients[id];
-      this.gameModule.removeNarrator(id);
-    
-      console.log(this.clients);
-    };
+    // TODO: client is implied to be coming back when connection closes
+    //       therefore, client will have to explicitely say it's leaving if they want to stop playing before c_start (new event)
+
+    /*
+    This code should be run when the user explicitely says they're leaving (new event):
+
+    delete this.clients[id];
+    this.gameModule.removeNarrator(id);
+    console.log(this.clients);
+    */
 
     this.wsem.addEventHandler(events.c_join, this.joinHandler);
     this.wsem.addEventHandler(events.c_narrator, this.narratorHandler);
@@ -39,7 +51,6 @@ class PregameApp {
   }
 
   cleanUp() {
-    this.wsem.onClose = null;
     this.wsem.removeEventHandler(events.c_join, this.joinHandler);
     this.wsem.removeEventHandler(events.c_narrator, this.narratorHandler);
     this.wsem.removeEventHandler(events.c_setRoles, this.setRolesHandler);
@@ -51,7 +62,14 @@ class PregameApp {
     if(!this.state.started) { 
       this.clients[id] = new Client(id, data.name, this.order++);
       console.log(this.clients);
+
       // TODO: inform client current number of players when joining. update them when others join
+
+      if(!this.state.sessionID) {
+        this.state.sessionID = uuidv4();
+        this.wsem.setSessionID(this.state.sessionID);
+      }
+      this.wsem.trackClientReconnect(id);
     }
   }
 

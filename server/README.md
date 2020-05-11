@@ -27,6 +27,8 @@ The following table documents the different events and their accompanying data. 
 | Event name   | Origin | Description                                                                                                                                              | Data properties                                                                                                   |
 |--------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
 | c_join       | Client | Sent when joining the game.                                                                                                                              | `name: string`                                                                                                    |
+| s_init       | Server | Sent in response to `c_join` to identify the current game and client ID. Used to detect reconnects.                                                      | `clientID: number`, `sessionID: string`                                                                           |
+| c_reconnect  | Client | Sent if a client suspects they are rejoining the game after a page refresh.                                                                              | `clientID: number`                                                                                                |
 | c_narrator   | Client | Signals that the client wishes to be a narrator (i.e. play audio instructions).                                                                          | None                                                                                                              |
 | c_setRoles   | Client | Configures available roles once the game starts. `roles` must contain unique elements and NOT have ANY WVs.                                              | `wvCount: number`, `roles: [string]`                                                                              |
 | c_start      | Client | Signals that all players have joined and the game should start (need only be sent by a single client, like Jackbox).                                     | None                                                                                                              |
@@ -77,3 +79,20 @@ If a player was put to sleep by Sydney, their data will always be `{ "sleep": tr
 | `cat`      | `card: number`  | Which card to flip over in the middle.                                                              |
 
 Annalise clarification: she sends her first message, the server responds, she sends her second message.
+
+## Client reconnection
+There are cases in which a client may accidentally close their WebSocket connection. To handle this, the `s_init` and `c_reconnect` events were created.
+
+When a client sends a `c_join` message, they are considered to be part of the current game session. In response, the server will send an `s_init` message with their client ID and the session ID.
+The client should store these in local storage so they persist through browser refreshes.
+
+When the client loads a page and all of the following are true, they should suspect they are reconnecting:
+* They are at a route they would only be at if in an active game (i.e. any route but exactly `/` of `/player`)
+* They have a client ID and session ID in local storage
+
+In this case, the client should send a `c_reconnect` message with their client ID stored in local storage.
+If the server agrees they are reconnecting, it will send any messages the client missed that are still relevant. These will be in chronological order (i.e. through a queue system).
+Because of this, it is important the client does not change their path between them closing the WebSocket connection and opening a new one.
+Otherwise, the client's perception of the current game state will be incorrect.
+
+To avoid false-positives, the client should remove these local storage values once they receive an `s_results` message, as this marks the end of the game session.

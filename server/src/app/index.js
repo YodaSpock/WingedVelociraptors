@@ -14,7 +14,7 @@ class App {
     pregameApp.onReady = () => {
       const gameApp = new GameApp(this.wsem, this.gameModule);
       gameApp.onVotingBegin = () => {
-        const votingApp = new VotingApp(this.wsem, this.gameModule, 60);
+        const votingApp = new VotingApp(this.wsem, this.gameModule, 300);
         votingApp.run();
       };
       gameApp.run();

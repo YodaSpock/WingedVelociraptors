@@ -51,15 +51,15 @@ class GameApp {
   narrAckHandler() {
     if(this.actTimer) return;
 
+    if(this.gameModule.currentRole === roles.rachel) {
+      this.gameModule.players.filter((player) => player.originalRole === roles.rachel)
+        .forEach((player) => {
+          if(!player.actionDisabled) this.wsem.sendMessage(player.id, events.s_act, { data: { noise: true } })
+        });
+    }
+
     this.actTimer = setTimeout(() => {
       this.actTimer = null;
-
-      if(this.gameModule.currentRole === roles.rachel) {
-        this.gameModule.players.filter((player) => player.originalRole === roles.rachel)
-          .forEach((player) => {
-            if(!player.actionDisabled) this.wsem.sendMessage(player.id, events.s_act, { data: { noise: true } })
-          });
-      }
 
       this.playerTargets.forEach((player) => this.wsem.sendMessage(player.id, events.s_act, { state: "end" }));
 

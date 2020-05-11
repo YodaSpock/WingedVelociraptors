@@ -24,12 +24,17 @@ function App() {
   const [role, setRole] = useState("");
   const [position, setPosition] = useState(0);
   const [players, setPlayers] = useState([{}]);
+  const [votingData, setVotingData] = useState({});
   const [killed, setKilled] = useState([]);
   
   const recieveRole = e => {
     setRole(e.role);
     setPosition(e.position);
     setPlayers(e.players);
+  };
+
+  const onVotingBegin = (data) => {
+    setVotingData(data);
   };
 
   const onEnd = (data) => {
@@ -44,11 +49,11 @@ function App() {
         <Header/>
         <Route path = "/" exact component={() => <WelcomeScreen wsem={wsem} />}/>
         <Route path = "/player" exact component={() => <LoginScreen wsem={wsem} onRole={recieveRole} />}/>
-        <Route path = "/narrator/waiting" exact component={() => <NarratorWaitingScreen wsem={wsem} />}/>
+        <Route path = "/narrator/waiting" exact component={({ history }) => <NarratorWaitingScreen history={history} wsem={wsem} />}/>
         <Route path = "/player/waiting" exact component = {PlayerWaitingScreen}/>
-        <Route path = "/player/game" exact component = {() => <GameScreen role = {role} position = {position} players = {players}/>}/>
-        <Route path = "/narrator/game" exact component = {NarratorScreen}/>
-        <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} players={players} onEnd={onEnd} />} />
+        <Route path = "/player/game" exact component = {({ history }) => <GameScreen history={history} wsem={wsem} role = {role} position = {position} players = {players} onVotingBegin={onVotingBegin}/>}/>
+        <Route path = "/narrator/game" exact component = {() => <NarratorScreen wsem={wsem} />}/>
+        <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} players={players} votingData={votingData} onEnd={onEnd} />} />
         <Route path = "/player/end" exact component = {() => <EndGameScreen role={role} players={players} killed={killed} />} />
         <Footer/>
       </BrowserRouter>

@@ -3,11 +3,28 @@ import {Button, Row, Col, Modal} from 'antd';
 import "../Styles/Waiting.scss";
 import RulesPage from './RulesPage';
 import CharcterPage from './CharacterPage';
-export default class PlayerWaitingScreen extends React.Component{
-    
-    state = {
-        rulesVisible: false,
-        charactersVisible: false,
+
+// TODO: opening modal might break things because these functions are declared in a weird way
+export default class PlayerWaitingScreen extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            rulesVisible: false,
+            charactersVisible: false,
+        };
+
+        this.getRole = this.getRole.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.wsem.addEventHandler("s_role", this.getRole);
+    }
+
+    getRole(e) {
+        this.props.onRole(e);
+        this.props.history.push("/player/game");
+        // TODO - ADD A way to remove the listener - STRETCH GOAL
     };
 
     showRules = () => {
@@ -45,7 +62,7 @@ export default class PlayerWaitingScreen extends React.Component{
         }
     }
     
-    render(){
+    render() {
 
         return(
             <div>

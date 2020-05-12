@@ -48,9 +48,9 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Route path = "/" exact component={() => <WelcomeScreen wsem={wsem} />}/>
-        <Route path = "/player" exact component={() => <LoginScreen wsem={wsem} onRole={recieveRole} />}/>
+        <Route path = "/player" exact component={() => <LoginScreen wsem={wsem} />}/>
         <Route path = "/narrator/waiting" exact component={({ history }) => <NarratorWaitingScreen history={history} wsem={wsem} />}/>
-        <Route path = "/player/waiting" exact component = {PlayerWaitingScreen}/>
+        <Route path = "/player/waiting" exact component = {(props) => <PlayerWaitingScreen {...props} wsem={wsem} onRole={recieveRole} />}/>
         <Route path = "/player/game" exact component = {({ history }) => <GameScreen history={history} wsem={wsem} role = {role} position = {position} players = {players} onVotingBegin={onVotingBegin}/>}/>
         <Route path = "/narrator/game" exact component = {() => <NarratorScreen wsem={wsem} />}/>
         <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} players={players} votingData={votingData} onEnd={onEnd} />} />

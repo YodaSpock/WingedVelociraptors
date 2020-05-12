@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 const events = require("../networking/wsEvents");
 
 class VotingApp {
@@ -26,7 +28,8 @@ class VotingApp {
     this.wsem.addEventHandler(events.c_vote, this.voteHandler);
 
     const middle = this.gameModule.middle.map((card) => ({ exposed: card.exposed, role: card.exposed ? card.role : null }));
-    this.gameModule.players.forEach((player) => this.wsem.sendMessage(player.id, events.s_timerStart, { length: this.voteTime, middle }));
+    const endTime = moment().add(this.voteTime, "seconds").format();
+    this.gameModule.players.forEach((player) => this.wsem.sendMessage(player.id, events.s_timerStart, { endTime, middle }));
 
     this.voteTimeout = setTimeout(() => {
       this.endGame();

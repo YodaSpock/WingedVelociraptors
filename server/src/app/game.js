@@ -35,7 +35,7 @@ class GameApp {
 
     this.gameModule.narrators.forEach((id) => this.wsem.sendMessage(id, events.s_narrate, { dialogue }, false));
   
-    playerTargets.forEach((player, i) => this.wsem.sendMessage(player.id, events.s_act, { state: "start", data: roleData[i] }, false));
+    playerTargets.forEach((player, i) => this.wsem.sendMessage(player.id, events.s_act, { state: "start", data: roleData[i] }));
   }
 
   actHandler(id, data) {
@@ -45,7 +45,7 @@ class GameApp {
     } catch(error) {
       this.wsem.sendMessage(id, events.s_error, { message: error.message });
     }
-    if(responseData) this.wsem.sendMessage(id, events.s_act, { state: "mid", data: responseData }, false);
+    if(responseData) this.wsem.sendMessage(id, events.s_act, { state: "mid", data: responseData });
   }
 
   narrAckHandler() {
@@ -54,14 +54,14 @@ class GameApp {
     if(this.gameModule.currentRole === roles.rachel) {
       this.gameModule.players.filter((player) => player.originalRole === roles.rachel)
         .forEach((player) => {
-          if(!player.actionDisabled) this.wsem.sendMessage(player.id, events.s_act, { data: { noise: true } }, false)
+          if(!player.actionDisabled) this.wsem.sendMessage(player.id, events.s_act, { data: { noise: true } })
         });
     }
 
     this.actTimer = setTimeout(() => {
       this.actTimer = null;
 
-      this.playerTargets.forEach((player) => this.wsem.sendMessage(player.id, events.s_act, { state: "end" }, false));
+      this.playerTargets.forEach((player) => this.wsem.sendMessage(player.id, events.s_act, { state: "end" }));
 
       if(this.gameModule.hasNextRole) {
         try {

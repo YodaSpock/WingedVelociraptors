@@ -87,7 +87,7 @@ When a client sends a `c_join` message, they are considered to be part of the cu
 The client should store these in local storage so they persist through browser refreshes.
 
 When the client loads a page and all of the following are true, they should suspect they are reconnecting:
-* They are at a route they would only be at if in an active game (i.e. any route but exactly `/` of `/player`)
+* They are at a route they would only be at if in an active game (i.e. any route but exactly `/` or `/player`)
 * They have a client ID and session ID in local storage
 
 In this case, the client should send a `c_reconnect` message with their client ID and perceived session ID stored in local storage.

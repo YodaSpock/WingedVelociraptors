@@ -101,9 +101,13 @@ const validJosh = (player) => player.role === roles.josh && !player.actionDisabl
  */
 const rshift = (players) => {
   // going backwards, find first non-josh
-  let next, i = players.length - 1;
-  while(i > 0 && (next = players[i--].role) === roles.josh);
-  if(i === 0) return;
+  let next;
+  for(let i = players.length - 1; i >= 0; i--) {
+    if(!validJosh(players[i])) {
+      next = players[i].role;
+      break;
+    }
+  }
 
   for(let i = 0; i < players.length; i++) {
     const player = players[i];
@@ -120,9 +124,13 @@ const rshift = (players) => {
  */
 const lshift = (players) => {
   // going forwards, find first non-josh
-  let next, i = 0;
-  while(i < players.length && (next = players[i++].role) === roles.josh);
-  if(i === players.length) return;
+  let next;
+  for(let i = 0; i < players.length; i++) {
+    if(!validJosh(players[i])) {
+      next = players[i].role;
+      break;
+    }
+  }
 
   for(let i = players.length - 1; i >= 0; i--) {
     const player = players[i];

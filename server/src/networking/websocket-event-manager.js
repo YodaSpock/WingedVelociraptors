@@ -104,7 +104,6 @@ class WebSocketEventManager {
   }
 
   sendMessage(id, event, data, queue = true) {
-    // TODO: change s_timerStart to give either end time or start time and length
     const originalID = id;
     if(this.handleReconnects && this.reconnectMap.hasCurrentFor(id)) id = this.reconnectMap.getCurrent(id);
     const ws = this.clients[id];

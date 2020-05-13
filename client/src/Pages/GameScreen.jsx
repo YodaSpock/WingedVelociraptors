@@ -1,105 +1,77 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CharacterCard from './CharacterCard';
 import AllCards from './AllCards';
 import Night from './Night';
 import CenterCards from './CenterCards';
-import { Button } from 'antd'
+import { Button } from 'antd';
+import useStorageState from "../useStorageState";
 
-/*
-How to play audio:
-1. Put audio file in public/Audio
-2. Create new Audio object with that url
-3. Add event listeners
-4. Call play
+const GameScreen = ({ wsem, history, onVotingBegin, role, players }) => {
+    const [isReady, setIsReady] = useStorageState("isReady", false);
+    const [turnActive, setTurnActive] = useStorageState("turnActive", false);
+    const [actionDisabled, setActionDisabled] = useStorageState("actionDisabled", false);
+    const [roleToDisplay, setRoleToDisplay] = useStorageState("roleToDisplay", "");
+    const [nameToDisplay, setNameToDisplay] = useStorageState("nameToDisplay", "");
 
-const audio = new Audio("../Audio/test.mp3");
-audio.addEventListener("ended", () => console.log("ended!"));
-audio.play();
-*/
-
-export default class GameScreen extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            isReady: false,
-            turnActive: false,
-            actionDisabled: false,
-            roleToDisplay: "",
-            nameToDisplay: ""
-        }
-        this.handleSAct = this.handleSAct.bind(this);
-        this.onAllCardsSubmit = this.onAllCardsSubmit.bind(this);
-        this.onCenterCardsSubmit = this.onCenterCardsSubmit.bind(this);
-        this.onCharacterCardSubmit = this.onCharacterCardSubmit.bind(this);
-    }
-
-    componentDidMount() {
-        const { wsem } = this.props;
-        wsem.addEventHandler("s_act", this.handleSAct);
-        wsem.addEventHandler("s_timerStart", (data) => {
-            this.props.onVotingBegin(data);
-            this.props.history.push("/player/voting");   
-        });
-    }
+    useEffect(() => {
+        const handleSAct = (data) => {
+            if(data.state === "start") setTurnActive(true);
+            else if(data.state === "end") setTurnActive(false);
     
-    handleSAct(data) {
-        if(data.state === "start") this.setState({ turnActive: true });
-        else if(data.state === "end") this.setState({ turnActive: false });
+            if(!data.data) return;
+    
+            if(data.data.sleep) setActionDisabled(true);
+    
+            if(role === "rachel" && data.data.noise) {
+                // const audio = new Audio("../Audio/test.mp3");
+                // audio.play();
+                console.log("FIX this")
+            } else if(role === "annalise" || role === "isaac") {
+                setRoleToDisplay(data.data.role);
+            }
+        };
 
-        if(!data.data) return;
+        wsem.addEventHandler("s_act", handleSAct);
+        wsem.addEventHandler("s_timerStart", (data) => {
+            onVotingBegin(data);
+            history.push("/player/voting");   
+        });
+    }, [history, onVotingBegin, role, setActionDisabled, setRoleToDisplay, setTurnActive, wsem]);
 
-        if(data.data.sleep) this.setState({ actionDisabled: true });
-
-        const { role } = this.props;
-        if(role === "rachel" && data.data.noise) {
-            // const audio = new Audio("../Audio/test.mp3");
-            // audio.play();
-            console.log("FIX this")
-        } else if(role === "annalise" || role === "isaac") {
-            this.setState({ roleToDisplay: data.data.role });
-        }
-    }
-
-    onAllCardsSubmit(ids) {
-        const { wsem, role, players } = this.props;
+    const onAllCardsSubmit = (ids) => {
         if(role === "sydney" || role === "annalise") {
             wsem.sendMessage("c_act", { data: { id: ids[0] }});
             if(role === "annalise") {
-                this.setState({ nameToDisplay: players.filter((el) => el.id === ids[0])[0].name });
+                setNameToDisplay(players.filter((el) => el.id === ids[0])[0].name);
             }
         } else if(role === "hannah") {
             wsem.sendMessage("c_act", { data: { ids }});
         }
-    }
+    };
 
-    onCenterCardsSubmit(index) {
-        const { wsem, role } = this.props;
+    const onCenterCardsSubmit = (index) => {
         if(role === "daniel" || role === "cat") {
             wsem.sendMessage("c_act", { data: { card: index }});
         }
-    }
+    };
 
-    onCharacterCardSubmit(swap) {
-        const { wsem, role } = this.props;
+    const onCharacterCardSubmit = (swap) => {
         if(role === "annalise") {
             wsem.sendMessage("c_act", { data: { swap }});
         }
-    }
+    };
 
-    readyUp = () => {
-        this.props.wsem.sendMessage("c_ready");
-        this.setState({isReady: true});
-    }
+    const readyUp = () => {
+        wsem.sendMessage("c_ready");
+        setIsReady(true);
+    };
 
-    getComponent() {
-        const { isReady, turnActive, actionDisabled, roleToDisplay, nameToDisplay } = this.state;
-        const { role, players } = this.props;
-
+    const getComponent = () => {
         if(!isReady) {
             return (
                 <div>
                     <CharacterCard role = {role} name = {"You"} flippable = {true}/>
-                    <Button onClick = {this.readyUp} style = {{marginTop: "120vw"}}>
+                    <Button onClick = {readyUp} style = {{marginTop: "120vw"}}>
                         READY
                     </Button>
                     
@@ -112,25 +84,25 @@ export default class GameScreen extends React.Component{
             return <div>A sleep spell has been cast on you! Go back to sleep.</div>
         } else if(role === "sydney" || (role === "annalise" && !roleToDisplay) || role === "hannah") {
             const numPlayers = (role === "hannah" ? 2 : 1);
-            return <AllCards players={players} onSubmit={this.onAllCardsSubmit} numPlayers = {numPlayers} />;
+            return <AllCards players={players} onSubmit={onAllCardsSubmit} numPlayers = {numPlayers} />;
         } else if(role === "cat" || role === "daniel") {
-            return <CenterCards onSubmit={this.onCenterCardsSubmit} />;
+            return <CenterCards onSubmit={onCenterCardsSubmit} />;
         } else if(role === "isaac") {
-            return <CharacterCard onSubmit={this.onCharacterCardSubmit} role = {roleToDisplay} flippable = {true} name = {"You"}/>;
+            return <CharacterCard onSubmit={onCharacterCardSubmit} role = {roleToDisplay} flippable = {true} name = {"You"}/>;
         } else if(role === "annalise") {
-            return <CharacterCard onSubmit={this.onCharacterCardSubmit} role = {roleToDisplay} swap = {true} flippable = {true} name = {nameToDisplay}/>;
+            return <CharacterCard onSubmit={onCharacterCardSubmit} role = {roleToDisplay} swap = {true} flippable = {true} name = {nameToDisplay}/>;
         } else {
             // TODO: default screen when it's your turn
             return <div>It's your turn</div>
         }
         // TODO: s_error display
     }
-    
-    render() {
-        return (
-            <div>
-                {this.getComponent()}
-            </div>
-        );
-    }
-}
+
+    return (
+        <div>
+            {getComponent()}
+        </div>
+    );
+};
+
+export default GameScreen;

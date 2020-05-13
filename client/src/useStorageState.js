@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useStorageState = (name, initialState, storageCondition) => {
+const useStorageState = (name, initialState, storageCondition = true) => {
   const [state, setState] = useState(() => {
     const item = localStorage.getItem(name);
     if(item !== null && storageCondition) {

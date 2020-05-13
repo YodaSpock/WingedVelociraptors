@@ -54,6 +54,8 @@ const VotingScreen = ({ wsem, players, onEnd, votingData: { endTime , middle } }
       }
       setTimeRemaining(remaining);
     }, 1000);
+
+    return () => clearInterval(interval);
   }, [endTime]);
 
   const formatTime = (val) => `0${Math.floor(val)}`.slice(-2);

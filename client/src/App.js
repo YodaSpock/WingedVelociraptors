@@ -35,7 +35,7 @@ function App() {
        localStorage.getItem("clientID") !== null &&
        localStorage.getItem("sessionID") !== null) {
       wsem.sendMessage("c_reconnect", {
-        clientID: localStorage.getItem("clientID"),
+        clientID: Number(localStorage.getItem("clientID")),
         sessionID: localStorage.getItem("sessionID")
       });
     } else {

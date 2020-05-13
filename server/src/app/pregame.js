@@ -21,7 +21,6 @@ class PregameApp {
       started: false
     };
     this.clients = {};
-    this.disconnectedClients = {};
     this.order = 0;
 
     this.joinHandler = this.joinHandler.bind(this);

@@ -22,11 +22,7 @@ const GameScreen = ({ wsem, history, onVotingBegin, role, players }) => {
     
             if(data.data.sleep) setActionDisabled(true);
     
-            if(role === "rachel" && data.data.noise) {
-                // const audio = new Audio("../Audio/test.mp3");
-                // audio.play();
-                console.log("FIX this")
-            } else if(role === "annalise" || role === "isaac") {
+            if(role === "annalise" || role === "isaac") {
                 setRoleToDisplay(data.data.role);
             }
         };
@@ -91,6 +87,11 @@ const GameScreen = ({ wsem, history, onVotingBegin, role, players }) => {
             return <CharacterCard onSubmit={onCharacterCardSubmit} role = {roleToDisplay} flippable = {true} name = {"You"}/>;
         } else if(role === "annalise") {
             return <CharacterCard onSubmit={onCharacterCardSubmit} role = {roleToDisplay} swap = {true} flippable = {true} name = {nameToDisplay}/>;
+        } else if(role === "rachel") {
+            return <Button onClick={() => {
+                const audio = new Audio("/Audio/ope.mp3");
+                audio.play();
+            }}>Trip</Button>
         } else {
             // TODO: default screen when it's your turn
             return <div>It's your turn</div>

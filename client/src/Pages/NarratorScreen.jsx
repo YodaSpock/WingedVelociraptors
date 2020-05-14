@@ -12,7 +12,7 @@ export default class NarratorScreen extends React.Component{
     }
 
     handleNarrate(data) {
-        const audio = new Audio(`../Audio/${data.dialogue}.mp3`);
+        const audio = new Audio(`/Audio/${data.dialogue}.mp3`);
         audio.addEventListener("ended", () => this.props.wsem.sendMessage("c_narrAck"));
         audio.play();
     }

@@ -41,6 +41,7 @@ class VotingApp {
   }
 
   voteHandler(id, data) {
+    if(id in this.votes) return;
     this.votes[id] = data.id;
     if(--this.votesRemaining === 0) {
       if(this.voteTimeout) clearTimeout(this.voteTimeout);

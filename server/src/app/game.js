@@ -33,7 +33,7 @@ class GameApp {
     const { playerTargets, roleData, dialogue } = this.gameModule.readyNextRole();
     this.playerTargets = playerTargets;
 
-    this.gameModule.narrators.forEach((id) => this.wsem.sendMessage(id, events.s_narrate, { dialogue }));
+    this.gameModule.narrators.forEach((id) => this.wsem.sendMessage(id, events.s_narrate, { dialogue }, false));
   
     playerTargets.forEach((player, i) => this.wsem.sendMessage(player.id, events.s_act, { state: "start", data: roleData[i] }));
   }

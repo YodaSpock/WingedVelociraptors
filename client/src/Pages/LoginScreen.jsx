@@ -6,8 +6,7 @@ export default class LoginScreen extends React.Component{
 
     render(){
         const {
-            wsem,
-            onRole
+            wsem
         } = this.props; 
         
         return(
@@ -17,7 +16,7 @@ export default class LoginScreen extends React.Component{
                         Please Enter Your Name: 
                     </Col>
                 </Row>
-                <LoginForm wsem = {wsem} onRole={onRole}/>
+                <LoginForm wsem = {wsem} />
             </>
         )
     }

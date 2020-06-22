@@ -5,7 +5,7 @@ const GameModule = require("./game/module");
 const App = require("./app");
 
 const wss = new WebSocket.Server({ port: 81 });
-const wsem = new WebSocketEventManager(wss);
+const wsem = new WebSocketEventManager(wss, null, true);
 
 const gameModule = new GameModule();
 

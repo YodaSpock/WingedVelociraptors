@@ -32,10 +32,9 @@ const testPlayers = [
 */
 
 // TODO: voting for yourself
-const VotingScreen = ({ wsem, players, onEnd, votingData: { length: timerLength, middle } }) => {
+const VotingScreen = ({ wsem, players, onEnd, votingData: { endTime , middle } }) => {
   const history = useHistory();
 
-  const [timerStart, setTimerStart] = useState();
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [voteId, setVoteId] = useState();
 
@@ -47,19 +46,17 @@ const VotingScreen = ({ wsem, players, onEnd, votingData: { length: timerLength,
   }, [wsem, onEnd, history]);
 
   useEffect(() => {
-    if(!timerStart) setTimerStart(Date.now());
+    const interval = setInterval(() => {
+      let remaining = (new Date(endTime) - Date.now()) / 1000;
+      if(remaining < 0) {
+        remaining = 0;
+        clearInterval(interval);
+      }
+      setTimeRemaining(remaining);
+    }, 1000);
 
-    if(timerLength && timerStart) {
-      const interval = setInterval(() => {
-        let elapsed = (Date.now() - timerStart) / 1000;
-        if(elapsed > timerLength) {
-          elapsed = timerLength;
-          clearInterval(interval);
-        }
-        setTimeRemaining(timerLength - elapsed);
-      }, 1000);
-    }
-  }, [timerLength, timerStart]);
+    return () => clearInterval(interval);
+  }, [endTime]);
 
   const formatTime = (val) => `0${Math.floor(val)}`.slice(-2);
 

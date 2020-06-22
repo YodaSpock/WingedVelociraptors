@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect } from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
 import Header from './Pages/Header';
@@ -14,18 +14,38 @@ import VotingScreen from "./Pages/VotingScreen";
 import EndGameScreen from "./Pages/EndGameScreen";
 import '../src/Styles/Layout.scss';
 import WebSocketEventManager from './Networking/websocket-event-manager';
+import useStorageState from "./useStorageState";
 
 
 const wsem = new WebSocketEventManager(`ws://${window.location.hostname}:81`);
 // TODO - storing data using useState or useRef - STRETCH GOAL
 
+const isSessionPath = () => ["/", "/player", "/player/end"].every(path => window.location.pathname !== path);
+
 function App() {
 
-  const [role, setRole] = useState("");
-  const [position, setPosition] = useState(0);
-  const [players, setPlayers] = useState([{}]);
-  const [votingData, setVotingData] = useState({});
-  const [killed, setKilled] = useState([]);
+  const [role, setRole] = useStorageState("role", "", isSessionPath());
+  const [position, setPosition] = useStorageState("position", 0, isSessionPath());
+  const [players, setPlayers] = useStorageState("players", [{}], isSessionPath());
+  const [votingData, setVotingData] = useStorageState("votingData", { middle: [] }, isSessionPath());
+  const [killed, setKilled] = useStorageState("killed", [], isSessionPath());
+
+  useEffect(() => {
+    if(isSessionPath() &&
+       localStorage.getItem("clientID") !== null &&
+       localStorage.getItem("sessionID") !== null) {
+      wsem.sendMessage("c_reconnect", {
+        clientID: Number(localStorage.getItem("clientID")),
+        sessionID: localStorage.getItem("sessionID")
+      });
+    } else {
+      localStorage.clear();
+      wsem.addEventHandler("s_init", (data) => {
+        localStorage.setItem("clientID", data.clientID);
+        localStorage.setItem("sessionID", data.sessionID);
+      });
+    }
+  }, []);
   
   const recieveRole = e => {
     setRole(e.role);
@@ -41,6 +61,7 @@ function App() {
     setRole(data.role);
     setPlayers(data.players);
     setKilled(data.killed);
+    localStorage.clear();
   };
 
   return (
@@ -48,9 +69,9 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Route path = "/" exact component={() => <WelcomeScreen wsem={wsem} />}/>
-        <Route path = "/player" exact component={() => <LoginScreen wsem={wsem} onRole={recieveRole} />}/>
+        <Route path = "/player" exact component={() => <LoginScreen wsem={wsem} />}/>
         <Route path = "/narrator/waiting" exact component={({ history }) => <NarratorWaitingScreen history={history} wsem={wsem} />}/>
-        <Route path = "/player/waiting" exact component = {PlayerWaitingScreen}/>
+        <Route path = "/player/waiting" exact component = {(props) => <PlayerWaitingScreen {...props} wsem={wsem} onRole={recieveRole} />}/>
         <Route path = "/player/game" exact component = {({ history }) => <GameScreen history={history} wsem={wsem} role = {role} position = {position} players = {players} onVotingBegin={onVotingBegin}/>}/>
         <Route path = "/narrator/game" exact component = {() => <NarratorScreen wsem={wsem} />}/>
         <Route path = "/player/voting" exact component = {() => <VotingScreen wsem={wsem} players={players} votingData={votingData} onEnd={onEnd} />} />

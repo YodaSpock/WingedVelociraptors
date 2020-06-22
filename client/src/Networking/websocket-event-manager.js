@@ -6,10 +6,14 @@ class WebSocketEventManager {
   constructor(url, onOpen) {
     this.events = {};
     this.ws = new WebSocket(url);
+    this.preOpenMessages = [];
 
     this.ws.onopen = () => {
       if(this.onLog) this.onLog(`WebSocket opened at ${url}`);
       if(onOpen) onOpen();
+
+      let msg;
+      while((msg = this.preOpenMessages.shift())) this.ws.send(msg);
     };
 
     this.ws.onmessage = (message) => {
@@ -30,7 +34,11 @@ class WebSocketEventManager {
   sendMessage(event, data) {
     const msg = JSON.stringify({ event, data });
     if(this.onLog) this.onLog(`Sending: ${msg}`);
-    this.ws.send(msg);
+    if(this.ws.readyState === WebSocket.CONNECTING) {
+      this.preOpenMessages.push(msg);
+    } else {
+      this.ws.send(msg);
+    }
   }
 }
 

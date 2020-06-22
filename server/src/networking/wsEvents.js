@@ -12,7 +12,9 @@ const wsEvents = {
   c_vote: "c_vote",
   s_results: "s_results",
   s_error: "s_error",
-  c_setRoles: "c_setRoles"
+  c_setRoles: "c_setRoles",
+  s_init: "s_init",
+  c_reconnect: "c_reconnect"
 };
 
 module.exports = wsEvents;
